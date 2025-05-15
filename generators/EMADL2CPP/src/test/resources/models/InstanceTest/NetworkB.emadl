@@ -1,0 +1,25 @@
+/* (c) https://github.com/MontiCore/monticore */
+package InstanceTest;
+
+component NetworkB<Z classes = 10> (Z convChannels){
+    ports in Z(0:255)^{1,28,28} data,
+         out Q(0:1)^{classes} predictions;
+
+    implementation CNN {
+
+        data ->
+        Convolution(kernel=(5,5), channels=convChannels) ->
+        Tanh() ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        Convolution(kernel=(5,5), channels=convChannels) ->
+        Tanh() ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        FullyConnected(units=1000) ->
+        Tanh() ->
+        Dropout() ->
+        FullyConnected(units=classes) ->
+        Softmax() ->
+        predictions;
+
+    }
+}

@@ -1,0 +1,25 @@
+/* (c) https://github.com/MontiCore/monticore */
+component MultipleInputs{
+    ports in Z(0:255)^{3, 32, 32} data[2],
+         out Q(0:1)^{10} softmax;
+
+    implementation CNN {
+        (
+            data[0] ->
+            Convolution(kernel=(5,5), channels=8, padding="valid") ->
+            Convolution(kernel=(5,5), channels=8, padding="valid") ->
+            FullyConnected(units=128) ->
+            Dropout()
+        |
+            data[1] ->
+            Convolution(kernel=(5,5), channels=8, padding="valid") ->
+            Convolution(kernel=(5,5), channels=8, padding="valid") ->
+            FullyConnected(units=128) ->
+            Dropout()
+        ) ->
+        Concatenate() ->
+        FullyConnected(units=10) ->
+        Softmax() ->
+        softmax;
+    }
+}

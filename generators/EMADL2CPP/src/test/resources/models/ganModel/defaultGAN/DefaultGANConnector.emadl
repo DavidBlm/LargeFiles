@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package defaultGAN;
+
+component DefaultGANConnector {
+    ports in Q(0:1)^{100} noise,
+          out Q(0:1)^{1, 64, 64} res;
+
+    instance DefaultGANGenerator predictor;
+
+    connect noise -> predictor.noise;
+    connect predictor.data -> res;
+}

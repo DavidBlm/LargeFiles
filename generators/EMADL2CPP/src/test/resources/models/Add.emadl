@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+component Add{
+    ports
+        in (0 m : 10 m) a,
+        in (0 m : 10 m) b,
+        out (0 m : 20 m) c;
+
+    implementation Math{
+         c = a + b;
+    }
+}

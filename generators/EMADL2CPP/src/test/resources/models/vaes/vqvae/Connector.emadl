@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package vqvae;
+
+component Connector{
+    ports in Q(-oo:oo)^{16,7,7} data,
+          out Q(-oo:oo)^{1,28,28} res;
+
+    instance Decoder decoder;
+
+    connect data -> decoder.encoding;
+    connect decoder.data-> res;
+
+}

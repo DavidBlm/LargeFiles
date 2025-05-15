@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+package episodicMemorySimple;
+
+component Network{
+    ports in Z(0:oo)^{10} data,
+          out Q(0:1)^{33} softmax;
+
+    implementation CNN {
+        data ->
+        EpisodicMemory(replayInterval=10, replayBatchSize=100, replaySteps=1, replayGradientSteps=1, memoryStoreProb=1, maxStoredSamples=-1, memoryReplacementStrategy="no_replacement", useLocalAdaptation=false, localAdaptationK=4, localAdaptationGradientSteps=2, queryNetDir="tag:simple", queryNetPrefix="simple_embedding-", queryNetNumInputs=1) ->
+		LoadNetwork(networkDir="tag:simple", networkPrefix="simple_embedding-", numInputs=1, outputShape=(1,768)) ->
+		FullyConnected(units=33) ->
+		Softmax() ->
+        softmax;
+    }
+}

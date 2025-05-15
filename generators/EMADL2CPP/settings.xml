@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) https://github.com/MontiCore/monticore -->
+
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <pluginGroups>
+        <pluginGroup>org.mortbay.jetty</pluginGroup>
+        <pluginGroup>de.topobyte</pluginGroup>
+    </pluginGroups>
+
+    <proxies>
+    </proxies>
+
+    <servers>
+        <server>
+            <id>se-nexus</id>
+            <username>cibuild</username>
+            <password>${env.cibuild}</password>
+        </server>
+
+        <server>
+            <id>gitlab-maven</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Job-Token</name>
+                        <value>${env.CI_JOB_TOKEN}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
+        </server>
+
+        <server>
+          <id>gitlab-maven-mnist</id>
+          <configuration>
+            <httpHeaders>
+                <property>
+                    <name>Job-Token</name>
+                    <value>${env.CI_JOB_TOKEN}</value>
+                </property>
+            </httpHeaders>
+          </configuration>
+        </server>
+
+
+    <server>
+      <id>github</id>
+      <username>travisbuilduser</username>
+      <password>${env.travisbuilduserpassword}</password>
+    </server>
+
+  </servers>
+
+  <mirrors>
+      <mirror>
+          <id>gitlab-maven-mnist</id>
+          <mirrorOf>gitlab-maven-mnist</mirrorOf>
+          <url>https://git.rwth-aachen.de/api/v4/projects/57999/packages/maven</url>
+      </mirror>
+
+
+      <mirror>
+      <id>gitlab-maven</id>
+      <mirrorOf>gitlab-maven</mirrorOf>
+      <url>https://git.rwth-aachen.de/api/v4/projects/55417/packages/maven</url>
+    </mirror>
+
+    <mirror>
+      <id>se-nexus</id>
+      <mirrorOf>external:*</mirrorOf>
+      <url>https://nexus.se.rwth-aachen.de/content/groups/public</url>
+    </mirror>
+  </mirrors>
+
+    <profiles>
+
+
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Optional URL to server. Default value is http://localhost:9000 -->
+                <sonar.host.url>
+                    https://metric.se.rwth-aachen.de
+                </sonar.host.url>
+                <sonar.login>
+                    jenkins
+                </sonar.login>
+                <sonar.password>
+                    ${env.sonar}
+                </sonar.password>
+            </properties>
+        </profile>
+
+         <profile>
+      <id>se-nexus</id>
+      <repositories>
+        <repository>
+          <id>gitlab-maven-mnist</id>
+          <url>https://git.rwth-aachen.de/api/v4/projects/57999/packages/maven</url>
+          <releases><enabled /></releases>
+          <snapshots><enabled /></snapshots>
+        </repository>
+        <repository>
+          <id>gitlab-maven</id>
+          <url>https://git.rwth-aachen.de/api/v4/projects/55417/packages/maven</url>
+          <releases><enabled /></releases>
+          <snapshots><enabled /></snapshots>
+        </repository>
+
+        <repository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled /></releases>
+          <snapshots><enabled /></snapshots>
+        </repository>
+
+      </repositories>
+
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled /></releases>
+          <snapshots><enabled /></snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>se-nexus</activeProfile>
+    </activeProfiles>
+</settings>

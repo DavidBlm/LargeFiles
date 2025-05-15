@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package mnist;
+
+component Connector {
+    ports in Z(0:255)^{1, 28, 28} image,
+          out Z(0:81) result,
+          out Q(0:1) probability;
+
+    instance AdaNetCustom<10, 10> network;
+    instance ArgMax<10> argmax;
+    instance SquareDigit squareDigit;
+
+    connect image -> network.image;
+    connect network.predictions -> argmax.inputVector;
+    connect argmax.maxIndex -> squareDigit.inputDigit;
+    connect argmax.maxValue -> probability;
+    connect squareDigit.outputDigit -> result;
+}

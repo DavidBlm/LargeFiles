@@ -1,0 +1,18 @@
+package calculator;
+
+component Net1 {
+    ports in Z(0:255)^{1, 28, 28} data,
+         out Z(0:255)^{500} dataOutput;
+
+    implementation CNN {
+        data ->
+        LoadNetwork(
+            networkDir="tag:mnist_pre",
+            networkPrefix="Net1-",
+            numInputs=1,
+            outputShape=(1,500)
+        ) ->
+        dataOutput;
+    }
+    
+}

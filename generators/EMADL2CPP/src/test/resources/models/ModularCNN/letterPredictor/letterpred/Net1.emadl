@@ -1,0 +1,21 @@
+package letterpred;
+
+component Net1 {
+    ports in Z(0:255)^{1, 28, 28} data,
+         out Z(0:255)^{500} dataOutput;
+
+    implementation CNN {
+        def conv(channels, kernel=1, stride=1){
+            Convolution(kernel=(kernel,kernel),channels=channels) ->
+            Relu() ->
+            Pooling(pool_type="max", kernel=(2,2), stride=(stride,stride))
+        }
+
+        data ->
+        conv(kernel=8, channels=52, stride=3) ->
+        conv(kernel=8, channels=104, stride=3) ->
+        FullyConnected(units=500) ->
+        dataOutput;
+    }
+    
+}

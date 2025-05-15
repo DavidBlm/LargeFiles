@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package vae;
+
+component Connector{
+    ports in Q(-oo:oo)^{2} data,
+          out Q(0:1)^{1,28,28} res;
+
+    instance Decoder decoder;
+
+    connect data -> decoder.encoding;
+    connect decoder.data-> res;
+
+}

@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package infoGAN;
+
+component InfoGANConnector {
+    ports in Q(0:1)^{62} noise,
+		  in Z(0:9)^{10} c1,
+          out Q(0:1)^{1, 64, 64} res;
+
+    instance InfoGANGenerator predictor;
+    connect noise -> predictor.noise;
+	connect c1 -> predictor.c1;
+    connect predictor.data -> res;
+}

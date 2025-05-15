@@ -1,0 +1,28 @@
+package cvae;
+
+component Decoder{
+    ports in Q(-oo:oo)^{2} encoding,
+          in Z(0:9)^{1} label,
+          out Q(0:1)^{1,28,28} data;
+
+    implementation CNN {
+        (
+            encoding
+        |
+            label ->
+            OneHot(size=10) ->
+            Flatten()
+        ) ->
+        Concatenate() ->
+        FullyConnected(units=3136) ->
+        Relu() ->
+        Reshape(shape=(64,7,7)) ->
+        UpConvolution(kernel=(4,4), channels=32, stride=(2,2)) ->
+        Relu() ->
+        UpConvolution(kernel=(4,4), channels=64, stride=(2,2)) ->
+        Relu() ->
+        UpConvolution(kernel=(3,3), channels=1, stride=(1,1)) ->
+        Sigmoid() ->
+        data;
+    }
+}

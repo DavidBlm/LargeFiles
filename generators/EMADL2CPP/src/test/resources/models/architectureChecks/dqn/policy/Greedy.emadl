@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package dqn.policy;
+
+component Greedy {
+    ports
+        in Q(-oo:oo)^{2} values,
+        out Z action;
+
+    implementation Math {
+        Q maxQValue = values(1);
+        Z maxValueAction = 0;
+
+        for i = 1:2
+            if values(i) > maxQValue
+                maxQValue = values(i);
+                maxValueAction = i-1;
+            end
+        end
+
+        action = maxValueAction;
+    }
+}

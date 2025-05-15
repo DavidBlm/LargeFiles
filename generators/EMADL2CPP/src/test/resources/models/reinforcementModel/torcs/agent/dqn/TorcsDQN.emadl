@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package torcs.agent.dqn;
+
+component TorcsDQN<Z(1:oo) discrete_actions = 2> {
+    ports
+        in Q^{5} state,
+        out Q(-oo:oo)^{discrete_actions} qvalues;
+
+    implementation CNN {
+        state ->
+        FullyConnected(units=512) ->
+        Tanh() ->
+        FullyConnected(units=256) ->
+        Tanh() ->
+        FullyConnected(units=discrete_actions) ->
+        qvalues;
+    }
+}

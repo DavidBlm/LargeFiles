@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package letterpred;
+
+component ArgMax<Z(1:oo) n = 2>{
+    ports in Q^{n} inputVector,
+          out Z(0:oo) maxIndex,
+          out Q maxValue;
+
+    implementation Math{
+         maxIndex = 0;
+         maxValue = inputVector(1);
+
+         for i = 1:n
+            if inputVector(i) > maxValue
+                maxIndex = i - 1;
+                maxValue = inputVector(i);
+            end
+         end
+    }
+}

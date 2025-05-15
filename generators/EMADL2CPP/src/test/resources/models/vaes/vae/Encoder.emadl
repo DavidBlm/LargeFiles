@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+package vae;
+
+component Encoder{
+    ports in Q(-oo:oo)^{1,28,28} data,
+          out Q(-oo:oo)^{2} encoding;
+
+    implementation CNN {
+        data ->
+        Convolution(channels=32,kernel=(3,3),stride=(2,2)) ->
+        Relu() ->
+        Convolution(channels=64,kernel=(3,3),stride=(2,2)) ->
+        Relu() ->
+        Flatten() ->
+        FullyConnected(units=16) ->
+        Relu() ->
+        FullyConnected(units=4) ->
+        Split(n=2) ->
+        (
+            [0] /* mean */
+        |
+            [1] /* log squared std */
+        ) ->
+        Reparameterize() ->
+        encoding;
+    }
+}

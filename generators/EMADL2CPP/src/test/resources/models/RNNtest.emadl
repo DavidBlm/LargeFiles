@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+component RNNtest{
+    ports in Q(0:1)^{30000} source,
+    out Q(0:1)^{30000} target[5];
+
+    implementation CNN{
+        source -> Softmax() -> target[0];
+
+        timed <t> BeamSearch(max_length=5, width=2){
+            target[t-1] ->
+            Concatenate() ->
+            FullyConnected(units=30000) ->
+            Softmax() ->
+            target[t]
+        };
+    }
+}

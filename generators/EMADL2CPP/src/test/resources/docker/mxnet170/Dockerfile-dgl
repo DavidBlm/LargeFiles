@@ -1,0 +1,3 @@
+FROM registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1
+
+RUN pip3 install dgl==0.6.1

@@ -1,0 +1,48 @@
+/* (c) https://github.com/MontiCore/monticore */
+component Alexnet{
+    ports in Z(0:255)^{3, 224, 224} image,
+         out Q(0:1)^{1000} predictions;
+
+    implementation CNN {
+
+        def split1(i){
+            [i] ->
+            Convolution(kernel=(5,5), channels=128) ->
+            Lrn(nsize=5, alpha=0.0001, beta=0.75) ->
+            Pooling(pool_type="max", kernel=(3,3), stride=(2,2), padding="no_loss") ->
+            Relu()
+        }
+        def split2(i){
+            [i] ->
+            Convolution(kernel=(3,3), channels=192) ->
+            Relu() ->
+            Convolution(kernel=(3,3), channels=128) ->
+            Pooling(pool_type="max", kernel=(3,3), stride=(2,2), padding="no_loss") ->
+            Relu()
+        }
+        def fc(){
+            FullyConnected(units=4096) ->
+            Relu() ->
+            Dropout()
+        }
+
+        image ->
+        Convolution(kernel=(11,11), channels=96, stride=(4,4), padding="no_loss") ->
+        Lrn(nsize=5, alpha=0.0001, beta=0.75) ->
+        Pooling(pool_type="max", kernel=(3,3), stride=(2,2), padding="no_loss") ->
+        Relu() ->
+        Split(n=2) ->
+        split1(i=[0|1]) ->
+        Concatenate() ->
+        Convolution(kernel=(3,3), channels=384) ->
+        Relu() ->
+        Split(n=2) ->
+        split2(i=[0|1]) ->
+        Concatenate() ->
+        fc(->=2) ->
+        FullyConnected(units=1000) ->
+        Softmax() ->
+        predictions;
+
+    }
+}

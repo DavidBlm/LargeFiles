@@ -1,0 +1,11 @@
+component AdaNetBase{
+    ports in Z(0:255)^{1, 32, 32} image, out Q(0:1)^{10} predictions;
+
+    implementation CNN {
+        image ->
+        AdaNet() ->
+        FullyConnected(units = 10) ->
+        predictions
+        ;
+    }
+}

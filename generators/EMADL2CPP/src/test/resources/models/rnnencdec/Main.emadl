@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package rnnencdec;
+
+component Main{
+    ports in Z(0:49999)^{30} source,
+         out Z(0:49999)^{1} target[30];
+
+    instance Network net;
+
+    connect source -> net.source;
+    connect net.target[:] -> target[:];
+}

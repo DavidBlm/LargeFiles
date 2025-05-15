@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package sentimentanalyzer;
+
+component Connector {
+    ports in Z(0:oo)^{128} data_0,
+		  in Z(0:oo)^{128} data_1,
+		  in Z(0:oo)^{1} data_2,
+          out Z(0:1) res;
+
+    instance Network<128> predictor;
+    instance ArgMax<2> argMax;
+
+    connect data_0 -> predictor.data_0;
+    connect data_1 -> predictor.data_1;
+    connect data_2 -> predictor.data_2;
+
+    connect predictor.softmax -> argMax.inputVector;
+    connect argMax.maxIndex -> res;
+}

@@ -1,0 +1,267 @@
+# (c) https://github.com/MontiCore/monticore
+
+stages:
+  #- windows
+  - docker
+  - linux
+  - deploy
+  - pages
+
+githubjob:
+  image: maven:3-jdk-8
+  stage: deploy
+  before_script:
+    - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$GITHUB_SSH_PRIV_KEY")
+    - echo "$GITHUB_SSH_PRIV_KEY" | tr -d '\r' | ssh-add -
+    - git config --global user.email "kusmenko@se-rwth.de"
+    - git config --global user.name "EMA CI Robot"
+    - mkdir -p ~/.ssh
+    #  - cat gitlab-known-hosts >> ~/.ssh/known_hosts
+    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  script:
+    - git clone git@github.com:MontiCore/EmbeddedMontiArc.git
+    - cd EmbeddedMontiArc
+    - git subtree pull --prefix $PRJ_NAME https://git.rwth-aachen.de/monticore/EmbeddedMontiArc/${PRJ_NAME}.git master --squash
+    - git push --force
+  only:
+    - master
+
+git masterJobLinux:
+  stage: deploy
+  image: maven:3-jdk-8
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B  -U clean deploy --settings settings.xml -DskipTests
+  #  - cat target/site/jacoco/index.html
+  #  - mvn package sonar:sonar -s settings.xml
+  only:
+    - master
+
+integrationMXNetJobLinux:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet150:v0.0.5
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B  -U clean install --settings settings.xml -Dtest=IntegrationMXNetTest
+  allow_failure: true
+
+integrationCaffe2JobLinux:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/integrationtests/caffe2:v0.0.5
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B  -U clean install --settings settings.xml -Dtest=IntegrationCaffe2Test
+
+integrationGluonJobLinux:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1
+  script:
+    - ln /usr/bin/python3 /usr/bin/python -f
+    - python -m pip install -U pip
+    - python -m pip install scikit-image
+    - python -m pip install opencv-python
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=IntegrationGluonTest
+  artifacts:
+    when: always
+    paths:
+      - target
+
+integrationTensorflowJobLinux:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/integrationtests/tensorflow
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=IntegrationTensorflowTest
+
+integrationPyTorchJobLinux:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/pytorch
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest="MontiAnnaGeneratorTest#testPyTorchBackendArtefactsGenerationWithEMADLGenerator,ConfigurationTest,PersistentLoggingDataTest,TrackingTest"
+
+integrationPythonWrapperTest:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2pythonwrapper/tests/mvn-swig:latest
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U  clean install --settings settings.xml -Dtest=IntegrationPythonWrapperTest
+  artifacts:
+    when: always
+    paths:
+      - target
+
+modularityTest:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190
+  script:
+    - export TZ=Europe/Berlin && apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata
+    - apt update && apt install libopencv-dev python3-opencv libopenblas-dev liblapack-dev -y
+    - ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    - dpkg-reconfigure --frontend noninteractive tzdata
+    - ln /usr/bin/python3 /usr/bin/python -f
+    - python -m pip install -U pip
+    - python -m pip install scikit-image
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=ModularBasicTest
+
+  except:
+    changes:
+      - .gitlab-ci.yml
+      - README.md
+
+#modularCNNLetterTest:
+# stage: linux
+#  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190
+#  script:
+#    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U dependency:resolve -s settings.xml
+#    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=LetterTest
+#  except:
+#    changes:
+#      - .gitlab-ci.yml
+#      - README.md
+
+#modularCNNSentimentAnalyzerTest:
+#  stage: linux
+#  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190
+#  script:
+#    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U dependency:resolve -s settings.xml
+#    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=ModularSentimentTest
+#  except:
+#    changes:
+#      - .gitlab-ci.yml
+#      - README.md
+    
+
+
+#masterJobWindows:
+#  stage: windows
+#  script:
+#  - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest="GenerationTest,SymtabTest"
+#  tags:
+#  - Windows10
+
+UnitTestJobLinux:
+  stage: linux
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/gans/mnist-infogan/gans_mxnet:latest
+  #  image: maven:3-jdk-8
+  script:
+    - mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest="GenerationTest,SymtabTest*"
+  #  - cat target/site/jacoco/index.html
+  artifacts:
+    when: always
+    paths:
+      - target
+
+buildDockerMXNet150:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/mxnet150
+    #- docker login registry.git.rwth-aachen.de -u someUserName -p yEep-tAt19HbsmNQJMNo
+    #- docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet150:v0.0.5 .
+    #- docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet150:v0.0.5
+  only:
+    changes:
+      - src/test/resources/docker/mxnet150/**/*
+
+buildDockerMXNet170:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/mxnet170
+    # - docker login registry.git.rwth-aachen.de -u someUserName -p yEep-tAt19HbsmNQJMNo
+    # - docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1 .
+    # - docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1
+  only:
+    changes:
+      - src/test/resources/docker/mxnet170/**/*
+
+buildDockerMXNet170onnx:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/mxnet170
+    # - docker login registry.git.rwth-aachen.de -u someUserName -p glpat--9siQV_pCkA2wFRqeDhf
+    # - docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170-onnx:v0.0.1 -f Dockerfile-onnx .
+    # - docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170-onnx:v0.0.1
+  only:
+    changes:
+      - src/test/resources/docker/mxnet170/**/*
+
+buildDockerTensorflowONNX:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/tensorflow
+    - docker login registry.git.rwth-aachen.de -u someUserName -p glpat--9siQV_pCkA2wFRqeDhf
+    - docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/tensorflow-onnx -f Dockerfile-onnx .
+    - docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/tensorflow-onnx
+  only:
+    changes:
+      - src/test/resources/docker/tensorflow/**/*
+
+buildDockerMXNet170DGL:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/mxnet170
+    - docker login registry.git.rwth-aachen.de -u someUserName -p glpat--9siQV_pCkA2wFRqeDhf
+    - docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170-dgl:v0.0.1 -f Dockerfile-dgl .
+    - docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170-dgl:v0.0.1
+  only:
+    changes:
+      - src/test/resources/docker/mxnet170/**/*
+
+buildDockerDGLQD:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/dglqd
+    - docker login registry.git.rwth-aachen.de -u someUserName -p $DOCKER_TOKEN
+    - docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/dgl-qd -f Dockerfile .
+    - docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/dgl-qd
+  only:
+    changes:
+      - src/test/resources/docker/dglqd/**/*
+
+buildDockerPyTorch:
+  stage: docker
+  tags:
+    - shell
+  script:
+    - cd src/test/resources/docker/pytorch
+    - docker login registry.git.rwth-aachen.de -u someUserName -p $DOCKER_TOKEN
+    - docker build -t registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/pytorch -f Dockerfile .
+    - docker push registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/pytorch
+  only:
+    changes:
+      - src/test/resources/docker/pytorch/**/*
+
+artifact-extraction:
+  image: ubuntu:22.04
+  stage: linux
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq openjdk-11-jre-headless python3 python3-pip git
+  script:
+    - cd extractor
+    - pip3 install -r requirements.txt
+    - python3 extract.py ${CI_JOB_TOKEN}
+  artifacts:
+    paths:
+      - extractor/output
+
+pages:
+  stage: pages
+  dependencies:
+    - artifact-extraction
+  script:
+    - mkdir .public
+    - cp -r extractor/output/html/* .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

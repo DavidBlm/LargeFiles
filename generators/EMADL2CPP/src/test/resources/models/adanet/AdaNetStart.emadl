@@ -1,0 +1,17 @@
+component AdaNetStart{
+    ports in Z(0:255)^{1, imageSize, imageSize} image, out Q(0:1)^{classes} predictions;
+
+    implementation CNN {
+        image ->
+        (
+            FullyConnected(units = 10)
+        |
+            FullyConnected(units = 10)
+        |
+            FullyConnected(units = 10)
+        ) ->
+        FullyConnected(units = 10) ->
+        predictions
+        ;
+    }
+}

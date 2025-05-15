@@ -1,0 +1,55 @@
+/* (c) https://github.com/MontiCore/monticore */
+package showAttendTell;
+
+component Show_attend_tell{
+    ports in Z(-oo:oo)^{64,2048} data,
+         in Z(0:255)^{3,224,224} images,
+         out Z(0:37758)^{1} target[25];
+
+   implementation CNN{
+
+      layer LSTM(units=512) decoder;
+
+      layer FullyConnected(units = 256, flatten=false) features;
+      layer FullyConnected(units = 1, flatten=false) attention;
+
+      0 -> target[0];
+
+      data -> features;
+
+       timed <t> GreedySearch(max_length=25){
+        (
+           (
+               (
+                 features.output ->
+                 FullyConnected(units=512, flatten=false)
+               |
+                 decoder.state[0] ->
+                 FullyConnected(units=512, flatten=false)
+               ) ->
+               BroadcastAdd() ->
+               Tanh() ->
+               FullyConnected(units=1, flatten=false) ->
+               Softmax(axis=0) ->
+               attention
+           |
+               features.output
+           )->
+           BroadcastMultiply() ->
+           ReduceSum(axis=0) ->
+           ExpandDims(axis=0)
+           |
+           target[t-1] ->
+           Embedding(output_dim=256)
+       ) ->
+       Concatenate(axis=1) ->
+       decoder ->
+       FullyConnected(units=37758) ->
+       Tanh() ->
+       Dropout(p=0.25) ->
+       ArgMax() ->
+       target[t]
+       };
+       }
+ }
+

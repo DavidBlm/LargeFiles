@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package defaultGANPreprocessing;
+
+component ProcessingWithPreprocessing
+{
+	ports in Q(-oo:oo)^{3,32,32} data,
+	in Q(0:1) softmax_label, 
+	out Q(-1:1)^{3,64,64} data_out,
+	out Q(0:1) softmax_label_out;
+
+	implementation Math
+	{ 
+		data = data * 2;
+		data = data - 1;
+		data_out = scaleCube(data, 0, 64, 64);
+		softmax_label_out = softmax_label;
+	}
+}

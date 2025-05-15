@@ -1,0 +1,55 @@
+component EfficientNetB1<classes=10>{
+    ports in Z(0:255)^{1, 32, 32} image,
+          out Q(0:1)^{classes} predictions;
+
+    implementation CNN {
+
+        def stem(channels){
+            Convolution(kernel=(3,3), channels=channels, stride=(2, 2), padding="same") ->
+            BatchNorm() ->
+            LeakyRelu()
+        }
+
+        def conv(channels){
+            Convolution(kernel=(3,3), channels=channels, stride=(1, 1), padding="same") ->
+            BatchNorm() ->
+            LeakyRelu()
+        }
+
+        def reductionConv(channels){
+            Convolution(kernel=(3,3), channels=channels, stride=(2, 2), padding="same") ->
+            BatchNorm() ->
+            LeakyRelu()
+        }
+
+        def residualBlock(channels){
+            (
+                conv(channels=channels) ->
+                conv(channels=channels)
+            |
+                LeakyRelu()
+            ) ->
+            Add()
+        }
+
+        def reductionBlock(channels){
+            (
+                conv(channels=channels) ->
+                conv(channels=channels) ->
+                reductionConv(channels=channels)
+            |
+                reductionConv(channels=channels)
+            ) ->
+            Add()
+        }
+
+        image ->
+        stem(channels=16) ->
+        residualBlock(-> = 8, channels=96) ->
+        reductionBlock(channels=96) ->
+        residualBlock(-> = 8, channels=192) ->
+        reductionBlock(channels=192) ->
+        FullyConnected(units=classes) ->
+        predictions;
+    }
+}

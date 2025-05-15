@@ -1,0 +1,35 @@
+/* (c) https://github.com/MontiCore/monticore */
+component VGG16{
+    ports in Z(0:255)^{3, 224, 224} image,
+         out Q(0:1)^{1000} predictions;
+
+    implementation CNN {
+
+        def conv(filter, channels){
+            Convolution(kernel=(filter,filter), channels=channels) ->
+            Relu()
+        }
+        def fc(){
+            FullyConnected(units=4096) ->
+            Relu() ->
+            Dropout(p=0.5)
+        }
+
+        image ->
+        conv(filter=3, channels=64, ->=2) ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        conv(filter=3, channels=128, ->=2) ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        conv(filter=3, channels=256, ->=3) ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        conv(filter=3, channels=512, ->=3) ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        conv(filter=3, channels=512, ->=3) ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        fc() ->
+        fc() ->
+        FullyConnected(units=1000) ->
+        Softmax() ->
+        predictions;
+    }
+}

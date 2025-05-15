@@ -1,0 +1,1 @@
+#include "infoGAN_infoGANConnector.h"

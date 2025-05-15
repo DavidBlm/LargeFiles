@@ -1,0 +1,30 @@
+/* (c) https://github.com/MontiCore/monticore */
+component MultipleOutputs{
+    ports in Q(-oo:+oo)^{10,1,1} data,
+         out Q(0:1)^{4} pred[2];
+
+    implementation CNN {
+
+        data ->
+        FullyConnected(units=128, no_bias=true) ->
+        Tanh() ->
+        (
+            FullyConnected(units=16, no_bias=true) ->
+            Tanh() ->
+            FullyConnected(units=4, no_bias=true)
+        |
+            FullyConnected(units=16, no_bias=true) ->
+            Tanh() ->
+            FullyConnected(units=4, no_bias=true)
+        ) ->
+        (
+            [0] ->
+            Softmax() ->
+            pred[0]
+        |
+            [1] ->
+            Softmax() ->
+            pred[1]
+        );
+    }
+}

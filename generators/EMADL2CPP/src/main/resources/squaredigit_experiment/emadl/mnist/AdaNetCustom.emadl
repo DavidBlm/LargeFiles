@@ -1,0 +1,17 @@
+package mnist;
+
+component AdaNetCustom<Z(2:oo) classes = 10, Z(1:oo) layerWidth = 10>{
+    ports in Z(0:255)^{1, 28, 28} image,
+          out Q(0:1)^{classes} predictions;
+
+    implementation CNN {
+        def adanet(){ FullyConnected(units=classes) }
+
+        image ->
+        adanet() ->
+        FullyConnected(units=classes) ->
+        Softmax() ->
+        predictions
+        ;
+    }
+}

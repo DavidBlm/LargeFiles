@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package sentimentanalyzer;
+
+component Network<Z(1:oo) n = 128>{
+    ports in Z(0:oo)^{n} data_0,
+		  in Z(0:oo)^{n} data_1,
+		  in Z(0:oo)^{1} data_2,
+          out Q(0:1)^{2} softmax;
+
+    instance Net1<128> net1;
+    instance Net2 net2;
+
+    connect data_0 -> net1.data_0;
+    connect data_1 -> net1.data_1;
+    connect data_2 -> net1.data_2;
+    connect net1.dataOut -> net2.data;
+    connect net2.softmax -> softmax;
+}

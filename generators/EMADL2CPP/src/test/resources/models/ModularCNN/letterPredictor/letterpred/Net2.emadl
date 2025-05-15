@@ -1,0 +1,15 @@
+package letterpred;
+
+component Net2<Z(0:oo) n = 26> {
+    ports in Z(0:255)^{500} dataInput,
+         out Q(0:1)^{n} softmax;
+
+     implementation CNN {
+            dataInput ->
+            Relu() ->
+            Dropout() ->
+            FullyConnected(units=n) ->
+            Softmax() ->
+            softmax;
+        }
+}

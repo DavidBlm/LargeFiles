@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package defaultGAN;
+
+component DefaultGANGenerator{
+    ports in Q(0:1)^{100} noise,
+        out Q(-1:1)^{1, 64, 64} data;
+
+    implementation CNN {
+
+		noise ->
+		Reshape(shape=(100,1,1)) ->
+		UpConvolution(kernel=(4,4), channels=512, stride=(1,1), padding="valid", no_bias=true) ->
+		BatchNorm() ->
+		Relu() ->
+		UpConvolution(kernel=(4,4), channels=256, stride=(2,2), no_bias=true) ->
+		BatchNorm() ->
+		Relu() ->
+		UpConvolution(kernel=(4,4), channels=128, stride=(2,2), no_bias=true) ->
+		BatchNorm() ->
+		Relu() ->
+		UpConvolution(kernel=(4,4), channels=64, stride=(2,2), no_bias=true) ->
+		BatchNorm() ->
+		Relu() ->
+		UpConvolution(kernel=(4,4), channels=1, stride=(2,2), no_bias=true) ->
+		Tanh() ->
+        data;
+	}
+}

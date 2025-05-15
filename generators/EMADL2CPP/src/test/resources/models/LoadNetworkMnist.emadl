@@ -1,0 +1,13 @@
+component LoadNetworkMnist{
+    ports in Z(0:255)^{1, 28, 28} image,
+         out Q(0:1)^{10} predictions;
+
+    implementation CNN {
+        image ->
+        LoadNetwork(networkDir="src/test/resources/pretrained/pytorch", networkPrefix="model_cpp", numInputs=1, outputShape=(1,10)) ->
+        FullyConnected(units=40) ->
+        FullyConnected(units=10) ->
+        Softmax() ->
+        predictions;
+    }
+}

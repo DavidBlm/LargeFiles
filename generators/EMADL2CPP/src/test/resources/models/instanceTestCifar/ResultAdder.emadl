@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package instanceTestCifar;
+
+component ResultAdder{
+    ports in Z(0:oo) number1,
+          in Z(0:oo) number2,
+          out Z(0:oo) sum;
+
+    implementation Math{
+        sum = number1 + number2;
+    }
+
+}

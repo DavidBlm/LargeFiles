@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+package CalculatorTest;
+import NumberDetector;
+
+component Calculator{
+    ports in Q(0:1)^10 vec1_1,
+          in Q(0:1)^10 vec1_2,
+          in Q(0:1)^10 vec1_3,
+          in Q(0:1)^10 vec2_1,
+          in Q(0:1)^10 vec2_2,
+          in Q(0:1)^10 vec2_3,
+          out Z(0:1998) result;
+
+    instance NumberDetector nd1;
+    instance NumberDetector nd2;
+
+    connect vec1_1 -> nd1.pred_num1;
+    connect vec1_2 -> nd1.pred_num2;
+    connect vec1_3 -> nd1.pred_num3;
+    connect vec2_1 -> nd2.pred_num1;
+    connect vec2_2 -> nd2.pred_num2;
+    connect vec2_3 -> nd2.pred_num3;
+
+    implementation Math{
+          result = nd1.number + nd2.number;
+    }
+}

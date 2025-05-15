@@ -1,0 +1,25 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ddpg2.agent;
+
+component MountaincarCritic {
+    ports
+        in Q^{2} state,
+        in Q(-1:1)^{1} action,
+        out Q(-oo:oo)^{1} qvalues;
+
+    implementation CNN {
+        (
+            state ->
+            FullyConnected(units=400) ->
+            Relu() ->
+            FullyConnected(units=300)
+        |
+            action ->
+            FullyConnected(units=300)
+        ) ->
+        Add() ->
+        Relu() ->
+        FullyConnected(units=1) ->
+        qvalues;
+    }
+}

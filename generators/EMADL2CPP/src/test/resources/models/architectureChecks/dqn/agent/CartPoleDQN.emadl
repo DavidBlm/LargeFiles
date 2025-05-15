@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package dqn.agent;
+
+component CartPoleDQN {
+    ports
+        in Q^{4} state,
+        in Q^{4} state2,
+        out Q(-oo:oo)^{2} qvalues,
+        out Q(-oo:oo)^{2} qvalues2;
+
+    implementation CNN {
+        state -> state2 ->
+        FullyConnected(units=128) ->
+        Tanh() ->
+        FullyConnected(units=256) ->
+        Tanh() ->
+        FullyConnected(units=2) ->
+        qvalues -> qvalues2;
+    }
+}

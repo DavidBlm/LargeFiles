@@ -1,0 +1,26 @@
+/* (c) https://github.com/MontiCore/monticore */
+package defaultGAN;
+
+component DefaultGANDiscriminator{
+    ports in Q(-1:1)^{1, 64, 64} data,
+         out Q(-oo:oo)^{1} dis;
+
+    implementation CNN {
+
+		data ->
+        Convolution(kernel=(4,4),channels=64, stride=(2,2)) ->
+		LeakyRelu(alpha=0.2) ->
+        Convolution(kernel=(4,4),channels=128, stride=(2,2)) ->
+		BatchNorm() ->
+		LeakyRelu(alpha=0.2) ->
+        Convolution(kernel=(4,4),channels=256, stride=(2,2)) ->
+		BatchNorm() ->
+		LeakyRelu(alpha=0.2) ->
+        Convolution(kernel=(4,4),channels=512, stride=(2,2)) ->
+		BatchNorm() ->
+		LeakyRelu(alpha=0.2) ->
+        Convolution(kernel=(4,4),channels=1, stride=(1,1)) ->
+		Sigmoid() ->
+		dis;
+    }
+}

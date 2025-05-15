@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+component DigitCombiner{
+    ports
+            in Z(0:9) hundreds,
+            in Z(0:9) tens,
+            in Z(0:9) ones,
+            out Z(0:999) number;
+
+    implementation Math{
+        number = ones + 10 * tens + 100 * hundreds;
+    }
+}

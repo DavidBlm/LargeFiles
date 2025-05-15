@@ -1,0 +1,1 @@
+cNNCalculator.Network src/test/resources/models/customMNISTCalculator/resources/training_data

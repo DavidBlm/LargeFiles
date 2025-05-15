@@ -1,0 +1,12 @@
+package calculator;
+
+component Net2 {
+    ports in Q(0:1)^{10} dataInput,
+         out Q(0:1)^{10} softmax;
+
+     implementation CNN {
+            dataInput ->
+            Softmax() ->
+            softmax;
+        }
+}
