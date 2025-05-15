@@ -1,0 +1,223 @@
+name: EMAM2Middleware_noetic_mxnet_image
+on:
+  push:
+    paths:
+      - 'generators/EMAM2Middleware/noetic_mxnet_image/**'
+  workflow_dispatch:
+env:
+  CI_PROJECT_ID : 17660
+  CI_API_V4_URL : https://git.rwth-aachen.de/api/v4
+  GITLABTOKEN : ${{ secrets.GITLABTOKEN }}
+jobs:
+  linuxCompile_phase:
+    needs: [CompileJobLinux]
+    if: ${{ !cancelled()}}
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "Finished stage linuxCompile"
+          if: ${{!contains(needs.*.result, 'failure')}}
+        - run: |
+            echo "Failed stage linuxCompile"
+            exit 1
+          if: ${{contains(needs.*.result, 'failure')}}
+  integration_phase:
+    needs: [linuxCompile_phase, Ros2IntegrationJob, SomeIPIntegrationJob, RosIntegrationJob, MqttIntegrationJob]
+    if: ${{ !cancelled()}}
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "Finished stage integration"
+          if: ${{!contains(needs.*.result, 'failure')}}
+        - run: |
+            echo "Failed stage integration"
+            exit 1
+          if: ${{contains(needs.*.result, 'failure')}}
+
+  CompileJobLinux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull maven:3-jdk-8
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} maven:3-jdk-8 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMAM2Middleware/noetic_mxnet_image
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B  clean install --settings settings.xml -U -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: CompileJobLinux
+          retention-days: 1 
+          path: |
+            generators/EMAM2Middleware/noetic_mxnet_image/target/
+
+  MqttIntegrationJob:
+    needs: CompileJobLinux
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: CompileJobLinux
+          path: |
+            generators/EMAM2Middleware/noetic_mxnet_image/target/
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2mqtt:v1
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2mqtt:v1 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMAM2Middleware/noetic_mxnet_image
+            chmod 770 ./src/test/bash/integrationTestMqtt.sh
+            ./src/test/bash/integrationTestMqtt.sh
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  RosIntegrationJob:
+    needs: CompileJobLinux
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: CompileJobLinux
+          path: |
+            generators/EMAM2Middleware/noetic_mxnet_image/target/
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2middleware/ema-ros-kinetic
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2middleware/ema-ros-kinetic tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMAM2Middleware/noetic_mxnet_image
+            ./src/test/bash/integrationTestRos.sh
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  SomeIPIntegrationJob:
+    needs: CompileJobLinux
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: CompileJobLinux
+          path: |
+            generators/EMAM2Middleware/noetic_mxnet_image/target/
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2someip:v2
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2someip:v2 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMAM2Middleware/noetic_mxnet_image
+            chmod 770 ./src/test/bash/integrationTestSomeIP.sh
+            ./src/test/bash/integrationTestSomeIP.sh
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  Ros2IntegrationJob:
+    needs: CompileJobLinux
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: CompileJobLinux
+          path: |
+            generators/EMAM2Middleware/noetic_mxnet_image/target/
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2middleware/ema-ros-crystal
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2middleware/ema-ros-crystal tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMAM2Middleware/noetic_mxnet_image
+            ./src/test/bash/integrationTestRos2.sh
+        run: docker exec build-container bash -c "$SCRIPT"
+
