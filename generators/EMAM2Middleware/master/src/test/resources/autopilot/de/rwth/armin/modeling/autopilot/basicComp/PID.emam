@@ -1,0 +1,30 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.basicComp;
+
+component PID{
+port
+ in Q desiredVel,
+ in Q currentVel,
+ in Q timeInc,
+
+ out Q engineVal,
+ out Q breakesVal;
+
+ implementation Math {
+     Q diff = desiredVel - currentVel;
+     static Q totalTime = 0.0;
+     totalTime = totalTime + timeInc;
+
+     if totalTime > 100
+       engineVal = 0.0;
+       breakesVal = 2.5;
+     elseif diff > 0
+        engineVal = 2.5;
+        breakesVal = 0.0;
+     else
+        engineVal = 0.0;
+        breakesVal = 2.5;
+     end
+ }
+
+}

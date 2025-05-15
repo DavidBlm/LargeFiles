@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component ManualSwitch1 {
+      port
+        in Number in1,
+        in Number in2,
+        out B sign_b;
+    }
+

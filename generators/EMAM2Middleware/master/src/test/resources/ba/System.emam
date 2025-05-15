@@ -1,0 +1,52 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba;
+import ba.intersection.IntersectionController;
+import ba.util.CommQuality;
+import ba.vehicle.VelocityController;
+import ba.collision.CollisionDetection;
+import ba.struct.Rectangle;
+
+component System{
+    ports
+    //Intersection ports
+        in Q(0s : 10s) cutoffTimeIn,
+        in B isActiveIn,
+        in Q^{3,10} absTrajectory[2],
+    //Collision detection ports
+        in Rectangle hullsIn[2],
+        out B collisionOut,
+    //Vehicle ports
+        in Q(0m/s^2 : 100m/s^2) maxAccel[2],
+        in Q(0m/s : 60m/s) maxVel[2],
+        in Q(0s : 10s) deltaTime[2],
+        in Q(0s : 60s) holdTime[2],
+        in B resetVel[2],
+        in B slowDown[2],
+        out Q(0m/s : 60m/s) curVel[2];
+
+    instance IntersectionController<2,1,10,4,10> intersectionController;
+    instance CollisionDetection<2,1> collisionDetection;
+    instance CommQuality<B> stopCommQuality[2];
+    instance VelocityController(3.0) velocityController[2];
+
+    //Intersection
+    connect cutoffTimeIn -> intersectionController.cutoffTime;
+    connect isActiveIn -> intersectionController.isActive;
+    connect absTrajectory[:] -> intersectionController.trajectoryIn[:];
+
+    //Collision detection
+    connect hullsIn[:] -> collisionDetection.hulls[:];
+    connect collisionDetection.collision -> collisionOut;
+
+    //Vehicles
+    connect maxAccel[:] -> velocityController[:].maxAccelIn;
+    connect maxVel[:] -> velocityController[:].maxVelIn;
+    connect deltaTime[:] -> velocityController[:].deltaTimeIn;
+    connect holdTime[:] -> velocityController[:].holdTimeIn;
+    connect resetVel[:] -> velocityController[:].resetVelIn;
+    connect velocityController[:].curVelOut -> curVel[:];
+
+    //Communication Quality
+    connect intersectionController.stop[:] -> stopCommQuality[:].in1;
+    connect stopCommQuality[:].out1 -> velocityController[:].slowDownIn;
+}

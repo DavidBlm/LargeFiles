@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component AcosCommandTest{
+    implementation Math{
+        Q a = acos(0.5);
+    }
+}

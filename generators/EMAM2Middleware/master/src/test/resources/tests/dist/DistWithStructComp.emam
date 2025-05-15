@@ -1,0 +1,39 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.dist;
+import tests.struct.Position;
+
+component DistWithStructComp{
+
+   port out Position resOut;
+
+    component SubComp1{
+        ports out Position out1,
+              out Position out2;
+
+        implementation Math{
+            out1.longitude = out1.longitude + 1;
+            out1.latitude = out1.latitude - 1;
+            out2.longitude = out2.longitude + 10;
+            out2.latitude = out2.latitude - 10;
+        }
+    }
+
+    component SubComp2{
+        ports in Position in1,
+              in Position in2,
+              out Position resOut;
+
+        implementation Math{
+            resOut.longitude = in1.longitude + in2.longitude;
+            resOut.latitude = in1.latitude + in2.latitude;
+        }
+    }
+
+    instance SubComp1 sub1;
+    instance SubComp2 sub2;
+
+    connect sub1.out1 -> sub2.in1;
+    connect sub1.out2 -> sub2.in2;
+    connect sub2.resOut -> resOut;
+
+}

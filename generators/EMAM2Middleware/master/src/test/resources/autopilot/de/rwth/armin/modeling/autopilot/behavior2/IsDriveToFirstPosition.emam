@@ -1,0 +1,29 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior2;
+
+component IsDriveToFirstPosition {
+  port
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionX,
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionY,
+
+    in  Z (0 : 100)                              trimmedTrajectoryLength,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryX,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryY,
+
+    out B                                        result;
+
+  implementation Math {
+    // maybe it can be moved to parameter later
+    Q TOO_FAR_FROM_TRAJECTORY_THRESHOLD = 3.0;
+    result = 1;
+    if trimmedTrajectoryLength > 0
+      Q dx = trimmedTrajectoryX(1,1) - currentPositionX;
+      Q dy = trimmedTrajectoryY(1,1) - currentPositionY;
+      Q sqr_dist = dx*dx + dy*dy;
+      Q dist_to_trajectory = sqrt( sqr_dist );
+      Q is_vehicle_went_off_trajectory = dist_to_trajectory > TOO_FAR_FROM_TRAJECTORY_THRESHOLD;
+      Q is_only_one_position_specified = trimmedTrajectoryLength <= 1;
+      result = is_vehicle_went_off_trajectory || is_only_one_position_specified;
+    end
+  }
+}

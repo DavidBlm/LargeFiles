@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component SysInit_3 {
+                    port
+                      out Number y;
+instance Memory_Init_3 memory_Init_3;
+instance Zero_Init_3 zero_Init_3;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.sysInit.memory_Init.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.sysInit.yOut1*/
+                    connect memory_Init_3.out1 -> y;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.sysInit.zero_Init.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.sysInit.memory_Init.in1*/
+                    connect zero_Init_3.out1 -> memory_Init_3.in1;
+
+                  }
+

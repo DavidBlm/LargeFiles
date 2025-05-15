@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                    component FalseBlock_2 {
+                      port
+                        out B y;
+instance Zero_2 zero_2;
+                      /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Deactive.falseBlock.zero.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Deactive.falseBlock.yOut1*/
+                      connect zero_2.out1 -> y;
+
+                    }
+

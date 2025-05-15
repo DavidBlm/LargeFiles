@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+
+//Dummy component. Behaviour is implemented in ROS. The Ports are only used to define the incoming and outgoing topics
+component CommQuality<T>{
+    port in T in1,
+         out T out1;
+
+
+}

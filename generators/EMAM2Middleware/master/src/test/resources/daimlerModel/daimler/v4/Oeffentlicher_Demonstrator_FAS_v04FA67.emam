@@ -1,0 +1,284 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA67.
+  component Oeffentlicher_Demonstrator_FAS_v04FA67 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _LeverDown_stat,
+              out Boolean _Limiter_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double leverDown_stat,
+                out Boolean limiter_active_b;
+
+              component Limiter {
+                port
+                  in Double leverDown_stat,
+                  out Double vMax_kmh,
+                  out Boolean limiter_active_b;
+
+                component Limiter_Function {
+                  port
+                    in Double leverDown_stat,
+                    out Double vMax_kmh;
+
+                  component Limiter_SetValue {
+                    port
+                      in Double leverDown_stat,
+                      out Double out1;
+
+                    component RelOp1_2 {
+                      port
+                        in Double in1,
+                        out Boolean out1;
+
+                    }
+instance RelOp1_2 relOp1_2;
+                    component RisingEdgeDetector1_1 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                      component CompareToZero1_2 {
+                        port
+                          in Boolean u,
+                          out Boolean y;
+
+                        component Compare_7 {
+                          port
+                            in Boolean in1,
+                            out Boolean out1;
+
+                        }
+instance Compare_7 compare_7;
+  connect u -> compare_7.in1;
+  connect compare_7.out1 -> y;
+                      }
+instance CompareToZero1_2 compareToZero1_2;
+                      component LogicalOperator_4 {
+                        port
+                          in Boolean in2,
+                          out Boolean out1;
+
+                      }
+instance LogicalOperator_4 logicalOperator_4;
+                      component LogicalOperator2_3 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance LogicalOperator2_3 logicalOperator2_3;
+                      component SwitchBlock_10 {
+                        port
+                          in Boolean ifIn,
+                          out Boolean out1;
+
+                      }
+instance SwitchBlock_10 switchBlock_10;
+  connect logicalOperator_4.out1 -> logicalOperator2_3.in1;
+  connect logicalOperator2_3.out1 -> switchBlock_10.ifIn;
+  connect compareToZero1_2.y -> logicalOperator_4.in2;
+  connect in1 -> compareToZero1_2.u;
+  connect switchBlock_10.out1 -> out1;
+                    }
+instance RisingEdgeDetector1_1 risingEdgeDetector1_1;
+                    component Condition1_7 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance Condition1_7 condition1_7;
+                    component SwitchBlock1_6 {
+                      port
+                        in Boolean condition,
+                        out Double out1;
+
+                    }
+instance SwitchBlock1_6 switchBlock1_6;
+                    component SwitchBlock_11 {
+                      port
+                        in Double elseIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock_11 switchBlock_11;
+  connect relOp1_2.out1 -> risingEdgeDetector1_1.in1;
+  connect risingEdgeDetector1_1.out1 -> condition1_7.in1;
+  connect condition1_7.out1 -> switchBlock1_6.condition;
+  connect switchBlock1_6.out1 -> switchBlock_11.elseIn;
+  connect leverDown_stat -> relOp1_2.in1;
+  connect switchBlock_11.out1 -> out1;
+                  }
+instance Limiter_SetValue limiter_SetValue;
+                  component SwitchBlock5_2 {
+                    port
+                      in Double ifIn,
+                      out Double out1;
+
+                  }
+instance SwitchBlock5_2 switchBlock5_2;
+                  component Limiter_Enabled {
+                    port
+                      in Double in1,
+                      out Double vMax_kmh;
+
+                    component Limiter_Active {
+                      port
+                        in Double in1,
+                        out Double vMax_kmh;
+
+                      component Gain_1 {
+                        port
+                          in Double vMax_kmh,
+                          out Double vMax_kmhOut1;
+
+                      }
+instance Gain_1 gain_1;
+  connect in1 -> gain_1.vMax_kmh;
+  connect gain_1.vMax_kmhOut1 -> vMax_kmh;
+                    }
+instance Limiter_Active limiter_Active;
+                    component SwitchBlock_8 {
+                      port
+                        in Double ifIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock_8 switchBlock_8;
+  connect limiter_Active.vMax_kmh -> switchBlock_8.ifIn;
+  connect in1 -> limiter_Active.in1;
+  connect switchBlock_8.out1 -> vMax_kmh;
+                  }
+instance Limiter_Enabled limiter_Enabled;
+                  component SwitchBlock_12 {
+                    port
+                      in Double elseIn,
+                      out Double vMax_kmh;
+
+                  }
+instance SwitchBlock_12 switchBlock_12;
+  connect limiter_Enabled.vMax_kmh -> switchBlock_12.elseIn;
+  connect switchBlock5_2.out1 -> limiter_Enabled.in1;
+  connect switchBlock_12.vMax_kmh -> vMax_kmh;
+  connect limiter_SetValue.out1 -> switchBlock5_2.ifIn;
+  connect leverDown_stat -> limiter_SetValue.leverDown_stat;
+                }
+instance Limiter_Function limiter_Function;
+                component SwitchBlock2_5 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock2_5 switchBlock2_5;
+  connect limiter_Function.vMax_kmh -> switchBlock2_5.ifIn;
+  connect leverDown_stat -> limiter_Function.leverDown_stat;
+  connect switchBlock2_5.out1 -> vMax_kmh;
+              }
+instance Limiter limiter;
+              component VelocityControl {
+                port
+                  in Double vMax_kmh;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double leverDown_stat,
+                  out Double leverDown_stat1;
+
+  connect leverDown_stat -> leverDown_stat1;
+              }
+instance FAS_Input fAS_Input;
+  connect limiter.vMax_kmh -> velocityControl.vMax_kmh;
+  connect fAS_Input.leverDown_stat1 -> limiter.leverDown_stat;
+  connect limiter.limiter_active_b -> limiter_active_b;
+  connect leverDown_stat -> fAS_Input.leverDown_stat;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double leverDown_statIn7,
+                out Double leverDown_stat;
+
+  connect leverDown_statIn7 -> leverDown_stat;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean limiter_active_b,
+                out Boolean limiter_active_bOut6;
+
+  connect limiter_active_b -> limiter_active_bOut6  ;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.leverDown_stat -> dEMO_FAS_Funktion.leverDown_stat;
+  connect dEMO_FAS_Funktion.limiter_active_b -> dEMO_FAS_Output.limiter_active_b;
+  connect _LeverDown_stat -> dEMO_FAS_Input.leverDown_statIn7;
+  connect dEMO_FAS_Output.limiter_active_bOut6 -> _Limiter_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

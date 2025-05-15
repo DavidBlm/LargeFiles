@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+// see https://github.com/daleharvey/pacman/blob/master/pacman.js#L281
+// we do not need `direction` and `due` as input, as `direction` is output and `due` is only for the game
+
+package de.rwth.pacman.structs;
+
+struct PacManData {
+        Q(0m: 342cm) x;
+        Q(0m: 426cm) y;
+        B eaten;
+        Z(0:oo) lives; // the simulator also has zero 
+                           // but then we are dead, and so the 
+                          // controller is not invoked anymore
+        Z(0:oo) score;
+}

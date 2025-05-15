@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.basicLibrary;
+
+// UP    = 0
+// DOWN  = 1
+// LEFT  = 2
+// RIGHT = 3
+
+component Fallback{
+	port 
+		out Z out1;
+    implementation Math{
+        out1=3;
+    }
+}

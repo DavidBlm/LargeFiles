@@ -1,0 +1,73 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+
+view CalculateEngineAndBrakes{
+	component CalculateEngineAndBrakes{
+		ports in ? currentSpeed,
+			  in ? desiredSpeed,
+			  out ? Engine,
+			  out ? Brakes;
+	
+	component CalculatePidParameters{
+		ports in ? ?,
+			  in ? ?,
+			  out ? P,
+			  out ? I,
+			  out ? D,
+			  out ? ParamC;
+	}
+	instance CalculatePidParameters calcPIDparam;
+	
+	component CalculatePidError{
+		ports in ? ?,
+			  in ? ?,
+			  out ? Error;
+	}
+	instance CalculatePidError calcPIDerror;
+	
+	component Abs{
+		ports in ? ?,
+			  out ? ?;
+	}
+	instance Abs abs;
+	
+	component PID{
+		ports in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  out ? Control;
+	}
+	instance PID pid;
+	
+	component DecideEngineOrBrakes{
+		ports in ? ?,
+			  in ? ?,
+			  out ? ?,
+			  out ? ?;
+	}
+	instance DecideEngineOrBrakes engineor;
+	
+	connect currentSpeed -> calcPIDerror;
+	connect currentSpeed -> calcPIDparam;
+	connect desiredSpeed -> calcPIDerror;
+	connect desiredSpeed -> calcPIDparam;
+	
+	connect calcPIDerror.Error -> abs;
+	connect calcPIDerror.Error -> engineor;
+	
+	connect calcPIDparam.P -> pid;
+	connect calcPIDparam.I -> pid;
+	connect calcPIDparam.D -> pid;
+	connect calcPIDparam.ParamC -> pid;
+	
+	connect abs -> pid;
+	
+	connect pid.Control -> engineor;
+	
+	connect engineor -> Engine;
+	connect engineor -> Brakes;
+	}
+}

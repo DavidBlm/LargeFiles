@@ -1,0 +1,82 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+
+component spanningSystemShortNameTest{
+
+    ports in Q input,
+          out Q output;
+
+  instance Alex alex;
+  instance DinhAn dinhAn;
+  instance Philipp philipp;
+  instance Michael michael;
+  instance Combine combine;
+
+  instance Alex alex1;
+  instance DinhAn dinhAn1;
+  instance Philipp philipp1;
+  instance Michael michael1;
+  instance Combine combine1;
+
+  instance Alex alex2;
+  instance DinhAn dinhAn2;
+  instance Philipp philipp2;
+  instance Michael michael2;
+  instance Combine combine2;
+
+  instance Alex alex3;
+  instance DinhAn dinhAn3;
+  instance Philipp philipp3;
+  instance Michael michael3;
+  instance Combine combine3;
+
+  connect input -> alex.input;
+  connect input -> dinhAn.input;
+  connect input -> philipp.input;
+  connect input -> michael.input;
+
+  connect input -> alex2.input;
+  connect input -> dinhAn2.input;
+  connect input -> philipp2.input;
+  connect input -> michael2.input;
+
+  connect combine1.out1 -> output;
+  connect combine1.out1 -> output;
+  connect combine1.out1 -> output;
+  connect combine1.out1 -> output;
+
+  connect combine3.out1 -> output;
+  connect combine3.out1 -> output;
+  connect combine3.out1 -> output;
+  connect combine3.out1 -> output;
+
+  connect alex.out1 -> combine.in1;
+  connect dinhAn.out1 -> combine.in2;
+  connect philipp.out1 -> combine.in3;
+  connect michael.out1 -> combine.in4;
+
+  connect combine.out1 -> alex1.input;
+  connect combine.out1 -> dinhAn1.input;
+  connect combine.out1 -> philipp1.input;
+  connect combine.out1 -> michael1.input;
+
+  connect alex1.out1 -> combine1.in1;
+  connect dinhAn1.out1 -> combine1.in2;
+  connect philipp1.out1 -> combine1.in3;
+  connect michael1.out1 -> combine1.in4;
+
+  connect alex2.out1 -> combine2.in1;
+  connect dinhAn2.out1 -> combine2.in2;
+  connect philipp2.out1 -> combine2.in3;
+  connect michael2.out1 -> combine2.in4;
+
+  connect combine2.out1 -> alex3.input;
+  connect combine2.out1 -> dinhAn3.input;
+  connect combine2.out1 -> philipp3.input;
+  connect combine2.out1 -> michael3.input;
+
+  connect alex3.out1 -> combine3.in1;
+  connect dinhAn3.out1 -> combine3.in2;
+  connect philipp3.out1 -> combine3.in3;
+  connect michael3.out1 -> combine3.in4;
+}

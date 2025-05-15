@@ -1,0 +1,49 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.decision;
+
+// check which directions are not blocked
+
+component PossibleWays {
+    ports
+      in Q(-1m: 19m) pacManX,
+      in Q(0m: 22m) pacManY,
+      in Z^{22,19} map,
+      
+      out B topPossible,
+      out B bottomPossible,
+      out B leftPossible,
+      out B rightPossible;
+      
+    implementation Math {
+        Q^{1,4} xOffSet = [0,0,-0.51,0.51];
+        Q^{1,4} yOffSet = [0.51,-0.51,0,0];
+        topPossible = 0;
+        bottomPossible = 0;
+        leftPossible = 0;
+        rightPossible = 0;
+        
+        for i = 0:3
+            Z indexX = round(pacManX + xOffSet(0, i)) + 1;
+            Z indexY = round(pacManY + yOffSet(0, i)) + 1;
+            Z nextTile = map(indexY, indexX);
+            if (nextTile != 0) && (nextTile != 3)
+                if i == 0
+                    bottomPossible = 1;
+                elseif i == 1
+                    topPossible = 1;
+                elseif i == 2
+                    leftPossible = 1;
+                else
+                    rightPossible = 1;
+                end
+            end
+        end
+        if abs(pacManX - round(pacManX)) > 0.01
+            topPossible = 0;
+            bottomPossible = 0;
+        elseif abs(pacManY - round(pacManY)) > 0.01
+            leftPossible = 0;
+            rightPossible = 0;
+        end
+    }
+}

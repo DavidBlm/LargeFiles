@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+stream PID for PID {
+  paramP:                  1.0           tick    2.0             tick    2.0;
+  paramI:                  0.0           tick    0.0             tick    3.0;
+  paramD:                  0.0           tick    0.0             tick    5.0;
+  paramDecayCoefficient:   0.0           tick    0.0             tick    0.01;
+  error:                   9.0           tick   -3.0             tick    0.5;
+  control:                 9.0 +/- 0.01  tick   -6.0 +/- 0.01    tick   19.91 +/- 0.01;
+}

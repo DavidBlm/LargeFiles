@@ -1,0 +1,6 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicPrecisionTest3{
+    ports in N0 in1;
+}

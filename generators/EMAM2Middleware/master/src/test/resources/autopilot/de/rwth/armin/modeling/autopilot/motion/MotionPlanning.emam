@@ -1,0 +1,50 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+import de.rwth.armin.modeling.autopilot.common.*;
+
+component MotionPlanning {
+  port
+    in  Q                                                       currentDirectionX,
+    in  Q                                                       currentDirectionY,
+    in  Q                                                       desiredDirectionX,
+    in  Q                                                       desiredDirectionY,
+    in  Q                                                       signedDistanceToTrajectory,
+    in  Q (0.0 m/s : 0.01 m/s : oo m/s)                         currentVelocity,
+    in  Q (0.0 m/s : 0.01 m/s : 13.0 m/s)                       desiredVelocity,
+
+    out Q                                                       engine,
+    out Q                                                       steering,
+    out Q                                                       brakes;
+
+  instance KeepDirection                                        keepDirection;
+  instance SteeringAngleCorrection                              sac;
+  instance Sum                                                  sum1;
+  instance CalculateEngineAndBrakes                             engineAndBrakes;
+  instance EnsureBoundsForSteeringAngle                         boundsSteering;
+  instance EnsureBoundsForBrakes                                boundsBrakes;
+  instance EnsureBoundsForEngine                                boundsEngine;
+
+  connect currentDirectionX                     ->              keepDirection.currentDirectionX;
+  connect currentDirectionY                     ->              keepDirection.currentDirectionY;
+  connect desiredDirectionX                     ->              keepDirection.desiredDirectionX;
+  connect desiredDirectionY                     ->              keepDirection.desiredDirectionY;
+
+  connect keepDirection.steeringAngle           ->              sum1.t1;
+  connect signedDistanceToTrajectory            ->              sac.signedDistanceToTrajectory;
+  connect sac.steeringAngleCorrection           ->              sum1.t2;
+
+  // brakes and engine
+  connect currentVelocity                       ->              engineAndBrakes.currentVelocity;
+  connect desiredVelocity                       ->              engineAndBrakes.desiredVelocity;
+
+  // compose output
+  connect engineAndBrakes.engine                ->              boundsEngine.input;
+  connect boundsEngine.output                   ->              engine;
+
+  connect sum1.result                           ->              boundsSteering.input;
+  connect boundsSteering.output                 ->              steering;
+
+  connect engineAndBrakes.brakes                ->              boundsBrakes.input;
+  connect boundsBrakes.output                   ->              brakes;
+}

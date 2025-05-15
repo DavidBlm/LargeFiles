@@ -1,0 +1,21 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.collision;
+import ba.util.MultiOr;
+import ba.util.SingleSetCompareRectangle;
+import ba.struct.Rectangle;
+
+component CollisionDetection<N1 n = 2,N1 x = 1>{
+    ports in Rectangle hulls[n],
+          out B collision;
+
+    instance SingleSetCompareRectangle<2,1> singleSetCompareRect;
+    instance RectIntersection rectIntersection[x];
+    instance MultiOr<1> multiOr;
+
+    connect hulls[:] -> singleSetCompareRect.setIn[:];
+
+    connect singleSetCompareRect.outA[:] -> rectIntersection[:].rect1;
+    connect singleSetCompareRect.outB[:] -> rectIntersection[:].rect2;
+    connect rectIntersection[:].collision -> multiOr.boolIn[:];
+    connect multiOr.boolOut -> collision;
+}

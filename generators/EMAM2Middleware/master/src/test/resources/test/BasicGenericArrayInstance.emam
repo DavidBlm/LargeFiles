@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicGenericArrayInstance{
+    ports in Q(-oo:oo) val1[6],
+          out Q(-oo:oo) valOut[6];
+
+    instance BasicGenericArraySize<3> basicGenericArraySize1;
+    instance BasicGenericArraySize<3> basicGenericArraySize2;
+
+    connect val1[1:3] -> basicGenericArraySize1.val1[:];
+    connect val1[4:6] -> basicGenericArraySize2.val1[:];
+    connect basicGenericArraySize1.valOut[:] -> valOut[1:3];
+    connect basicGenericArraySize2.valOut[:] -> valOut[4:6];
+}

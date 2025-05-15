@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicPortsMath{
+    ports in (-oo:1:oo) counter,
+          out (0:1:100) result;
+
+    implementation Math{
+            if counter < 0{
+                result = 0;
+            }
+            elseif counter < 100{
+                result = counter;
+            }
+            else{
+                result = 100;
+            }
+            end
+    }
+}

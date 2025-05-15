@@ -1,0 +1,54 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component RSFlipFlop_2 {
+                    port
+                      out B nOT_Q,
+                      out B q,
+                      in B r,
+                      in B s;
+instance LogOp_N_5_Not logOp_N_5;
+instance Memory_Q_2 memory_Q_2;
+instance One_S_2 one_S_2;
+instance Switch_R_5 switch_R_5;
+instance Switch_S_2 switch_S_2;
+instance Zero_R_2 zero_R_2;
+instance Condition_21 condition_21;
+instance Condition1_11 condition1_11;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.qOut1*/
+                    connect switch_R_5.out1 -> q;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.logOp_N.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.nOT_QOut2*/
+                    connect logOp_N_5.out1 -> nOT_Q;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_S.condition*/
+                    connect condition_21.out1 -> switch_S_2.condition;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_R.condition*/
+                    connect condition1_11.out1 -> switch_R_5.condition;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.sIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.condition.in1*/
+                    connect s -> condition_21.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.rIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.condition1.in1*/
+                    connect r -> condition1_11.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.memory_Q.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_S.elseIn*/
+                    connect memory_Q_2.out1 -> switch_S_2.elseIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_S.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_R.elseIn*/
+                    connect switch_S_2.out1 -> switch_R_5.elseIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.one_S.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_S.ifIn*/
+                    connect one_S_2.out1 -> switch_S_2.ifIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.memory_Q.in1*/
+                    connect switch_R_5.out1 -> memory_Q_2.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.logOp_N.in1*/
+                    connect switch_R_5.out1 -> logOp_N_5.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.zero_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.switch_R.ifIn*/
+                    connect zero_R_2.out1 -> switch_R_5.ifIn;
+
+                  }
+

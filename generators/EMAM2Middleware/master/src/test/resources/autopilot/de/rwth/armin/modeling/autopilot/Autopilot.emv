@@ -1,0 +1,132 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot;
+
+
+view Autopilot {
+	component Autopilot{
+		ports in ? currentVelocity,
+			  in ? compass,
+			  in ? currentPosX,
+			  in ? currentPosY,
+			  in ? trajectory_length,
+			  in ? trajectory_x,
+			  in ? trajectory_y,
+			  out ? Engine,
+			  out ? Brakes,
+			  out ? Steering;
+
+	component Compass2CurrentDirection{
+		ports in ? ?,
+			  out ? ?,
+			  out ? ?;
+	}
+	instance Compass2CurrentDirection comp;
+	
+	component BehaviorGeneration{
+		ports in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  out ? ?;
+	}
+	instance BehaviorGeneration behavior;
+	
+	component CalculateMotionCommands{
+		ports in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  out ? ?;
+	}
+	instance CalculateMotionCommands calcMotion;
+	
+	component TrimPath{
+		ports in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  in ? ?,
+			  out ? ?;
+	}
+	instance TrimPath trim;
+	
+	component MotionPlanning{
+		ports in ? ?,
+			  in ? ?,
+			  out ? ?;
+	}
+	instance MotionPlanning motion;
+	
+	component CalculateEngineAndBrakes{
+		ports in ? ?,
+			  in ? ?,
+			  out ? ?;
+	}
+	instance CalculateEngineAndBrakes calcEngine;
+	
+	component KeepDirection{
+		ports in ? ?,
+			  out ? ?;
+	}
+	instance KeepDirection keep;
+	
+	component SteeringAngleCorrection{
+		ports in ? ?,
+			  out ? ?;
+	}
+	instance SteeringAngleCorrection steer;
+	
+	component EnsureBounds{
+		ports in ? ?,
+			  out ? ?;
+	}
+	instance EnsureBounds ensure;
+	
+	connect currentVelocity -> motion;
+	connect compass -> comp;
+	connect currentPosX -> behavior;
+	connect currentPosY -> behavior;
+	connect trajectory_length -> behavior;
+	connect trajectory_x -> behavior;
+	connect trajectory_y -> behavior;
+	
+	connect comp -> behavior;
+	connect comp -> behavior;
+	
+	connect behavior -> calcMotion;
+	connect behavior -> calcMotion;
+	connect behavior -> calcMotion;
+	connect behavior -> calcMotion;
+	connect behavior -> trim;
+	connect behavior -> trim;
+	connect behavior -> trim;
+	connect behavior -> trim;
+	connect behavior -> trim;
+	
+	connect trim -> calcMotion;
+	
+	connect calcMotion -> behavior;
+	
+	connect behavior -> motion;
+	
+	connect motion -> calcEngine;
+	connect motion -> calcEngine;
+	
+	connect calcEngine -> keep;
+	
+	connect keep -> steer;
+	
+	connect steer -> ensure;
+	
+	connect ensure -> motion;
+	
+	connect motion -> Engine;
+	connect motion -> Brakes;
+	connect motion -> Steering;
+	
+	}
+}

@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+//TODO: n2 = n(n+1)/2
+//TODO: EMAM2Cpp does not work with matrix generics
+//TODO: EMAM2Cpp does not work when T is first generic, n and n2 are not present in generated code
+component DualSetCompare<N1 n = 10, N2 n2 = 15,T>{
+    ports in T setInA[n],
+          in T setInB[n],
+          out T outA[n2],
+          out T outB[n2];
+
+    implementation Math{
+        Z counter = 1;
+        for i = 1:n
+            for j = i:n
+                outA(counter) = setInA(i);
+                outB(counter) = setInB(j);
+                counter = counter + 1;
+            end
+        end
+    }
+}

@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component DEMO_FAS_Emerg_Brake_Time1 {
+                  port
+                    out Number out1;
+                }
+

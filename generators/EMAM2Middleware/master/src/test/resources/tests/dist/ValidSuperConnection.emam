@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.dist;
+
+component ValidSuperConnection{
+      port in Q rosIn;
+      port out Q rosOut;
+
+        component Sub1{
+            port in Q rosIn;
+            port out Q rosOut;
+        }
+
+      instance Sub1 sub1;
+
+      connect rosIn -> sub1.rosIn;
+      connect rosOut -> sub1.rosOut;
+}

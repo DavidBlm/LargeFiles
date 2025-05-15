@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.collision;
+import ba.struct.Point;
+
+component PointsToLine{
+    ports in Point pointA,
+          in Point pointB,
+          out Q^{4,1} line;
+
+    implementation Math{
+        line(1,1) = pointA.posX;
+        line(2,1) = pointA.posY;
+        line(3,1) = pointB.posX;
+        line(4,1) = pointB.posY;
+    }
+}

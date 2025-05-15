@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+import tests.struct.Position.Position;
+
+component CostHeuristic{
+
+    ports in Q inQ,
+          in Z inZ,
+          in B inB,
+          in C inC,
+          in Q^{5} inQVec,
+          in Q^{10} inQVec2,
+          in Q^{3,3} inQMat,
+          in Q^{4,4} inQMat2,
+          in Position inPos;
+
+}

@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component Constant1_33_value_1 {
+      port
+        out Number out1;
+    }
+

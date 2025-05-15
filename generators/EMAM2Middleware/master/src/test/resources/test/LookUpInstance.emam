@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+import ba.LookUp;
+component LookUpInstance{
+    port out Q(-oo:oo) out1;
+
+    instance LookUp([ 1 2 3 4]) lookUp;
+
+    connect 2 -> lookUp.in1;
+}

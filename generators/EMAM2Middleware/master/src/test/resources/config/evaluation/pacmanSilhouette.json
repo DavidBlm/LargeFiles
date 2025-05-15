@@ -1,0 +1,26 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/evaluation/pacmanSilhouette/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "metric": "Silhouette",
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":{
+          "min": 3,
+          "max": 72,
+          "step": 1
+        }
+      },{
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

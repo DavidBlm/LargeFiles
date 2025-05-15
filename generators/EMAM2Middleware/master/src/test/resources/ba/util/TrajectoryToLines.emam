@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+
+component TrajectoryToLines<N1 m = 10, N1 m1 = 9>{
+    ports in Q^{3,m} trajectoryIn,
+          //m-1 lineOuts
+          out Q^{4,1} lineOut[m1];
+
+    implementation Math{
+        for i = 1:m1
+            Q^{4} tmpLine;
+            tmpLine(1,1) = trajectoryIn(1,i);
+            tmpLine(2,1) = trajectoryIn(2,i);
+            tmpLine(3,1) = trajectoryIn(1,i+1);
+            tmpLine(4,1) = trajectoryIn(2,i+1);
+            lineOut(i) = tmpLine;
+        end
+    }
+}

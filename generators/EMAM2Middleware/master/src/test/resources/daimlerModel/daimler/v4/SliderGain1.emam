@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component SliderGain1 {
+      port
+        in Number u,
+        out Number y;
+instance SliderGain_3 sliderGain_3;
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain1.sliderGain.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain1.yOut1*/
+      connect sliderGain_3.out1 -> y;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain1.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain1.sliderGain.in1*/
+      connect u -> sliderGain_3.in1;
+
+    }
+

@@ -1,0 +1,49 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package de.rwth.supermario.haller;
+
+import de.rwth.supermario.haller.tools.GetIndexes;
+
+import de.rwth.supermario.haller.environment.Enemy;
+import de.rwth.supermario.haller.environment.EnemySelector;
+
+import de.rwth.supermario.haller.actuator.EnemyStrategy;
+
+
+component EnemyController {
+    ports
+        in Z^{5,2} nextEnemyPositions,
+
+        out Z(-1 : 1 : 1) dirAdvice,
+        out Z jumpAdvice,
+        out Z shootAdvice,
+        out Z crouchAdvice;
+        
+    //Helper component to make the code shorter    
+    instance GetIndexes enemyIndexes;
+    
+    //These selectors select the according x and y positions from the Array
+    instance EnemySelector enemySelectors[5];
+    connect enemyIndexes.index[:] -> enemySelectors[:].index;
+    
+    connect nextEnemyPositions -> enemySelectors[1].nextEnemyPositions,
+            enemySelectors[2].nextEnemyPositions,
+            enemySelectors[3].nextEnemyPositions,
+            enemySelectors[4].nextEnemyPositions,
+            enemySelectors[5].nextEnemyPositions;
+            
+    instance Enemy enemies[5];
+    connect enemySelectors[:].x -> enemies[:].distX;
+    connect enemySelectors[:].y -> enemies[:].distY;
+    
+    //The values are forwarded into the strategy
+    instance EnemyStrategy enemyStrat;
+    connect enemySelectors[:].x ->enemyStrat.enemyDistsX[:];
+    connect enemySelectors[:].y ->enemyStrat.enemyDistsY[:];
+    connect enemies[:].velX ->enemyStrat.enemyVelX[:];
+    connect enemies[:].velY ->enemyStrat.enemyVelY[:];
+    
+    //The advice ist passed back
+    connect  enemyStrat.jumpAdvice -> jumpAdvice;
+    
+}

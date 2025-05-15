@@ -1,0 +1,48 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package de.rwth.supermario.haller;
+
+import de.rwth.supermario.haller.tools.GetIndexes;
+
+import de.rwth.supermario.haller.environment.Obstacle;
+import de.rwth.supermario.haller.environment.ObstacleSelector;
+import de.rwth.supermario.haller.actuator.ObstacleStrategy;
+
+
+component ObstacleController {
+    ports
+        in Z^{5,2} nextObstaclePositions,
+        in Z holeDistance,
+        
+        out Z(-1 : 1 : 1) dirAdvice,
+        out Z jumpAdvice,
+        out Z shootAdvice,
+        out Z crouchAdvice;
+        
+    //Helper component to make the code shorter 
+    instance GetIndexes obstIndexes;
+    
+    //These selectors select the according x and y positions from the Array
+    instance ObstacleSelector obstacleSelectors[5];
+    connect obstIndexes.index[:] -> obstacleSelectors[:].index;
+    
+    connect nextObstaclePositions -> obstacleSelectors[1].nextObstaclePositions,
+            obstacleSelectors[2].nextObstaclePositions,
+            obstacleSelectors[3].nextObstaclePositions,
+            obstacleSelectors[4].nextObstaclePositions,
+            obstacleSelectors[5].nextObstaclePositions;
+    
+    instance Obstacle obstacles[5];
+    connect obstacleSelectors[:].x -> obstacles[:].distX;
+    connect obstacleSelectors[:].y -> obstacles[:].distY;
+    
+    //The values are forwarded into the strategy
+    instance ObstacleStrategy obstStrat;
+    connect obstacleSelectors[:].x ->obstStrat.obstDistsX[:];
+    connect obstacleSelectors[:].y ->obstStrat.obstDistsY[:];
+    connect holeDistance -> obstStrat.holeDistance;
+    
+    //The advice ist passed back
+    connect obstStrat.jumpAdvice -> jumpAdvice;
+    
+}

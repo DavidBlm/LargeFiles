@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+stream DecideEngineOrBrakes for DecideEngineOrBrakes {
+  error:         1.0          tick  -10.0          ;
+  controlSignal: 5.0          tick   20.0          ;
+  engine:        5.0 +/- 0.01 tick    0.0 +/- 0.01 ;
+  brakes:        0.0 +/- 0.01 tick   20.0 +/- 0.01 ;
+}

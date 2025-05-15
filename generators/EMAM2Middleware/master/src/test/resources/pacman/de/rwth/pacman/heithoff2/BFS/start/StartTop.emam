@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS.start;
+
+component StartTop{
+    ports
+        in Q(0m: 20m) pacManX,
+        in Q(0m: 23m) pacManY,
+        out Q(0m: 20m) startX,
+        out Q(0m: 23m) startY,
+        out Z startD;
+        
+    implementation Math {
+        startX = round(pacManX);
+        startY = round(pacManY - 0.51);
+        startD = 0;
+    }
+}

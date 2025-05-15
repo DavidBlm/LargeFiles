@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component DoubleAccess{
+    ports in Q(-oo:oo)^{n,m} redPixels,
+          out Q(-oo:oo)^{n*m,3} imgMatrix;
+
+    implementation Math{
+               Q counter = 1;
+               imgMatrix(counter,1) = redPixels(1,5);
+
+    }
+}

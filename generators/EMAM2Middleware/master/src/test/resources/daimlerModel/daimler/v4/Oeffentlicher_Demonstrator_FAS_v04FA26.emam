@@ -1,0 +1,253 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA26.
+  component Oeffentlicher_Demonstrator_FAS_v04FA26 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _LeverDown_stat,
+              out Boolean _CC_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double leverDown_stat,
+                out Boolean cC_active_b;
+
+              component Tempomat {
+                port
+                  in Double leverDown_Stat,
+                  out Boolean cC_active_b,
+                  out Double v_CC_delta_kmh;
+
+                component Tempomat_Function {
+                  port
+                    in Double leverDown_Stat,
+                    out Double v_CC_delta_kmh;
+
+                  component CC_On_Off {
+                    port
+                      in Double leverDown_stat,
+                      out Boolean cC_active_b;
+
+                    component RelOp_6 {
+                      port
+                        in Double in1,
+                        out Boolean out1;
+
+                    }
+instance RelOp_6 relOp_6;
+                    component LogicalOperator6_1 {
+                      port
+                        in Boolean in2,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator6_1 logicalOperator6_1;
+                    component EdgeRising1 {
+                      port
+                        in Boolean u,
+                        out Boolean y;
+
+                      component LogOp_A_3 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance LogOp_A_3 logOp_A_3;
+  connect u -> logOp_A_3.in1;
+  connect logOp_A_3.out1 -> y;
+                    }
+instance EdgeRising1 edgeRising1;
+                    component LogicalOperator3_1 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator3_1 logicalOperator3_1;
+                    component LogicalOperator4_1 {
+                      port
+                        in Boolean in2,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator4_1 logicalOperator4_1;
+                    component RSFlipFlop_2 {
+                      port
+                        in Boolean s,
+                        out Boolean q;
+
+                      component Condition_21 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance Condition_21 condition_21;
+                      component Switch_S_2 {
+                        port
+                          in Boolean condition,
+                          out Boolean out1;
+
+                      }
+instance Switch_S_2 switch_S_2;
+                      component Switch_R_5 {
+                        port
+                          in Boolean elseIn,
+                          out Boolean out1;
+
+                      }
+instance Switch_R_5 switch_R_5;
+  connect switch_S_2.out1 -> switch_R_5.elseIn;
+  connect condition_21.out1 -> switch_S_2.condition;
+  connect switch_R_5.out1 -> q;
+  connect s -> condition_21.in1;
+                    }
+instance RSFlipFlop_2 rSFlipFlop_2;
+  connect relOp_6.out1 -> logicalOperator6_1.in2;
+  connect leverDown_stat -> relOp_6.in1;
+  connect logicalOperator4_1.out1 -> rSFlipFlop_2.s;
+  connect rSFlipFlop_2.q -> cC_active_b;
+  connect logicalOperator6_1.out1 -> edgeRising1.u;
+  connect logicalOperator3_1.out1 -> logicalOperator4_1.in2;
+  connect edgeRising1.y -> logicalOperator3_1.in1;
+                  }
+instance CC_On_Off cC_On_Off;
+                  component CC_Enabled {
+                    port
+                      in Boolean cC_active_b,
+                      out Double v_CC_delta_kmh;
+
+                    component Condition_18 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance Condition_18 condition_18;
+                    component SwitchBlock_16 {
+                      port
+                        in Boolean condition,
+                        out Double out1;
+
+                    }
+instance SwitchBlock_16 switchBlock_16;
+  connect condition_18.out1 -> switchBlock_16.condition;
+  connect switchBlock_16.out1 -> v_CC_delta_kmh;
+  connect cC_active_b -> condition_18.in1;
+                  }
+instance CC_Enabled cC_Enabled;
+  connect cC_On_Off.cC_active_b -> cC_Enabled.cC_active_b;
+  connect cC_Enabled.v_CC_delta_kmh -> v_CC_delta_kmh;
+  connect leverDown_Stat -> cC_On_Off.leverDown_stat;
+                }
+instance Tempomat_Function tempomat_Function;
+                component SwitchBlock2_11 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock2_11 switchBlock2_11;
+  connect tempomat_Function.v_CC_delta_kmh -> switchBlock2_11.ifIn;
+  connect switchBlock2_11.out1 -> v_CC_delta_kmh;
+  connect leverDown_Stat -> tempomat_Function.leverDown_Stat;
+              }
+instance Tempomat tempomat;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double leverDown_stat,
+                  out Double leverDown_stat2;
+
+  connect leverDown_stat -> leverDown_stat2;
+              }
+instance FAS_Input fAS_Input;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect fAS_Input.leverDown_stat2 -> tempomat.leverDown_Stat;
+  connect tempomat.cC_active_b -> cC_active_b;
+  connect leverDown_stat -> fAS_Input.leverDown_stat;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double leverDown_statIn7,
+                out Double leverDown_stat;
+
+  connect leverDown_statIn7 -> leverDown_stat;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean cC_active_b,
+                out Boolean cC_active_bOut1;
+
+  connect cC_active_b -> cC_active_bOut1;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.leverDown_stat -> dEMO_FAS_Funktion.leverDown_stat;
+  connect dEMO_FAS_Funktion.cC_active_b -> dEMO_FAS_Output.cC_active_b;
+  connect _LeverDown_stat -> dEMO_FAS_Input.leverDown_statIn7;
+  connect dEMO_FAS_Output.cC_active_bOut1 -> _CC_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

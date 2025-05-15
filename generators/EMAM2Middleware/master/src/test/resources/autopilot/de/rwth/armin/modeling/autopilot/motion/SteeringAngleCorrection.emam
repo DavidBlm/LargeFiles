@@ -1,0 +1,37 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+component SteeringAngleCorrection {
+  port
+    in Q signedDistanceToTrajectory,
+    out Q steeringAngleCorrection;
+
+  implementation Math {
+    // TODO convert into parameter when parameters start working (bug #28)
+    static Q MAX_STEERING_ANGLE = 0.785;
+    static Q EPSILON = 0.01;
+    // exponent params
+    static Q X1 = 0.1;
+    static Q Y1 = 0.01 * MAX_STEERING_ANGLE;
+    static Q X2 = 5.0;
+    static Q Y2 = 0.05 * MAX_STEERING_ANGLE;
+    static Q COEF_K = log( (Y1 / Y2) ) / (X2 - X1);
+
+    steeringAngleCorrection = 0.0;
+
+    Q dist = abs(signedDistanceToTrajectory);
+    if (dist > EPSILON)
+      if (dist < X1)
+        steeringAngleCorrection = Y1;
+      elseif (dist > X2)
+        steeringAngleCorrection = Y2;
+      else
+        steeringAngleCorrection = Y1 * exp(-COEF_K * (dist - X1));
+      end
+      // take sign into account
+      if (signedDistanceToTrajectory < 0)
+        steeringAngleCorrection *= -1.0;
+      end
+    end
+  }
+}

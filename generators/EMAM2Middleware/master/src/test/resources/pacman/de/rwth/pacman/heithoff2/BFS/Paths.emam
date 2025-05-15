@@ -1,0 +1,62 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS;
+
+import de.rwth.pacman.heithoff2.BFS.start.*;
+
+// check whether the four directions are safe to go
+// a directions is not safe to go if there is a ghost on its path
+
+component Paths {
+    ports
+      in Q(0m: 20m) ghostX[4],
+      in Q(1m: 23m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      in Q(0m: 20m) pacManX,
+      in Q(1m: 23m) pacManY,
+      in Z^{22,19} map,
+      
+      out B topSafe,
+      out B bottomSafe,
+      out B leftSafe,
+      out B rightSafe;
+    
+    instance BFSearch searchLeft;
+    instance BFSearch searchRight;
+    instance BFSearch searchTop;
+    instance BFSearch searchBottom;
+    instance StartLeft startLeft;
+    instance StartRight startRight;
+    instance StartTop startTop;
+    instance StartBottom startBottom;
+    
+    connect pacManX -> startLeft.pacManX, startRight.pacManX, startTop.pacManX, startBottom.pacManX;
+    connect pacManY -> startLeft.pacManY, startRight.pacManY, startTop.pacManY, startBottom.pacManY;
+    
+    connect ghostX[:] -> searchLeft.ghostX[:], searchRight.ghostX[:], searchTop.ghostX[:], searchBottom.ghostX[:];
+    connect ghostY[:] ->  searchLeft.ghostY[:], searchRight.ghostY[:], searchTop.ghostY[:], searchBottom.ghostY[:];
+    connect ghostDirection[:] ->  searchLeft.ghostDirection[:], searchRight.ghostDirection[:], searchTop.ghostDirection[:], searchBottom.ghostDirection[:];
+    connect ghostEatable[:] -> searchLeft.ghostEatable[:], searchRight.ghostEatable[:], searchTop.ghostEatable[:], searchBottom.ghostEatable[:];
+    connect map -> searchLeft.map, searchRight.map, searchTop.map, searchBottom.map;
+    
+    connect pacManX -> searchLeft.pacManX, searchRight.pacManX, searchTop.pacManX, searchBottom.pacManX;
+    connect pacManY -> searchLeft.pacManY, searchRight.pacManY, searchTop.pacManY, searchBottom.pacManY;
+    connect startLeft.startX -> searchLeft.startX;
+    connect startLeft.startY -> searchLeft.startY;
+    connect startLeft.startD -> searchLeft.startDirection;
+    connect startRight.startX -> searchRight.startX;
+    connect startRight.startY -> searchRight.startY;
+    connect startRight.startD -> searchRight.startDirection;
+    connect startTop.startX -> searchTop.startX;
+    connect startTop.startY -> searchTop.startY;
+    connect startTop.startD -> searchTop.startDirection;
+    connect startBottom.startX -> searchBottom.startX;
+    connect startBottom.startY -> searchBottom.startY;
+    connect startBottom.startD -> searchBottom.startDirection;
+    
+    connect searchLeft.safe -> leftSafe;
+    connect searchRight.safe -> rightSafe;
+    connect searchTop.safe -> topSafe;
+    connect searchBottom.safe -> bottomSafe;
+    
+}

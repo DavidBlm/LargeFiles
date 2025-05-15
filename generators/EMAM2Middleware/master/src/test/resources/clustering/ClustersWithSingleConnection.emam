@@ -1,0 +1,25 @@
+/* (c) https://github.com/MontiCore/monticore */
+package clustering;
+
+component ClustersWithSingleConnection{
+
+    component InOutComp{
+        ports in Q in1,
+              out Q out1;
+    }
+
+    component DoubleInComp{
+        port in Q in1,
+             in Q in2;
+    }
+
+    instance OutComp outComp1;
+    instance OutComp outComp2;
+    instance DoubleInComp doubleInComp;
+    instance InOutComp inOutComp;
+
+    connect outComp1.out1 -> inOutComp.in1;
+    connect outComp2.out1 -> doubleInComp.in1;
+    connect inOutComp.out1 -> doubleInComp.in2;
+
+}

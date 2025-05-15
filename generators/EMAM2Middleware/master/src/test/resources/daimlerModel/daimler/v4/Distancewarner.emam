@@ -1,0 +1,24 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component Distancewarner {
+              port
+                out B acusti_warn_b,
+                in (0 m: oo m) distance_Object_m,
+                out B opti_warn_b,
+                in Number v_Vehicle_ms;
+instance Distancewarner_Function distancewarner_Function;
+instance VERSION_INFO_4 vERSION_INFO_4;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.opti_warn_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.opti_warn_bOut1*/
+              connect distancewarner_Function.opti_warn_b -> opti_warn_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.acusti_warn_bOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.acusti_warn_bOut2*/
+              connect distancewarner_Function.acusti_warn_b -> acusti_warn_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distance_Object_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.distance_Object_mIn2*/
+              connect distance_Object_m -> distancewarner_Function.distance_Object_m;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.v_Vehicle_msIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.v_Vehicle_msIn1*/
+              connect v_Vehicle_ms -> distancewarner_Function.v_Vehicle_ms;
+
+            }
+

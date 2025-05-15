@@ -1,0 +1,15 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/cliTest/dynamicList/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp","roscpp"],
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters": [
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":[2,3,4,6,7]
+      }
+    ]
+  }
+}

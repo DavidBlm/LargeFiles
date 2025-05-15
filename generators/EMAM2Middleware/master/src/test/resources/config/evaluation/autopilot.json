@@ -1,0 +1,30 @@
+{
+  "modelsDir": "src/test/resources/autopilot/",
+  "outputDir": "target/evaluation/autopilot/",
+  "rootModel": "de.rwth.armin.modeling.autopilot.autopilot",
+  "generators": ["cpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":3
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters": 5
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters": 5
+      },
+      {
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component Vehicle {
+      port
+        in (0:100) acceleration_pc,
+        in (0:100) brakeForce_pc,
+        out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Constant_117_value_0 constant_117;
+instance Constant1_35_value_0 constant1_35;
+instance DiscreteTransferFcnwithinitialstates discreteTransferFcnwithinitialstates;
+instance Gain_4_value_Minus_2 gain_4;
+instance RelationalOperator_Smaller relationalOperator;
+instance Saturation_2 saturation_2;
+instance Sum1_4 sum1_4;
+instance SwitchBlock_36 switchBlock_36;
+instance SwitchBlock1_20 switchBlock1_20;
+instance UniformRandomNumber uniformRandomNumber;
+instance UnitDelay_9 unitDelay_9;
+instance Widerstand widerstand;
+instance Condition_51 condition_51;
+instance Condition1_27 condition1_27;
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.saturation.v_Vehicle_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.v_Vehicle_kmhOut1*/
+      connect saturation_2.v_Vehicle_kmh -> v_Vehicle_kmh;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock.condition*/
+      connect condition_51.out1 -> switchBlock_36.condition;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.brakeForce_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock1.ifIn*/
+      connect brakeForce_pc -> switchBlock1_20.ifIn;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock1.condition*/
+      connect condition1_27.out1 -> switchBlock1_20.condition;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.acceleration_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock.elseIn*/
+      connect acceleration_pc -> switchBlock_36.elseIn;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.condition.in1*/
+      connect switchBlock1_20.out1 -> condition_51.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.relationalOperator.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.condition1.in1*/
+      connect relationalOperator.out1 -> condition1_27.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock1.elseIn*/
+      connect constant1_35.out1 -> switchBlock1_20.elseIn;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.gain.in1*/
+      connect switchBlock1_20.out1 -> gain_4.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.relationalOperator.in1*/
+      connect constant_117.out1 -> relationalOperator.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.uniformRandomNumber.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.sum1.in3*/
+      connect uniformRandomNumber.out1 -> sum1_4.in3;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.unitDelay.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.widerstand.in1*/
+      connect unitDelay_9.out1 -> widerstand.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.unitDelay.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.relationalOperator.in2*/
+      connect unitDelay_9.out1 -> relationalOperator.in2;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.widerstand.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.sum1.in2*/
+      connect widerstand.out1 -> sum1_4.in2;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.discreteTransferFcnwithinitialstates.out1Out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.sum1.v_Vehicle_kmhIn1*/
+      connect discreteTransferFcnwithinitialstates.out1 -> sum1_4.v_Vehicle_kmh;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.sum1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.saturation.in1*/
+      connect sum1_4.out1 -> saturation_2.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.discreteTransferFcnwithinitialstates.in1In1*/
+      connect switchBlock_36.out1 -> discreteTransferFcnwithinitialstates.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.gain.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.switchBlock.ifIn*/
+      connect gain_4.out1 -> switchBlock_36.ifIn;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.saturation.v_Vehicle_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.unitDelay.v_Vehicle_kmhIn1*/
+      connect saturation_2.v_Vehicle_kmh -> unitDelay_9.v_Vehicle_kmh;
+
+    }
+

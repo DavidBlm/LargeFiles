@@ -1,0 +1,143 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS;
+import de.rwth.pacman.heithoff2.BFS.single.*;
+
+
+// Pacman.WALL    = 0;
+// Pacman.BISCUIT = 1;
+// Pacman.EMPTY   = 2;
+// Pacman.BLOCK   = 3;
+// Pacman.PILL    = 4;
+
+// check whether the current tile is safe and then calculate the next tile position
+
+component BFSSingle {
+    ports
+      in Q(0m: 20m) ghostX[4],
+      in Q(1m: 23m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      in Z^{22,19} map,
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in Q(0m: 20m) oldX,
+      in Q(1m: 23m) oldY,
+      in B oldSafe,
+      in B oldSafeFound,
+      in Z oldDirection,
+      
+      out Q(0m: 20m) newX,
+      out Q(1m: 23m) newY,
+      out B safeFound,
+      out B safe,
+      out Z newDirection;
+      
+    // sadly this doesnt work, due to some bugs in emam2wasm. Concept is still correct
+    // should get fixed, soon
+    
+    // instance ControlFlow control;
+    // instance ReenterMap reenterMap;
+    // instance SearchFinished searchFinished;
+    // instance SafePosition safePosition;
+    // instance CalcNewPosition calcNewPosition;
+    
+    // connect currentX -> reenterMap.currentX;
+    // connect currentY -> reenterMap.currentY;
+    // connect oldX     -> reenterMap.oldX;
+    // connect oldY     -> reenterMap.oldY;
+    
+    // connect reenterMap.newCurrentX -> searchFinished.currentX, safePosition.currentX, calcNewPosition.currentX, control.currentX;
+    // connect reenterMap.newCurrentY -> searchFinished.currentY, safePosition.currentY, calcNewPosition.currentY, control.currentY;
+    // connect map                    -> searchFinished.map, calcNewPosition.map;
+    // connect oldSafe                -> searchFinished.oldSafe;
+    // connect oldSafeFound           -> searchFinished.oldSafeFound;
+    
+    // connect ghostX[:]         -> safePosition.ghostX[:];
+    // connect ghostY[:]         -> safePosition.ghostY[:];
+    // connect ghostDirection[:] -> safePosition.ghostDirection[:];
+    // connect ghostEatable[:]   -> safePosition.ghostEatable[:];
+    // connect oldDirection      -> safePosition.oldDirection, control.oldDirection;
+    
+    // connect reenterMap.newOldX      -> calcNewPosition.oldX;
+    // connect reenterMap.newOldY      -> calcNewPosition.oldY;
+    // connect searchFinished.finished -> calcNewPosition.searchFinished;
+    // connect safePosition.safe       -> calcNewPosition.positionIsSafe;
+    
+    // connect searchFinished.finished      -> control.searchFinished;
+    // connect searchFinished.safe          -> control.safeFromSearchFinished;
+    // connect searchFinished.safeFound     -> control.safeFoundFromSearchFinished;
+    // connect safePosition.safe            -> control.positionIsSafe;
+    // connect calcNewPosition.safeFound    -> control.safeFoundFromNewPosition;
+    // connect calcNewPosition.newX         -> control.newXFromNewPosition;
+    // connect calcNewPosition.newY         -> control.newYFromNewPosition;
+    // connect calcNewPosition.newDirection -> control.newDirectionFromNewPosition;
+    
+    // connect control.newX -> newX;
+    // connect control.newY -> newY;
+    // connect control.safeFound -> safeFound;
+    // connect control.safe -> safe;
+    // connect control.newDirection -> newDirection;
+        
+    implementation Math {
+        // reenter the map
+        if currentX < 2
+            currentX = 18;
+            oldX = 19;
+        elseif currentX > 18
+            currentX = 2;
+            oldX = 1;
+        end
+        newDirection = oldDirection;
+        newX = currentX;
+        newY = currentY;
+        Z currentTile = map(currentY, currentX);
+        if (currentTile == 0) || (currentTile == 3) // begin within a wall-tile, nothing to check
+            safeFound = 1;
+            safe = 1;
+        elseif (oldSafeFound == 1) || (oldSafe == 0) // already at an intersection or a ghost was found
+            safeFound = oldSafeFound;
+            safe = oldSafe;
+        else
+            safe = 1;
+            safeFound = 0;
+            
+            // check whether the current tile is safe
+            for i = 1:4
+                Z xG = round(ghostX(i));
+                Z yG = round(ghostY(i));
+                if (abs(xG - currentX) < 1) && (abs(yG - currentY) < 1) && (ghostEatable(i) == 0) && (ghostDirection(i) != oldDirection)
+                    safe = 0;
+                end
+            end
+            if (safe == 1)
+                // check for intersection or calculate the next tile
+                Z^{1,4} xOffSet = [0,0,-1,1];
+                Z^{1,4} yOffSet = [-1,1,0,0];
+                Z newPathsFound = 0;
+                for i = 0:3
+                    Z indexY = 0;
+                    Z indexX = i;
+                    Z xOff = xOffSet(indexY, indexX);
+                    Z yOff = yOffSet(indexY, indexX);
+                    Q xT = currentX + xOff;
+                    Q yT = currentY + yOff;
+                    
+                    if (abs(xT - (oldX)) >= 1) || (abs(yT - (oldY)) >= 1)
+                        Z nextTile = map(yT, xT);
+                        if (nextTile != 0) && (nextTile != 3) // a non-blocking tile was found
+                            newPathsFound = newPathsFound + 1;
+                            newX = xT;
+                            newY = yT;
+                            newDirection = i;
+                            if newPathsFound > 1
+                                safeFound = 1;
+                                newX = currentX;
+                                newY = currentY;
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    }
+}

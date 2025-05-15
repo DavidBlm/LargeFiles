@@ -1,0 +1,69 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component Object {
+      port
+        out (0 m: oo m) distance_Object_m,
+        in Number distance_Object_Start_m,
+        out (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+        in Number v_Object_kmh,
+        in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Accumulator_REL accumulator_REL;
+instance Add add;
+instance Constant_116_value_300 constant_116;
+instance Constant1_34_value_1000 constant1_34;
+instance Constant2_9_value_0 constant2_9;
+instance Gain_3_value_Minus_1_Div_3_6 gain_3;
+instance LogicalOperator_22_Not logicalOperator_22;
+instance RelOp_10_Greater relOp_10;
+instance Terminator_6 terminator_6;
+instance Terminator1_2 terminator1_2;
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.add.v_Obj_rel_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.v_Obj_rel_kmhOut1*/
+      connect add.v_Obj_rel_kmh -> v_Obj_rel_kmh;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.distance_Object_mOut2*/
+      connect accumulator_REL.y -> distance_Object_m;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.b_minOut3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.terminator1.in1*/
+      connect accumulator_REL.b_min -> terminator1_2.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.b_maxOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.terminator.in1*/
+      connect accumulator_REL.b_max -> terminator_6.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.logicalOperator.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.eIn4*/
+      connect logicalOperator_22.out1 -> accumulator_REL.e;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.constant2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.mNIn2*/
+      connect constant2_9.out1 -> accumulator_REL.mN;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.mXIn1*/
+      connect constant1_34.out1 -> accumulator_REL.mX;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.relOp.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.rIn5*/
+      connect relOp_10.out1 -> accumulator_REL.r;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.relOp.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.logicalOperator.in1*/
+      connect relOp_10.out1 -> logicalOperator_22.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.distance_Object_Start_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.iVIn6*/
+      connect distance_Object_Start_m -> accumulator_REL.iV;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.distance_Object_Start_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.relOp.in1*/
+      connect distance_Object_Start_m -> relOp_10.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.relOp.in2*/
+      connect constant_116.out1 -> relOp_10.in2;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.gain.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.uIn3*/
+      connect gain_3.out1 -> accumulator_REL.u;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.add.v_Obj_rel_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.gain.v_Obj_rel_kmhIn1*/
+      connect add.v_Obj_rel_kmh -> gain_3.v_Obj_rel_kmh;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.v_Vehicle_kmhIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.add.in1*/
+      connect v_Vehicle_kmh -> add.in1;
+
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.v_Object_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.add.in2*/
+      connect v_Object_kmh -> add.in2;
+
+    }
+

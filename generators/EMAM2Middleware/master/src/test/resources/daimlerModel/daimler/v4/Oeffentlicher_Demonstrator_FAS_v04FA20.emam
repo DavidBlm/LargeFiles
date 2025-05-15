@@ -1,0 +1,86 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA20.
+  component Oeffentlicher_Demonstrator_FAS_v04FA20 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Boolean _CruiseControl_b,
+              out Boolean _CC_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Boolean cruiseControl_b,
+                out Boolean cC_active_b;
+
+              component Tempomat {
+                port
+                  in Boolean cruiseControl_b,
+                  out Boolean cC_active_b,
+                  out Double v_CC_delta_kmh;
+
+              }
+instance Tempomat tempomat;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Boolean cruiseControl_b,
+                  out Boolean cruiseControl_b1;
+
+  connect cruiseControl_b -> cruiseControl_b1;
+              }
+instance FAS_Input fAS_Input;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect fAS_Input.cruiseControl_b1 -> tempomat.cruiseControl_b;
+  connect tempomat.cC_active_b -> cC_active_b;
+  connect cruiseControl_b -> fAS_Input.cruiseControl_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Boolean cruiseControl_bIn4,
+                out Boolean cruiseControl_b;
+
+  connect cruiseControl_bIn4 -> cruiseControl_b;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean cC_active_b,
+                out Boolean cC_active_bOut1;
+
+  connect cC_active_b -> cC_active_bOut1;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.cruiseControl_b -> dEMO_FAS_Funktion.cruiseControl_b;
+  connect _CruiseControl_b -> dEMO_FAS_Input.cruiseControl_bIn4;
+  connect dEMO_FAS_Funktion.cC_active_b -> dEMO_FAS_Output.cC_active_b;
+  connect dEMO_FAS_Output.cC_active_bOut1 -> _CC_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+

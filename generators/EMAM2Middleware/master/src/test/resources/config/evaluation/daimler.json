@@ -1,0 +1,30 @@
+{
+  "modelsDir": "src/test/resources/daimlerModel/",
+  "outputDir": "target/evaluation/daimler/",
+  "rootModel": "daimler.v4.oeffentlicher_Demonstrator_FAS_v04",
+  "generators": ["cpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":3
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters": 258
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters": 458
+      },
+      {
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

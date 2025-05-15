@@ -1,0 +1,23 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.environment;
+
+
+component HoleWatcher {
+    ports
+    
+        in Z holeDistance,
+        
+        out Z inJumpRange;
+
+    implementation Math {
+        //Empirical distance values
+        Z jumpRangeX = 128;
+        
+        if((abs(holeDistance) < jumpRangeX) && (holeDistance != -1))
+            inJumpRange = 1;
+        else
+            inJumpRange = 0;
+        end
+        
+    }
+}

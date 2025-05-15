@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+stream EnsureBounds for EnsureBounds {
+  lowerBound:   1.0   tick    0.0   tick  -3.0    tick   5.0;
+  upperBound:   2.0   tick   10.0   tick   3.0    tick   5.5;
+  input:        0.0   tick   15.0   tick   1.0    tick   5.3;
+  output:       1.0   tick   10.0   tick   1.0    tick   5.3;
+}

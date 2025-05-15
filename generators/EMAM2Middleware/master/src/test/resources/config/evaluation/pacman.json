@@ -1,0 +1,27 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/evaluation/pacman/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":3
+      },{
+        "name":"SpectralClustering",
+        "numberOfClusters": 10
+      },{
+        "name":"SpectralClustering",
+        "numberOfClusters": 23
+      },{
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

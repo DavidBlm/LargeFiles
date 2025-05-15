@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component FalseBlock2_2 {
+      port
+        out Number y;
+instance Zero_8 zero_8;
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.falseBlock2.zero.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.falseBlock2.yOut1*/
+      connect zero_8.out1 -> y;
+
+    }
+

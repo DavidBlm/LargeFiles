@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component SysInit_1 {
+                  port
+                    out Number y;
+instance Memory_Init_1 memory_Init_1;
+instance Zero_Init_1 zero_Init_1;
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.sysInit.memory_Init.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.sysInit.yOut1*/
+                  connect memory_Init_1.out1 -> y;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.sysInit.zero_Init.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.sysInit.memory_Init.in1*/
+                  connect zero_Init_1.out1 -> memory_Init_1.in1;
+
+                }
+

@@ -1,0 +1,114 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component EmergencyBrake_Function {
+                port
+                  out B acusti_warn_b,
+                  out (0:100) brakeForce_Emergency_pc,
+                  in (0 m: oo m) distance_Object_m,
+                  in Number v_Obj_rel_ms,
+                  in Number v_Vehicle_ms;
+instance Constant1_5_value_0 constant1_5;
+instance Constant2_2_value_0 constant2_2;
+instance DEMO_FAS_Emerg_Brake_Force1 dEMO_FAS_Emerg_Brake_Force1;
+instance DEMO_FAS_Emerg_Brake_Force2 dEMO_FAS_Emerg_Brake_Force2;
+instance DEMO_FAS_Emerg_Brake_Time1 dEMO_FAS_Emerg_Brake_Time1;
+instance DEMO_FAS_Emerg_Brake_Time12 dEMO_FAS_Emerg_Brake_Time12;
+instance DEMO_FAS_Neg_Max_ms dEMO_FAS_Neg_Max_ms;
+instance Div_1 div_1;
+instance Div1_1 div1_1;
+instance MinMax_1 minMax_1;
+instance RelOp_5_Smaller relOp_5;
+instance RelOp1_1_Smaller relOp1_1;
+instance Saturation1_1 saturation1_1;
+instance Saturation2 saturation2;
+instance Saturation3 saturation3;
+instance Sum1_1 sum1_1;
+instance Sum2 sum2;
+instance SwitchBlock_5 switchBlock_5;
+instance SwitchBlock1_2 switchBlock1_2;
+instance VERSION_INFO_10 vERSION_INFO_10;
+instance Condition_5 condition_5;
+instance Condition1_2 condition1_2;
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.minMax.brakeForce_Emergency_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.brakeForce_Emergency_pcOut1*/
+                connect minMax_1.brakeForce_Emergency_pc -> brakeForce_Emergency_pc;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp.acusti_warn_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.acusti_warn_bOut2*/
+                connect relOp_5.acusti_warn_b -> acusti_warn_b;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock1.condition*/
+                connect condition1_2.out1 -> switchBlock1_2.condition;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock.condition*/
+                connect condition_5.out1 -> switchBlock_5.condition;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp.acusti_warn_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.condition.in1*/
+                connect relOp_5.acusti_warn_b -> condition_5.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.condition1.in1*/
+                connect relOp1_1.out1 -> condition1_2.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.saturation3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp1.in1*/
+                connect saturation3.out1 -> relOp1_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.saturation2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp.in1*/
+                connect saturation2.out1 -> relOp_5.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.saturation1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div1.in2*/
+                connect saturation1_1.out1 -> div1_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.sum2.in2*/
+                connect div1_1.out1 -> sum2.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.sum1.in2*/
+                connect div1_1.out1 -> sum1_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.minMax.in2*/
+                connect switchBlock1_2.out1 -> minMax_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.minMax.in1*/
+                connect switchBlock_5.out1 -> minMax_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.constant2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock1.elseIn*/
+                connect constant2_2.out1 -> switchBlock1_2.elseIn;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock.elseIn*/
+                connect constant1_5.out1 -> switchBlock_5.elseIn;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.dEMO_FAS_Emerg_Brake_Force2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock1.ifIn*/
+                connect dEMO_FAS_Emerg_Brake_Force2.out1 -> switchBlock1_2.ifIn;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.dEMO_FAS_Emerg_Brake_Force1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.switchBlock.ifIn*/
+                connect dEMO_FAS_Emerg_Brake_Force1.out1 -> switchBlock_5.ifIn;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.sum1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.saturation3.in1*/
+                connect sum1_1.out1 -> saturation3.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.sum2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.saturation2.in1*/
+                connect sum2.out1 -> saturation2.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.dEMO_FAS_Emerg_Brake_Time12.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.sum1.in1*/
+                connect dEMO_FAS_Emerg_Brake_Time12.out1 -> sum1_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.dEMO_FAS_Emerg_Brake_Time1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.sum2.in1*/
+                connect dEMO_FAS_Emerg_Brake_Time1.out1 -> sum2.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.v_Obj_rel_msIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.saturation1.in1*/
+                connect v_Obj_rel_ms -> saturation1_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.distance_Object_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div1.in1*/
+                connect distance_Object_m -> div1_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp1.in2*/
+                connect div_1.out1 -> relOp1_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.relOp.in2*/
+                connect div_1.out1 -> relOp_5.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.dEMO_FAS_Neg_Max_ms.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div.in2*/
+                connect dEMO_FAS_Neg_Max_ms.out1 -> div_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.v_Vehicle_msIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.div.in1*/
+                connect v_Vehicle_ms -> div_1.in1;
+
+              }
+

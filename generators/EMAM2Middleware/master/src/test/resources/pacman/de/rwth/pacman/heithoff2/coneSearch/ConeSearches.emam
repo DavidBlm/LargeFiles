@@ -1,0 +1,77 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch;
+
+import de.rwth.pacman.heithoff2.coneSearch.coinSearch.*;
+import de.rwth.pacman.heithoff2.coneSearch.enemySearch.*;
+
+// Search in cones to all four directions for coins/buiscuits and enemies
+
+component ConeSearches {
+    ports
+      in Z^{22,19} map,
+      in Q(-1m: 19m) currentX,
+      in Q(0m: 22m) currentY,
+      in Q(-1m: 19m) ghostX[4],
+      in Q(0m: 22m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      
+      out Z topValue,
+      out Z bottomValue,
+      out Z leftValue,
+      out Z rightValue;
+      
+    instance SearchCoinsTop coinsTop;
+    instance SearchCoinsBottom coinsBottom;
+    instance SearchCoinsLeft coinsLeft;
+    instance SearchCoinsRight coinsRight;
+    instance CoinWeights coinWeights;
+    
+    instance SearchEnemiesTop enemiesTop;
+    instance SearchEnemiesBottom enemiesBottom;
+    instance SearchEnemiesLeft enemiesLeft;
+    instance SearchEnemiesRight enemiesRight;
+    instance EnemyWeights  enemiesWeights;
+    
+    instance EnhanceCoinValue enhancer;
+    
+    instance CombineValues combine1;
+    instance CombineValues combine2;
+    instance CombineValues combine3;
+    instance CombineValues combine4;
+    
+    
+    connect map -> coinsTop.map, coinsBottom.map, coinsLeft.map, coinsRight.map;
+    connect ghostX[:] -> enemiesTop.ghostX[:], enemiesBottom.ghostX[:], enemiesLeft.ghostX[:], enemiesRight.ghostX[:];
+    connect ghostY[:] -> enemiesTop.ghostY[:], enemiesBottom.ghostY[:], enemiesLeft.ghostY[:], enemiesRight.ghostY[:];
+    connect currentX -> coinsTop.currentX, enemiesTop.currentX, coinsBottom.currentX, enemiesBottom.currentX, coinsLeft.currentX, enemiesLeft.currentX, coinsRight.currentX, enemiesRight.currentX;
+    connect currentY -> coinsTop.currentY, enemiesTop.currentY, coinsBottom.currentY, enemiesBottom.currentY, coinsLeft.currentY, enemiesLeft.currentY, coinsRight.currentY, enemiesRight.currentY;
+    connect ghostEatable[:] -> enemiesTop.ghostEatable[:], enemiesBottom.ghostEatable[:], enemiesLeft.ghostEatable[:], enemiesRight.ghostEatable[:];
+    connect ghostDirection[:] -> enemiesTop.ghostDirection[:], enemiesBottom.ghostDirection[:], enemiesLeft.ghostDirection[:], enemiesRight.ghostDirection[:];
+    
+    
+    connect coinWeights.buiscuitWeight -> coinsTop.buiscuitWeight, coinsBottom.buiscuitWeight, coinsLeft.buiscuitWeight, coinsRight.buiscuitWeight;
+    connect coinWeights.coinWeight -> coinsTop.coinWeight, coinsBottom.coinWeight, coinsLeft.coinWeight, coinsRight.coinWeight;
+    connect enemiesWeights.normal -> enemiesTop.ghostNormalWeight, enemiesBottom.ghostNormalWeight, enemiesLeft.ghostNormalWeight, enemiesRight.ghostNormalWeight;
+    connect enemiesWeights.towardsPacMan -> enemiesTop.ghostFacingPacManWight, enemiesBottom.ghostFacingPacManWight, enemiesLeft.ghostFacingPacManWight, enemiesRight.ghostFacingPacManWight;
+    connect enemiesWeights.eatable -> enemiesTop.ghostEatableWeight, enemiesBottom.ghostEatableWeight, enemiesLeft.ghostEatableWeight, enemiesRight.ghostEatableWeight;
+    
+    connect coinsTop.val -> enhancer.valueIn[1];
+    connect coinsBottom.val -> enhancer.valueIn[2];
+    connect coinsLeft.val -> enhancer.valueIn[3];
+    connect coinsRight.val -> enhancer.valueIn[4];
+    
+    connect enhancer.valueOut[1] -> combine1.valueCoins;
+    connect enhancer.valueOut[2] -> combine2.valueCoins;
+    connect enhancer.valueOut[3] -> combine3.valueCoins;
+    connect enhancer.valueOut[4] -> combine4.valueCoins;
+    connect enemiesTop.val -> combine1.valueEnemies;
+    connect enemiesBottom.val -> combine2.valueEnemies;
+    connect enemiesLeft.val -> combine3.valueEnemies;
+    connect enemiesRight.val -> combine4.valueEnemies;
+    
+    connect combine1.val -> topValue;
+    connect combine2.val -> bottomValue;
+    connect combine3.val -> leftValue;
+    connect combine4.val -> rightValue;
+}

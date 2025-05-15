@@ -1,0 +1,170 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA21.
+  component Oeffentlicher_Demonstrator_FAS_v04FA21 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Boolean _CruiseControl_b,
+              in Double _V_Vehicle_kmh,
+              out Boolean _CC_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Boolean cruiseControl_b,
+                in Double v_Vehicle_kmh,
+                out Boolean cC_active_b;
+
+              component Tempomat {
+                port
+                  in Boolean cruiseControl_b,
+                  in Double v_Vehicle_kmh,
+                  out Boolean cC_active_b,
+                  out Double v_CC_delta_kmh;
+
+                component Tempomat_Function {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double v_CC_delta_kmh;
+
+                  component CC_Enabled {
+                    port
+                      in Double v_Vehicle_kmh,
+                      out Double v_CC_delta_kmh;
+
+                    component Tempomat_Active {
+                      port
+                        in Double v_Vehicle_kmh,
+                        out Double v_CC_delta_kmh;
+
+                      component Sum_6 {
+                        port
+                          in Double in1,
+                          out Double v_CC_delta_kmh;
+
+                      }
+instance Sum_6 sum_6;
+  connect v_Vehicle_kmh -> sum_6.in1;
+  connect sum_6.v_CC_delta_kmh -> v_CC_delta_kmh;
+                    }
+instance Tempomat_Active tempomat_Active;
+                    component SwitchBlock_16 {
+                      port
+                        in Double ifIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock_16 switchBlock_16;
+  connect tempomat_Active.v_CC_delta_kmh -> switchBlock_16.ifIn;
+  connect switchBlock_16.out1 -> v_CC_delta_kmh;
+  connect v_Vehicle_kmh -> tempomat_Active.v_Vehicle_kmh;
+                  }
+instance CC_Enabled cC_Enabled;
+  connect v_Vehicle_kmh -> cC_Enabled.v_Vehicle_kmh;
+  connect cC_Enabled.v_CC_delta_kmh -> v_CC_delta_kmh;
+                }
+instance Tempomat_Function tempomat_Function;
+                component SwitchBlock2_11 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock2_11 switchBlock2_11;
+  connect tempomat_Function.v_CC_delta_kmh -> switchBlock2_11.ifIn;
+  connect switchBlock2_11.out1 -> v_CC_delta_kmh;
+  connect v_Vehicle_kmh -> tempomat_Function.v_Vehicle_kmh;
+              }
+instance Tempomat tempomat;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Boolean cruiseControl_b,
+                  out Boolean cruiseControl_b1,
+                  in Double v_Vehicle_kmh,
+                  out Double v_Vehicle_kmh5;
+
+  connect cruiseControl_b -> cruiseControl_b1;
+  connect v_Vehicle_kmh -> v_Vehicle_kmh5;
+              }
+instance FAS_Input fAS_Input;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect fAS_Input.cruiseControl_b1 -> tempomat.cruiseControl_b;
+  connect fAS_Input.v_Vehicle_kmh5 -> tempomat.v_Vehicle_kmh;
+  connect cruiseControl_b -> fAS_Input.cruiseControl_b;
+  connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh;
+  connect tempomat.cC_active_b -> cC_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Boolean cruiseControl_bIn4,
+                out Boolean cruiseControl_b,
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh;
+
+  connect cruiseControl_bIn4 -> cruiseControl_b;
+  connect v_Vehicle_b -> v_Vehicle_kmh;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean cC_active_b,
+                out Boolean cC_active_bOut1;
+
+  connect cC_active_b -> cC_active_bOut1;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.cruiseControl_b -> dEMO_FAS_Funktion.cruiseControl_b;
+  connect dEMO_FAS_Input.v_Vehicle_kmh -> dEMO_FAS_Funktion.v_Vehicle_kmh;
+  connect dEMO_FAS_Funktion.cC_active_b -> dEMO_FAS_Output.cC_active_b;
+  connect _CruiseControl_b -> dEMO_FAS_Input.cruiseControl_bIn4;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect dEMO_FAS_Output.cC_active_bOut1 -> _CC_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

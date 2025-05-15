@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS.single;
+
+component SafePosition {
+    ports
+      in Q(0m: 20m) ghostX[4],
+      in Q(1m: 23m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in Z oldDirection,
+      
+      out B safe;
+      
+    implementation Math {
+        safe = 1;
+        
+        // check whether the current tile is safe
+        for i = 1:4
+            Z xG = round(ghostX(i));
+            Z yG = round(ghostY(i));
+            if (abs(xG - currentX) < 1) && (abs(yG - currentY) < 1) && (ghostEatable(i) == 0) && (ghostDirection(i) != oldDirection)
+                safe = 0;
+            end
+        end
+    }
+}

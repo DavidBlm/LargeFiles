@@ -1,0 +1,24 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/cliTest/flattenSpectralMulti/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp","roscpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":2
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":3
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":10
+      }
+    ]
+  }
+}
