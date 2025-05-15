@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) https://github.com/MontiCore/monticore -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.monticore.lang.monticar.application</groupId>
+    <artifactId>mnist-resnet-composed</artifactId>
+    <version>0.0.1</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.monticore.lang.monticar.datasets</groupId>
+            <artifactId>mnist-letters</artifactId>
+            <version>1</version>
+            <classifier>dataset</classifier>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>de.monticore.lang.monticar.utilities</groupId>
+                <artifactId>emadl-maven-plugin</artifactId>
+                <version>0.0.12-SNAPSHOT</version>
+                <configuration>
+                    <training>
+                        <backend>GLUON</backend>
+                        <pathToPython>/usr/bin/python3</pathToPython>
+                        <modelToTrain>transfer.Transfer</modelToTrain>
+                        <pathToProject>src/main/emadl</pathToProject>
+                        <pathToTest>src/main/emadl</pathToTest>
+                    </training>
+                </configuration>
+           </plugin>
+        </plugins>
+    </build>
+
+</project>

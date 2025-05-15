@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) https://github.com/MontiCore/monticore -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.monticore.lang.monticar.application</groupId>
+    <artifactId>mnist-calculator</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+
+    <properties>
+ 
+        <!-- .. Misc .......................................................... -->
+        <java.version>1.8</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>de.monticore.lang.monticar.utilities</groupId>
+                <artifactId>emadl-maven-plugin</artifactId>
+                <version>0.0.6-SNAPSHOT</version>
+                <configuration>
+                    <training>
+                        <backend>GLUON</backend>
+                        <modelToTrain>cNNCalculator.Connector</modelToTrain>
+                        <pathToProject>src/emadl/models</pathToProject>
+                        <pathToTest>src/emadl/models</pathToTest>
+                        <pathToPython>/usr/bin/python3</pathToPython>
+                    </training>
+                    <pretrainedModelToStore>
+                        <path>model/cNNCalculator.Network</path>
+                        <artifactId>mnistcalc-gluon</artifactId>
+                        <groupId>de.monticore.lang.monticar.pretrained</groupId>
+                        <version>1</version>
+                    </pretrainedModelToStore>
+                </configuration>
+           </plugin>
+
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>se-nexus</id>
+            <url>https://nexus.se.rwth-aachen.de/content/repositories/embeddedmontiarc-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>se-nexus</id>
+            <url>https://nexus.se.rwth-aachen.de/content/repositories/embeddedmontiarc-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

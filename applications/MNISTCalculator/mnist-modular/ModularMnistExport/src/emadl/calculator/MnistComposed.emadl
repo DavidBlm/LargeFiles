@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+component MnistComposed {
+    ports in Z(0:255)^{1, 28, 28} image,
+         out Q(0:1)^{10} predictions;
+
+    instance MnistInputLayer mnistinputlayer;
+    instance MnistClassifier mnistclassifier;
+
+    connect image -> mnistinputlayer.data;
+    connect mnistinputlayer.vector -> mnistclassifier.vector;
+    connect mnistclassifier.softmax -> predictions;
+
+}

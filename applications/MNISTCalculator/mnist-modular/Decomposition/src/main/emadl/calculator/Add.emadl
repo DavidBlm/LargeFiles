@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+component Add{
+    ports
+            in Z(0:999) num1,
+            in Z(0:999) num2,
+            out Z(0:1998) sum;
+
+    implementation Math{
+        sum = num1 + num2;
+    }
+}

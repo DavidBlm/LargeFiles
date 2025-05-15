@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="27bc5749-1450-4740-8daf-d71e57296281" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/MnistInputLayer.emadl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed.MnistClassifier_decomposed/model_MnistClassifier_decomposed-0000.params" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed.MnistClassifier_decomposed/model_MnistClassifier_decomposed-old-symbol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed.MnistClassifier_decomposed/model_MnistClassifier_decomposed-symbol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed.MnistInputLayer_decomposed/model_MnistInputLayer_decomposed-0000.params" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed.MnistInputLayer_decomposed/model_MnistInputLayer_decomposed-old-symbol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed.MnistInputLayer_decomposed/model_MnistInputLayer_decomposed-symbol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/0000.params" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/learning_rate.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/metric.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/metric.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/newest-0000.params" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/newest-symbol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/newest_loss-0000.params" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/modularMnistM2/calculator.MnistComposed/newest_loss-symbol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/readme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ModularMnistExport/pom_build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/calculator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/src/main/emadl/calculator/ConnectorStream.stream" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/src/main/emadl/calculator/ConnectorStream.stream" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/src/main/emadl/calculator/Network.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/src/main/emadl/calculator/Network.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/src/main/emadl/calculator/Network.emadl" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/src/main/emadl/calculator/Network.emadl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/trained_mnist_calc/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/trained_mnist_calc/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/trained_mnist_calc/target/classes/model.params" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/trained_mnist_calc/target/mnist-calculator-trained-0.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator transfer learning/trained_mnist_calc/target/mnist-calculator-trained-0.0.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven hexadecimal calculator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/calculator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/src/main/emadl/calculator/Network.tag" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator  transfer learning/src/main/emadl/calculator/Network.tag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven operator calculator/src/main/emadl/calculator/Network.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven operator calculator/src/main/emadl/calculator/Network.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven-plugin/calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven-plugin/calculator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emadl-maven-plugin/calculator.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../emadl-maven-plugin/calculator.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/pom_build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/Testing the Mxnet files/pom_build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/pom_deploy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/pom_deploy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/src/emadl/calculator/MnistClassifier.emadl" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/src/emadl/calculator/MnistClassifier.emadl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/src/emadl/calculator/MnistComposed.conf" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/src/emadl/calculator/MnistComposed.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/src/emadl/calculator/MnistComposed.emadl" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/src/emadl/calculator/MnistComposed.emadl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/src/emadl/calculator/MnistComposed.tag" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/src/emadl/calculator/MnistComposed.tag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ModularesMnistExport/src/emadl/calculator/MnistInputLayer.emadl" beforeDir="false" afterPath="$PROJECT_DIR$/ModularMnistExport/src/emadl/calculator/MnistInputLayer.emadl" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2q4tIq2pYHXIMoQ8FYsqqS6grF2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.DecompositionResNetExport/Dockerfile.executor": "Run",
+    "Docker.ModularesMnistExport/Dockerfile.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master-haag",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/chris/Desktop/Experimente/emadl-maven hexadecimal calculator transfer learning",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chris\Desktop\mnistcalculator\mnist-modular\ModularesMnistExport\Testing the Mxnet files" />
+      <recent name="C:\Users\chris\Desktop\mnistcalculator\mnist-modular\ModularesMnistExport" />
+      <recent name="C:\Users\chris\Desktop\mnistcalculator\mnist-modular\ModularesMnistExport\src" />
+      <recent name="C:\Users\chris\Desktop\mnistcalculator\mnist-modular" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\chris\Desktop\mnistcalculator\mnist-modular\ModularesMnistExport\Testing the Mxnet files" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.145" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="27bc5749-1450-4740-8daf-d71e57296281" name="Changes" comment="" />
+      <created>1733933597895</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733933597895</updated>
+      <workItem from="1733933599066" duration="8597000" />
+      <workItem from="1734004950789" duration="1917000" />
+      <workItem from="1734012076407" duration="8000" />
+      <workItem from="1734012631352" duration="4932000" />
+      <workItem from="1734077548339" duration="17000" />
+      <workItem from="1734263769746" duration="2292000" />
+      <workItem from="1734857324109" duration="23823000" />
+      <workItem from="1734890020994" duration="15000" />
+      <workItem from="1734892114768" duration="2721000" />
+      <workItem from="1734895218803" duration="3623000" />
+      <workItem from="1734899706026" duration="839000" />
+      <workItem from="1734970163814" duration="165000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

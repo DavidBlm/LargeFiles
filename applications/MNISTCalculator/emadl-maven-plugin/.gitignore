@@ -1,0 +1,6 @@
+target/
+model/
+
+.idea/
+
+train.log

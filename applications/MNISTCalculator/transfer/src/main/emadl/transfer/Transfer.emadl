@@ -1,0 +1,15 @@
+package transfer;
+
+component Transfer{
+     ports in Q(0:1)^{1, 28, 28} data,
+           out Q(0:1)^{26} softmax;
+
+    implementation CNN {
+            data ->
+            LoadNetwork(networkDir="model/digits.DigitsComposed.DigitsInputLayer_decomposed", networkPrefix="model_DigitsInputLayer_decomposed-", numInputs=1, outputShape=128, trainable=true) ->
+            FullyConnected(units=26) ->
+            Softmax() ->
+            softmax;
+    }
+}
+

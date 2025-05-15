@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "vector", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "Net_0_241222_2025dense1_weight", 
+      "attrs": {
+        "__dtype__": "0", 
+        "__lr_mult__": "1.0", 
+        "__shape__": "(10, 0)", 
+        "__storage_type__": "0", 
+        "__wd_mult__": "1.0"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "Net_0_241222_2025dense1_bias", 
+      "attrs": {
+        "__dtype__": "0", 
+        "__init__": "zeros", 
+        "__lr_mult__": "1.0", 
+        "__shape__": "(10,)", 
+        "__storage_type__": "0", 
+        "__wd_mult__": "1.0"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "FullyConnected", 
+      "name": "Net_0_241222_2025dense1_fwd", 
+      "attrs": {
+        "flatten": "True", 
+        "no_bias": "False", 
+        "num_hidden": "10"
+      }, 
+      "inputs": [[0, 0, 0], [1, 0, 0], [2, 0, 0]]
+    }, 
+    {
+      "op": "softmax", 
+      "name": "Net_0_241222_2025softmax0", 
+      "attrs": {"axis": "-1"}, 
+      "inputs": [[3, 0, 0]]
+    }, 
+    {
+      "op": "_copy", 
+      "name": "Net_0_241222_2025identity0", 
+      "inputs": [[4, 0, 0]]
+    }
+  ], 
+  "arg_nodes": [0, 1, 2], 
+  "node_row_ptr": [0, 1, 2, 3, 4, 5, 6], 
+  "heads": [[5, 0, 0]], 
+  "attrs": {"mxnet_version": ["int", 10901]}
+}

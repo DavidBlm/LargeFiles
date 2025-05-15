@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+/* Changed to hexadecimal numbers*/
+package calculator;
+
+component Add{
+    ports
+            in Z(0:4096) num1,
+            in Z(0:4096) num2,
+            out Z(0:8191) sum;
+
+    implementation Math{
+        sum = num1 + num2;
+    }
+}
+
+
+/*TODO: Output should possibly be a hexadecimal number*/

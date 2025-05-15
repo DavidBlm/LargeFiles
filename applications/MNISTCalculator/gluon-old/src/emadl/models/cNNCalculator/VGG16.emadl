@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package cNNCalculator;
+
+component VGG16{
+    ports in Z(0:255)^{1, 28, 28} image,
+         out Q(0:1)^{10} predictions;
+
+         implementation CNN {
+
+             def conv(filter, channels){
+                 Convolution(kernel=(filter,filter), channels=channels) ->
+                 Relu()
+             }
+             def fc(){
+                 FullyConnected(units=100) ->
+                 Relu() ->
+                 Dropout(p=0.5)
+             }
+
+             image ->
+             conv(filter=2, channels=64, ->=2) ->
+             Pooling(pool_type="max", kernel=(2,2), stride=(1,1)) ->
+             fc() ->
+             FullyConnected(units=10) ->
+             Softmax() ->
+             predictions
+         }
+  }

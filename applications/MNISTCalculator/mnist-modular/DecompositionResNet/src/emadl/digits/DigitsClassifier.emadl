@@ -1,0 +1,13 @@
+package digits;
+
+component DigitsClassifier {
+    ports in Q^{128} vector,
+         out Q(0:1)^{10} softmax;
+
+     implementation CNN {
+            vector ->
+            FullyConnected(units=10) ->
+            Softmax() ->
+            softmax;
+        }
+}

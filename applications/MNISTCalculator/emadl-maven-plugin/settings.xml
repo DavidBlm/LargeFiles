@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    (c) https://github.com/MontiCore/monticore
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <pluginGroups>
+        <pluginGroup>org.mortbay.jetty</pluginGroup>
+        <pluginGroup>de.topobyte</pluginGroup>
+    </pluginGroups>
+
+    <proxies>
+    </proxies>
+
+    <servers>
+        <server>
+            <id>gitlab-maven</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Job-Token</name>
+                        <value>${env.CI_JOB_TOKEN}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
+        </server>
+
+        <server>
+            <id>gitlab-maven-mnist</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Job-Token</name>
+                        <value>${env.CI_JOB_TOKEN}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
+        </server>
+    </servers>
+
+    <!--<mirrors>
+        <mirror>
+            <id>se-nexus</id>
+            <mirrorOf>external:*</mirrorOf>
+            <url>https://nexus.se.rwth-aachen.de/content/groups/public</url>
+        </mirror>
+        <mirror>
+            <id>topobyte-repository</id>
+            <mirrorOf>topobyte</mirrorOf>
+            <url>http://mvn.topobyte.de/</url>
+        </mirror>
+        <mirror>
+            <id>rosjava_mvn_repo</id>
+            <mirrorOf>rosjava_mvn</mirrorOf>
+            <url>https://github.com/rosjava/rosjava_mvn_repo/raw/master/</url>
+        </mirror>
+        
+    </mirrors>-->
+
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Optional URL to server. Default value is http://localhost:9000 -->
+                <sonar.host.url>
+                https://metric.se.rwth-aachen.de
+                </sonar.host.url>
+                <sonar.login>
+                jenkins
+                </sonar.login>
+                <sonar.password>
+                ${env.sonar}
+                </sonar.password>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>se-nexus</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2/</url>
+                    <releases>
+                        <enabled />
+                    </releases>
+                    <snapshots>
+                        <enabled />
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>nexus</id>
+                    <url>https://nexus.se.rwth-aachen.de/content/groups/public</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>gitlab-maven</id>
+                    <url>https://git.rwth-aachen.de/api/v4/projects/57999/packages/maven</url>
+                     <releases><enabled /></releases>
+                    <snapshots><enabled /></snapshots>
+               </repository>
+               <repository>
+                  <id>jena</id>
+                  <url>https://bio.informatik.uni-jena.de/repository/libs-release-oss</url>
+                  <releases>
+                        <enabled />
+                    </releases>
+                    <snapshots>
+                        <enabled />
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>eclipse</id>
+                    <url>https://repo.eclipse.org/content/groups/releases/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>jcenter</id>
+                    <url>https://jcenter.bintray.com/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>topobyte</id>
+                    <url>http://mvn.topobyte.de/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>spring</id>
+                    <url>https://repo.spring.io/libs-release/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>rosjava_mvn</id>
+                    <name>Public Rosjava repository</name>
+                    <url>https://github.com/rosjava/rosjava_mvn_repo</url>
+                </repository>
+				
+				<repository>
+                   <id>icm</id>
+                   <name>icm</name>
+                    <url>http://maven.icm.edu.pl/artifactory/repo/</url>
+                 </repository>
+        
+            </repositories>
+            
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled />
+                    </releases>
+                    <snapshots>
+                        <enabled />
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>nexus</id>
+                    <url>https://nexus.se.rwth-aachen.de/content/groups/public</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>eclipse</id>
+                    <url>https://repo.eclipse.org/content/groups/releases/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>jcenter</id>
+                    <url>https://jcenter.bintray.com/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+
+                <pluginRepository>
+                    <id>topobyte</id>
+                    <url>http://mvn.topobyte.de/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                  <id>jena</id>
+                  <url>https://bio.informatik.uni-jena.de/repository/libs-release-oss</url>
+                  <releases>
+                        <enabled />
+                    </releases>
+                    <snapshots>
+                        <enabled />
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>se-nexus</activeProfile>
+    </activeProfiles>
+</settings>

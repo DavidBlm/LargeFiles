@@ -1,0 +1,8 @@
+/home/julian/Documents/mnistcalculator/tensorflow/CMakeFiles/edit_cache.dir
+/home/julian/Documents/mnistcalculator/tensorflow/CMakeFiles/rebuild_cache.dir
+/home/julian/Documents/mnistcalculator/tensorflow/src/cpp/CMakeFiles/edit_cache.dir
+/home/julian/Documents/mnistcalculator/tensorflow/src/cpp/CMakeFiles/rebuild_cache.dir
+/home/julian/Documents/mnistcalculator/tensorflow/src/cpp/CMakeFiles/DigitCalculator.dir
+/home/julian/Documents/mnistcalculator/tensorflow/target/CMakeFiles/edit_cache.dir
+/home/julian/Documents/mnistcalculator/tensorflow/target/CMakeFiles/rebuild_cache.dir
+/home/julian/Documents/mnistcalculator/tensorflow/target/CMakeFiles/cNNCalculator_connector.dir
