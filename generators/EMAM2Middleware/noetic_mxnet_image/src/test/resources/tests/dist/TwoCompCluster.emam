@@ -1,0 +1,26 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.dist;
+
+component TwoCompCluster{
+
+    component Sub1{
+        port out Q rosOut;
+    }
+
+    component Sub2{
+        port out Q noRosOut;
+    }
+
+    component Sub3{
+        port in Q rosIn;
+        port in Q noRosIn;
+    }
+
+
+    instance Sub1 sub1;
+    instance Sub2 sub2;
+    instance Sub3 sub3;
+
+    connect sub1.rosOut -> sub3.rosIn;
+    connect sub2.noRosOut -> sub3.noRosIn;
+}

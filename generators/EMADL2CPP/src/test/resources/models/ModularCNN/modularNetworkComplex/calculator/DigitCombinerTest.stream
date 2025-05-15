@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+stream DigitCombinerTest for DigitCombiner{
+    // Input
+    hundreds: 1; 
+    tens: 1;
+    ones: 1;
+
+    // Output
+    // - means: all values are allowed
+    // 100 +/- 1 means: all values from 99 to 101 are allowed
+    number: 111;
+
+}
+

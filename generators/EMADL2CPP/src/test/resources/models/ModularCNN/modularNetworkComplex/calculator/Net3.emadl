@@ -1,0 +1,13 @@
+package calculator;
+
+component Net3 {
+    ports in Z(0:255)^{500} data,
+         out Q(0:1)^{500} dataOutput;
+
+     implementation CNN {
+            data ->
+            Relu() ->
+            Dropout() ->
+            dataOutput;
+        }
+}

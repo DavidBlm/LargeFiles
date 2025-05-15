@@ -1,0 +1,26 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+
+component OverallSystem{
+
+    ports in Q input[4],
+          out Q output[4];
+
+    instance System system1;
+    instance System system2;
+
+    connect input[1] -> system1.rosIn[1];
+    connect input[2] -> system1.rosIn[2];
+    connect input[3] -> system1.rosIn[3];
+    connect input[4] -> system1.rosIn[4];
+
+    connect system1.rosOut -> system2.rosIn[1];
+    connect system1.rosOut -> system2.rosIn[2];
+    connect system1.rosOut -> system2.rosIn[3];
+    connect system1.rosOut -> system2.rosIn[4];
+
+    connect system2.rosOut -> output[1];
+    connect system2.rosOut -> output[2];
+    connect system2.rosOut -> output[3];
+    connect system2.rosOut -> output[4];
+}

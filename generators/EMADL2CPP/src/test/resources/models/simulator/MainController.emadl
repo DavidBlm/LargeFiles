@@ -1,0 +1,48 @@
+/* (c) https://github.com/MontiCore/monticore */
+package simulator;
+import SteerController;
+import BrakeController;
+component MainController{
+    ports in Q(-90°:90°)  pathX[2],
+          in Q(-180:180°)  pathY[2],
+          in Q(-90°:90°)  gpsX,
+          in Q(-180°:180°)  gpsY,
+	      in Q(-180°:180°)  sensorSteering,
+		  in Q(-40 km/h : 0.1 km/h :180 km/h)  sensorVelocity,
+		  in Q(-180°:180°)  sensorCompass,
+		  in Q(0 : 100)  sensorWeather,
+		  in Q(0 m:10 m)  sensorDistanceToLeft,
+		  in Q(0 m:10 m)  sensorDistanceToRight,
+		  in Q(-oo:oo)  sensorCurrentSurface[3], // should be later struct (not supported yet)
+		  in Q(-180°:180°)  minSteeringAngle,
+		  in Q(-180°:180°)  maxSteeringAngle,
+		  in Q(0:100)  trajectoryError,
+		  in Q(0 m/s^2:40 m/s^2)  brakesMinAcceleration,
+		  in Q(0 m/s^2:40 m/s^2)  brakesMaxAcceleration,
+		  in Q(-10 m/s^2:40 m/s^2)  motorMinAcceleration,
+		  in Q(-10 m/s^2:40 m/s^2)  motorMaxAcceleration,
+		  in Q(0 km/h: 300 km/h)  maximumVelocity,
+		  in Q(0 m:20 m) wheelDistanceFrontBack,
+		  in Z(-1:6)  numberOfGears, // should be later struct/enum (not supported yet)
+		  in Q(0 s:1 s) deltaTime,
+		  out Q(-10 m/s^2:40 m/s^2) actuatorEngine,
+		  out Q(0 m/s^2:40 m/s^2) actuatorBrake,
+		  out Z(-1:6) actuatorGear,
+		  out Q(-180°:180°) actuatorSteering;
+
+	instance SteerController steerController1;
+
+    connect pathX[:] -> steerController1.x[:];
+    connect pathY[:] -> steerController1.y[:];
+    connect gpsX -> steerController1.gpsX;
+    connect gpsY -> steerController1.gpsY;
+    connect sensorCompass -> steerController1.orientation;
+	connect sensorSteering -> steerController1.currentSteeringAngle;
+	connect minSteeringAngle -> steerController1.minSteeringAngle;
+	connect maxSteeringAngle -> steerController1.maxSteeringAngle;
+	connect steerController1.steeringAngle -> actuatorSteering;
+
+	connect 3.5 -> actuatorEngine;
+	
+	
+}

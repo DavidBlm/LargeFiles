@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+stream SumCommandTestStream for SumCommandTest{
+    in1: 0 tick 1 tick 2;
+    out1: 6 +/- 1 tick 7 tick 8;
+}

@@ -1,0 +1,34 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.collision;
+import ba.util.DualSetCompareMatrix;
+import ba.util.LineIntersection;
+import ba.util.MultiOr;
+import ba.struct.Rectangle;
+
+component RectIntersection{
+    ports in Rectangle rect1,
+          in Rectangle rect2,
+          out B collision;
+
+    instance RectToLines rectToLines1;
+    instance RectToLines rectToLines2;
+
+    //check intersection of 4*4 lines w/o permutations
+    //4*(4+1)/2 = 10 possibilities
+    instance DualSetCompareMatrix<2,4,4,10> dualSetCompareLines;
+
+    instance LineIntersection lineIntersection[10];
+    instance MultiOr<10> multiOrRect;
+
+    connect rect1 -> rectToLines1.rect;
+    connect rect2 -> rectToLines2.rect;
+
+    connect rectToLines1.lines[:] -> dualSetCompareLines.setInA[:];
+    connect rectToLines2.lines[:] -> dualSetCompareLines.setInB[:];
+
+    connect dualSetCompareLines.outA[:] -> lineIntersection[:].lineA;
+    connect dualSetCompareLines.outB[:] -> lineIntersection[:].lineB;
+
+    connect lineIntersection[:].intersects -> multiOrRect.boolIn[:];
+    connect multiOrRect.boolOut -> collision;
+}

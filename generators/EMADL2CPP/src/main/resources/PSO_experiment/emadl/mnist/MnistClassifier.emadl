@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+package mnist;
+
+component MnistClassifier{
+    ports in Z(0:255)^{1, 28, 28} image,
+         out Z(0:9) classIndex,
+         out Q probability;
+
+    instance LeNetNetwork<10> net;
+
+    instance ArgMax<10> calculateClass;
+
+    connect image -> net.image;
+    connect net.predictions -> calculateClass.inputVector;
+    connect calculateClass.maxIndex -> classIndex;
+    connect calculateClass.maxValue -> probability;
+}

@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package torcs.agent.policy;
+
+component GreedyDiscreteActionPolicy<Z(1:oo) n = 2> {
+    ports 
+        in Q^{n} values,
+        out Z action;
+
+    implementation Math {
+        Z best_action = 0;
+        Q value_of_best_action = values(1);
+
+        for i=2:n
+            if values(i) > value_of_best_action
+                best_action = i-1;
+                value_of_best_action = values(i);
+            end
+        end
+
+        action = best_action;
+    }
+}

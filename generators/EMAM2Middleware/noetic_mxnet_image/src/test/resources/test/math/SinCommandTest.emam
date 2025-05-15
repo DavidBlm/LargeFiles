@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component SinCommandTest{
+    implementation Math{
+        Q a = sin(0.5);
+    }
+}

@@ -1,0 +1,172 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA19.
+  component Oeffentlicher_Demonstrator_FAS_v04FA19Tracing {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Boolean _CruiseControl_b,
+              out Boolean _CC_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Boolean cruiseControl_b,
+                out Boolean cC_active_b;
+
+              component Tempomat {
+                port
+                  in Boolean cruiseControl_b,
+                  out Boolean cC_active_b;
+
+                component Tempomat_Function {
+                  port
+                    in Boolean cruiseControl_b,
+                    out Boolean cC_active_b;
+
+                  component CC_On_Off {
+                    port
+                      in Boolean cruiseControl_b,
+                      out Boolean cC_active_b;
+
+                    component LogicalOperator3_1 {
+                      port
+                        in Boolean in2,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator3_1 logicalOperator3_1;
+                    component LogicalOperator4_1 {
+                      port
+                        in Boolean in2,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator4_1 logicalOperator4_1;
+                    component RSFlipFlop_2 {
+                      port
+                        in Boolean s,
+                        out Boolean q;
+
+                      component Condition_21 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance Condition_21 condition_21;
+                      component Switch_S_2 {
+                        port
+                          in Boolean condition,
+                          out Boolean out1;
+
+                      }
+instance Switch_S_2 switch_S_2;
+                      component Switch_R_5 {
+                        port
+                          in Boolean elseIn,
+                          out Boolean out1;
+
+                      }
+instance Switch_R_5 switch_R_5;
+  connect switch_S_2.out1 -> switch_R_5.elseIn;
+  connect condition_21.out1 -> switch_S_2.condition;
+  connect switch_R_5.out1 -> q;
+  connect s -> condition_21.in1;
+                    }
+instance RSFlipFlop_2 rSFlipFlop_2;
+  connect logicalOperator4_1.out1 -> rSFlipFlop_2.s;
+  connect rSFlipFlop_2.q -> cC_active_b;
+  connect logicalOperator3_1.out1 -> logicalOperator4_1.in2;
+  connect cruiseControl_b -> logicalOperator3_1.in2;
+                  }
+instance CC_On_Off cC_On_Off;
+  connect cruiseControl_b -> cC_On_Off.cruiseControl_b;
+  connect cC_On_Off.cC_active_b -> cC_active_b;
+                }
+instance Tempomat_Function tempomat_Function;
+                component SwitchBlock3_12 {
+                  port
+                    in Boolean ifIn,
+                    out Boolean out1;
+
+                }
+instance SwitchBlock3_12 switchBlock3_12;
+  connect tempomat_Function.cC_active_b -> switchBlock3_12.ifIn;
+  connect switchBlock3_12.out1 -> cC_active_b;
+  connect cruiseControl_b -> tempomat_Function.cruiseControl_b;
+              }
+instance Tempomat tempomat;
+              component FAS_Input {
+                port
+                  in Boolean cruiseControl_b,
+                  out Boolean cruiseControl_b1;
+
+  connect cruiseControl_b -> cruiseControl_b1;
+              }
+instance FAS_Input fAS_Input;
+  connect fAS_Input.cruiseControl_b1 -> tempomat.cruiseControl_b;
+  connect cruiseControl_b -> fAS_Input.cruiseControl_b;
+  connect tempomat.cC_active_b -> cC_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Boolean cruiseControl_bIn4,
+                out Boolean cruiseControl_b;
+
+  connect cruiseControl_bIn4 -> cruiseControl_b;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean cC_active_b,
+                out Boolean cC_active_bOut1;
+
+  connect cC_active_b -> cC_active_bOut1;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.cruiseControl_b -> dEMO_FAS_Funktion.cruiseControl_b;
+  connect dEMO_FAS_Funktion.cC_active_b -> dEMO_FAS_Output.cC_active_b;
+  connect _CruiseControl_b -> dEMO_FAS_Input.cruiseControl_bIn4;
+  connect dEMO_FAS_Output.cC_active_bOut1 -> _CC_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component OnesCommandTest{
+    implementation Math{
+        Q^{3,3} a = ones(3,3);
+    }
+}

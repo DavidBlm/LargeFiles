@@ -1,0 +1,212 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA31.
+  component Oeffentlicher_Demonstrator_FAS_v04FA31Tracing {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _V_Vehicle_kmh;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double v_Vehicle_kmh;
+
+              component Limiter {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double vMax_kmh;
+
+                component Limiter_Function {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double vMax_kmh;
+
+                  component Limiter_InitialSetValue {
+                    port
+                      in Double v_Vehicle_kmh,
+                      out Double out4;
+
+  connect v_Vehicle_kmh -> out4;
+                  }
+instance Limiter_InitialSetValue limiter_InitialSetValue;
+                  component SwitchBlock6_2 {
+                    port
+                      in Double ifIn,
+                      out Double out1;
+
+                  }
+instance SwitchBlock6_2 switchBlock6_2;
+                  component SwitchBlock5_2 {
+                    port
+                      in Double elseIn,
+                      out Double out1;
+
+                  }
+instance SwitchBlock5_2 switchBlock5_2;
+                  component Limiter_Enabled {
+                    port
+                      in Double in1,
+                      out Double vMax_kmh;
+
+                    component Limiter_Active {
+                      port
+                        in Double in1,
+                        out Double vMax_kmh;
+
+                      component Gain_1 {
+                        port
+                          in Double vMax_kmh,
+                          out Double vMax_kmhOut1;
+
+                      }
+instance Gain_1 gain_1;
+  connect in1 -> gain_1.vMax_kmh;
+  connect gain_1.vMax_kmhOut1 -> vMax_kmh;
+                    }
+instance Limiter_Active limiter_Active;
+                    component SwitchBlock_8 {
+                      port
+                        in Double ifIn,
+                        out Double out1,
+                        in Double elseIn;
+
+                    }
+instance SwitchBlock_8 switchBlock_8;
+                    component UnitDelay_4 {
+                      port
+                        in Double valueIn,
+                        out Double valueOut;
+
+                    }
+instance UnitDelay_4 unitDelay_4;
+                    component SwitchBlock1_5 {
+                      port
+                        in Double elseIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock1_5 switchBlock1_5;
+  connect limiter_Active.vMax_kmh -> switchBlock_8.ifIn;
+  connect in1 -> limiter_Active.in1;
+  connect switchBlock1_5.out1 -> switchBlock_8.elseIn;
+  connect switchBlock_8.out1 -> unitDelay_4.valueIn;
+  connect switchBlock_8.out1 -> vMax_kmh;
+  connect unitDelay_4.valueOut -> switchBlock1_5.elseIn;
+                  }
+instance Limiter_Enabled limiter_Enabled;
+                  component SwitchBlock_12 {
+                    port
+                      in Double elseIn,
+                      out Double vMax_kmh;
+
+                  }
+instance SwitchBlock_12 switchBlock_12;
+  connect limiter_InitialSetValue.out4 -> switchBlock6_2.ifIn;
+  connect v_Vehicle_kmh -> limiter_InitialSetValue.v_Vehicle_kmh;
+  connect switchBlock6_2.out1 -> switchBlock5_2.elseIn;
+  connect switchBlock5_2.out1 -> limiter_Enabled.in1;
+  connect limiter_Enabled.vMax_kmh -> switchBlock_12.elseIn;
+  connect switchBlock_12.vMax_kmh -> vMax_kmh;
+                }
+instance Limiter_Function limiter_Function;
+                component SwitchBlock2_5 {
+                  port
+                    in Double ifIn,
+                    out Double out1,
+                    in Double elseIn;
+
+                }
+instance SwitchBlock2_5 switchBlock2_5;
+                component UnitDelay_5 {
+                  port
+                    in Double valueIn,
+                    out Double valueOut;
+
+                }
+instance UnitDelay_5 unitDelay_5;
+  connect switchBlock2_5.out1 -> unitDelay_5.valueIn;
+  connect unitDelay_5.valueOut -> switchBlock2_5.elseIn;
+  connect limiter_Function.vMax_kmh -> switchBlock2_5.ifIn;
+  connect switchBlock2_5.out1 -> vMax_kmh;
+  connect v_Vehicle_kmh -> limiter_Function.v_Vehicle_kmh;
+              }
+instance Limiter limiter;
+              component VelocityControl {
+                port
+                  in Double vMax_kmh;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double v_Vehicle_kmh4;
+
+  connect v_Vehicle_kmh -> v_Vehicle_kmh4;
+              }
+instance FAS_Input fAS_Input;
+  connect limiter.vMax_kmh -> velocityControl.vMax_kmh;
+  connect fAS_Input.v_Vehicle_kmh4 -> limiter.v_Vehicle_kmh;
+  connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh;
+
+  connect v_Vehicle_b -> v_Vehicle_kmh;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+  connect dEMO_FAS_Input.v_Vehicle_kmh -> dEMO_FAS_Funktion.v_Vehicle_kmh;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component Log2CommandTest{
+    implementation Math{
+        Q a = log2(15);
+    }
+}

@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component V_Vehicle_kmh {
+      port
+        in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+    }
+

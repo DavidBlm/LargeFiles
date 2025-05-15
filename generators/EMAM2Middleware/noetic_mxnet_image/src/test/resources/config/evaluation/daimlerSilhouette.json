@@ -1,0 +1,23 @@
+{
+  "modelsDir": "src/test/resources/daimlerModel/",
+  "outputDir": "target/evaluation/daimlerSilhouette/",
+  "rootModel": "daimler.v4.oeffentlicher_Demonstrator_FAS_v04",
+  "generators": [
+    "cpp"
+  ],
+  "writeTagFile": true,
+  "clusteringParameters": {
+    "flatten": true,
+    "metric": "Silhouette",
+    "algorithmParameters": [
+      {
+        "name": "SpectralClustering",
+        "numberOfClusters": {
+          "min": 3,
+          "max": 1000,
+          "count": 100
+        }
+      }
+    ]
+  }
+}

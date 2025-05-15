@@ -1,0 +1,74 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+        component Limit {
+          port
+            out B b_max,
+            out B b_min,
+            in Number mN,
+            in Number mX,
+            in Number u,
+            out Number y;
+instance LogOp_A_5_And logOp_A_5;
+instance LogOp_N_8_Not logOp_N_8;
+instance RelOp_MN_Smaller relOp_MN;
+instance RelOp_MX_Greater relOp_MX;
+instance Switch_MN switch_MN;
+instance Switch_MX switch_MX;
+instance Condition_49 condition_49;
+instance Condition1_25 condition1_25;
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MX.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.yOut1*/
+          connect switch_MX.out1 -> y;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MX.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.b_maxOut2*/
+          connect relOp_MX.out1 -> b_max;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.logOp_A.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.b_minOut3*/
+          connect logOp_A_5.out1 -> b_min;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MX.condition*/
+          connect condition_49.out1 -> switch_MX.condition;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MN.condition*/
+          connect condition1_25.out1 -> switch_MN.condition;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MX.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.condition.in1*/
+          connect relOp_MX.out1 -> condition_49.in1;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MN.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.condition1.in1*/
+          connect relOp_MN.out1 -> condition1_25.in1;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MX.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.logOp_N.in1*/
+          connect relOp_MX.out1 -> logOp_N_8.in1;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.mXIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MX.ifIn*/
+          connect mX -> switch_MX.ifIn;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.mXIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MX.in2*/
+          connect mX -> relOp_MX.in2;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.mNIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MN.in2*/
+          connect mN -> relOp_MN.in2;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.mNIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MN.ifIn*/
+          connect mN -> switch_MN.ifIn;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MN.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MX.elseIn*/
+          connect switch_MN.out1 -> switch_MX.elseIn;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.logOp_N.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.logOp_A.in1*/
+          connect logOp_N_8.out1 -> logOp_A_5.in1;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MN.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.logOp_A.in2*/
+          connect relOp_MN.out1 -> logOp_A_5.in2;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.uIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.switch_MN.elseIn*/
+          connect u -> switch_MN.elseIn;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.uIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MX.in1*/
+          connect u -> relOp_MX.in1;
+
+          /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.uIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.relOp_MN.in1*/
+          connect u -> relOp_MN.in1;
+
+        }
+

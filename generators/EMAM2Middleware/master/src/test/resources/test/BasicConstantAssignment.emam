@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicConstantAssignment{
+
+    implementation Math{
+        Q^{4,4} m=[1,2,3,4;2,3,4,1;3,4,1,2;4,1,2,3];
+    }
+}

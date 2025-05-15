@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component ManualSwitch2 {
+      port
+        out B cruiseControl_b,
+        in Number in1,
+        in Number in2;
+    }
+

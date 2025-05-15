@@ -1,0 +1,3 @@
+defaultGANPreprocessing.GeneratorWithPreprocessing src/test/resources/training_data/Cifar
+defaultGAN.DefaultGANGenerator src/test/resources/training_data/Cifar
+infoGAN.InfoGANGenerator src/test/resources/training_data/Cifar

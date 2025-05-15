@@ -1,0 +1,354 @@
+# (c) https://github.com/MontiCore/monticore
+
+stages:
+  - prebuild
+  - test
+  - testmodular
+  - build
+
+
+#TestMXNET:
+#  stage: build
+#  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/mnistcalculator/mxnet:v0.0.5
+#  script:
+#  - cd mxnet
+#  - chmod +x build.sh
+#  - ./build.sh
+#  - RES=$(./build/src/cpp/DigitCalculator resources/images/1.png resources/images/2.png resources/images/3.png resources/images/4.png resources/images/5.png resources/images/6.png)
+#  - "if [[ $RES != *\"SUM: 579\"* ]]; then echo \"Wrong result:\" $RES; exit 1; fi;"
+
+#TestCAFFE2:
+#  stage: build
+#  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/mnistcalculator/caffe2:v0.0.2
+#  script:
+#  - cd caffe2
+#  - chmod +x build.sh
+#  - ./build.sh
+#  - RES=$(./build/src/cpp/DigitCalculator resources/images/2.jpg resources/images/3.jpg resources/images/4.png resources/images/6.png resources/images/2.jpg resources/images/3.jpg)
+#  - "if [[ $RES != *\"SUM: 857\"* ]]; then echo \"Wrong result:\" $RES; exit 1; fi;"
+
+
+TestTENSORFLOW:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/mnistcalculator/tensorflow
+  when: always
+  script:
+    - cd tensorflow
+    - chmod +x build.sh
+    - ./build.sh
+    - RES=$(./build/src/cpp/DigitCalculator resources/images/1.png resources/images/2.png resources/images/3.png resources/images/4.png resources/images/5.png resources/images/6.png)
+    - 'if [[ $RES != *"SUM: 579"* ]]; then echo "Wrong result:" $RES; exit 1; fi;'
+  except:
+    - modular_testing
+
+TestMavenStreamtestPlugin:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  when: always
+  script:
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - cd mnist-calculator
+    - mvn streamtest:streamtest-build -s settings.xml
+  except:
+    - modular_testing
+
+TestEMADLMavenPlugin:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  when: always
+  script:
+    - cd emadl-maven-plugin
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - mvn dependency:resolve emadl:train -s settings.xml -U
+    - mkdir output
+    - python3 calculator.py
+  artifacts:
+    paths:
+      - emadl-maven-plugin/output/*
+    expire_in: 1 week
+  except:
+    - modular_testing
+
+TestModularModels:
+  stage: testmodular
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  when: always
+  script:
+    - apt update && apt install -y libomp-dev
+    - cd mnist-modular/Streamtest
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - mvn dependency:resolve emadl:train -s settings.xml -U
+    - mkdir output
+    - python3 calculator.py
+  artifacts:
+    paths:
+      - mnist-modular/Streamtest/output/*
+
+TestDecomposition:
+  stage: testmodular
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  when: always
+  script:
+    - export TZ=Europe/Berlin && apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata
+    - apt update && apt install -y libomp-dev libopencv-dev python3-opencv
+    - ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    - dpkg-reconfigure --frontend noninteractive tzdata
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - ln /usr/bin/python3 /usr/bin/python -f
+    - cd mnist-modular/Streamtest
+    - mvn dependency:resolve -s settings.xml -U
+    - cd ../Decomposition
+    - ./runDecomposition.sh
+    - STATUS=$?
+    - 'if [[ $STATUS -eq 1 ]]; then echo "Error during decomposition." $RES; exit 1; fi;'
+
+  artifacts:
+    paths:
+      - mnist-modular/Streamtest/output/*
+
+TestDecompositionResNet:
+  stage: testmodular
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  when: always
+  script:
+    - export TZ=Europe/Berlin
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata libomp-dev libopencv-dev python3-opencv
+    - ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    - dpkg-reconfigure --frontend noninteractive tzdata
+    - python3 -m pip install --upgrade pip
+    - python3 -m pip install scikit-image opencv-python
+    - ln -fs /usr/bin/python3 /usr/bin/python
+    - cd mnist-modular/DecompositionResNet
+    - mvn dependency:resolve emadl:train -s settings.xml -U
+  needs:
+    - TestEMADLMavenPlugin
+
+TestTransfer:
+  stage: testmodular
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  when: always
+  script:
+    - export TZ=Europe/Berlin
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata libomp-dev libopencv-dev python3-opencv
+    - ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    - dpkg-reconfigure --frontend noninteractive tzdata
+    - python3 -m pip install -U pip scikit-image opencv-python
+    - ln -fs /usr/bin/python3 /usr/bin/python
+    - cd transfer
+    - chmod +x runTransfer.sh
+    - ./runTransfer.sh
+
+
+TestMnistWithAdaNet:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1
+  when: always
+  script:
+    - mv /mxnet/build/libmxnet.so /mxnet/build/libmxnet.a /usr/lib/
+    - cd AdaNet
+    - mvn dependency:resolve emadl:train -s settings.xml
+  except:
+    - modular_testing
+
+TestMNISTwithCustomLayer:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1
+  when: always
+  script:
+    - shopt -s expand_aliases
+    - echo 'alias python='\''/usr/bin/python3'\''' >> ~/.bashrc
+    - . ~/.bashrc
+    - cat ~/.bashrc
+    - echo $PYTHONPATH
+    - python --version
+    - python3 --version
+    - which python
+    - which python3
+    - alias python=/usr/bin/python3
+    - python --version
+    - python3 --version
+    - which python
+    - type -a python
+    - mv /mxnet/build/libmxnet.so /mxnet/build/libmxnet.a /usr/lib/
+    - cd mnist-custom-layer
+    - mvn dependency:resolve emadl:train -s settings.xml
+  except:
+    - modular_testing
+
+TrainTensorflowONNX:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/tensorflow-onnx:latest
+  artifacts:
+    paths:
+    - onnx/tensorflow-pretrained/model/
+    expire_in: 1 day
+  script:
+    - cd onnx/tensorflow-pretrained
+    - mvn dependency:resolve emadl:train -s settings.xml
+  except:
+    - modular_testing
+
+.docker: &docker
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker push $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME
+  - >
+    if [ "$CI_COMMIT_REF_NAME" == "master" ]; 
+    then
+      docker tag $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE/$IMAGE_NAME:latest
+      docker push $CI_REGISTRY_IMAGE/$IMAGE_NAME:latest
+    fi
+  
+
+#base/mxnet:
+#  stage: prebuild
+#  image: docker:dind
+#  only:
+#    changes:
+#     - docker/base/*
+#  variables:
+#    IMAGE_NAME: base/mxnet
+#  script:
+#    - cd docker/base
+#    - docker build -t #$CI_REGISTRY_IMAGE/#$IMAGE_NAME:$CI_COMMIT_REF_NA#ME .
+#    - *docker
+
+#mnistcalculator:
+#  stage: build
+#  image: docker:dind
+#  variables:
+#    IMAGE_NAME: mnistcalculator
+#  script:
+#    - cd emadl-maven-plugin
+#    - docker build -t $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME --build-arg BASE_IMAGE=$CI_REGISTRY_IMAGE/base/mxnet --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} .
+#    - *docker
+
+TestGluonONNX:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170-onnx:v0.0.1
+  needs:
+    - TrainTensorflowONNX
+  script:
+    - mv /mxnet/build/libmxnet.so /mxnet/build/libmxnet.a /usr/lib/
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - cd onnx/tensorflow-pretrained
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - ls model/cNNCalculator.Network/
+    - mvn emadl:install-pretrained -e -s ./settings.xml
+    - cd ../gluon-load
+    - mvn emadl:train -s settings.xml
+    - chmod +x build.sh
+    - ./build.sh
+    - RES=$(./build/src/cpp/DigitCalculator resources/images/1.png resources/images/2.png resources/images/3.png resources/images/4.png resources/images/5.png resources/images/6.png)
+    - "if [[ $RES != *\"SUM: 579\"* ]]; then echo \"Wrong result:\" $RES; exit 1; fi;"
+  except:
+    - modular_testing
+
+
+#Deployment of Maven Artifacts (required for other some of the tranfer experiments)
+
+DeployMnistCalcArtifact:
+  stage: prebuild
+  image: maven:3.6-jdk-8
+  script:
+    - cd "emadl-maven_hexadecimal_calculator/trained_mnist_calc"
+    - 'mvn deploy -s ci_settings.xml'
+
+
+#From experiment mnist-modular: The use of emadl:train is required (thus stage test)
+DeployDecompositionResNetArtifact:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+  script:
+    - export TZ=Europe/Berlin
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata libomp-dev libopencv-dev python3-opencv
+    - ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    - dpkg-reconfigure --frontend noninteractive tzdata
+    - python3 -m pip install --upgrade pip
+    - python3 -m pip install scikit-image opencv-python
+    - ln -fs /usr/bin/python3 /usr/bin/python
+    - cd mnist-modular/DecompositionResNetExport
+    - mvn dependency:resolve -s settings.xml -U -f pom_build.xml
+    - mvn emadl:train -s settings.xml -U -f pom_build.xml
+    - mvn deploy -s settings.xml -U -f pom_deploy.xml
+  needs:
+    - TestEMADLMavenPlugin
+
+  
+#Mnist Variants Functional Tests
+#Hexadecimal Calculator
+
+TrainHexadecimal_MnistCalculator:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+
+  script:
+    - cd "emadl-maven_hexadecimal_calculator"
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - echo "$PWD"
+    - cd src/main/emadl/calculator
+    - ls
+    - cd ../../../..
+    - mvn dependency:resolve emadl:train -s settings.xml -U
+
+TrainHexadecimal_MnistCalculatorTL:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+
+  script:
+    - cd "emadl-maven_hexadecimal_calculator_transfer_learning"
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - echo "$PWD"
+    - mvn dependency:resolve  -s settings.xml -U
+    - mvn clean verify -s settings.xml -U
+    - mvn emadl:train -s settings.xml -U
+    - mkdir output
+    - python3 calculator.py
+
+#Operator Calculator
+
+TrainOperator_MnistCalculator:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+
+  script:
+    - cd "emadl-maven_operator_calculator"
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - echo "$PWD"
+    - mvn dependency:resolve emadl:train -s settings.xml -U
+    - mkdir output
+    - python3 calculator.py
+
+TrainOperator_MnistCalculatorTL:
+  stage: test
+  image: registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190:v0.0.2
+
+  script:
+    - cd "emadl-maven_operator_calculator_transfer_learning"
+    - python3 -m pip install -U pip
+    - python3 -m pip install scikit-image
+    - python3 -m pip install opencv-python
+    - echo "$PWD"
+    - mvn dependency:resolve  -s settings.xml -U
+    - mvn clean verify -s settings.xml -U
+    - mvn emadl:train -s settings.xml -U
+    - mkdir output
+    - python3 calculator.py
+

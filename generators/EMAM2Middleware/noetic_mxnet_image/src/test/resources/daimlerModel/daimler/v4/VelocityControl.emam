@@ -1,0 +1,141 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component VelocityControl {
+              port
+                out (0:100) acceleration_pc,
+                in (0:100) acceleration_pedal_pc,
+                in (0:100) brakeForce_Distronic_pc,
+                in (0:100) brakeForce_Emergency_pc,
+                out (0:100) brakeForce_pc,
+                in (0:100) brakeForce_pedal_pc,
+                in (0:100) brakeForceBoosted_pc,
+                in (0:100) decelerator_pc,
+                in Number v_CC_delta_kmh,
+                in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh,
+                in Number vMax_kmh;
+instance Constant1_29_value_0 constant1_29;
+instance Constant2_7_value_0 constant2_7;
+instance Constant3_5_value_0 constant3_5;
+instance Constant4_3_value_0 constant4_3;
+instance Constant5_2_value_100 constant5_2;
+instance LogOp_2_And logOp_2;
+instance LookUpTable_3 lookUpTable_3;
+instance LookUpTable1_3 lookUpTable1_3;
+instance MinMax1 minMax1;
+instance MinMax2 minMax2;
+instance Mul_3 mul_3;
+instance RelOp_9_Greater relOp_9;
+instance RelOp1_6_Greater relOp1_6;
+instance Saturation_1 saturation_1;
+instance Saturation1_2 saturation1_2;
+instance SwitchBlock_35 switchBlock_35;
+instance SwitchBlock1_18 switchBlock1_18;
+instance SwitchBlock2_12 switchBlock2_12;
+instance VERSION_INFO_48 vERSION_INFO_48;
+instance Condition_45 condition_45;
+instance Condition1_22 condition1_22;
+instance Condition2_12 condition2_12;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock2.acceleration_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.acceleration_pcOut1*/
+              connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.brakeForce_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.brakeForce_pcOut2*/
+              connect minMax2.brakeForce_pc -> brakeForce_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.condition2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock1.condition*/
+              connect condition2_12.out1 -> switchBlock1_18.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock2.condition*/
+              connect condition_45.out1 -> switchBlock2_12.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock.condition*/
+              connect condition1_22.out1 -> switchBlock_35.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.brakeForce_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.condition.in1*/
+              connect minMax2.brakeForce_pc -> condition_45.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.logOp.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.condition1.in1*/
+              connect logOp_2.out1 -> condition1_22.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.condition2.in1*/
+              connect minMax1.out1 -> condition2_12.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.constant5.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.mul.in3*/
+              connect constant5_2.out1 -> mul_3.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.mul.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock2.elseIn*/
+              connect mul_3.out1 -> switchBlock2_12.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.decelerator_pcIn8 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.mul.in1*/
+              connect decelerator_pc -> mul_3.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.constant3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock2.ifIn*/
+              connect constant3_5.out1 -> switchBlock2_12.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock.acceleration_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.mul.acceleration_pcIn2*/
+              connect switchBlock_35.acceleration_pc -> mul_3.acceleration_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.brakeForce_Distronic_pcIn7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.in4*/
+              connect brakeForce_Distronic_pc -> minMax2.in4;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.brakeForce_Emergency_pcIn9 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.in5*/
+              connect brakeForce_Emergency_pc -> minMax2.in5;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.constant4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock1.ifIn*/
+              connect constant4_3.out1 -> switchBlock1_18.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock.elseIn*/
+              connect minMax1.out1 -> switchBlock_35.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.in1*/
+              connect switchBlock1_18.out1 -> minMax2.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.brakeForce_pedal_pcIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.in3*/
+              connect brakeForce_pedal_pc -> minMax2.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.lookUpTable1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock1.elseIn*/
+              connect lookUpTable1_3.out1 -> switchBlock1_18.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.brakeForceBoosted_pcIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax2.in2*/
+              connect brakeForceBoosted_pc -> minMax2.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.saturation1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.lookUpTable1.in1*/
+              connect saturation1_2.out1 -> lookUpTable1_3.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.saturation.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.lookUpTable.in1*/
+              connect saturation_1.out1 -> lookUpTable_3.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.constant2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.relOp1.in2*/
+              connect constant2_7.out1 -> relOp1_6.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.acceleration_pedal_pcIn4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax1.in1*/
+              connect acceleration_pedal_pc -> minMax1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.vMax_kmhIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.relOp.in2*/
+              connect vMax_kmh -> relOp_9.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.vMax_kmhIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.relOp1.in1*/
+              connect vMax_kmh -> relOp1_6.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.v_Vehicle_kmhIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.relOp.in1*/
+              connect v_Vehicle_kmh -> relOp_9.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.lookUpTable.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.minMax1.in2*/
+              connect lookUpTable_3.out1 -> minMax1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.v_CC_delta_kmhIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.saturation.in1*/
+              connect v_CC_delta_kmh -> saturation_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.v_CC_delta_kmhIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.saturation1.in1*/
+              connect v_CC_delta_kmh -> saturation1_2.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.relOp.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.logOp.in1*/
+              connect relOp_9.out1 -> logOp_2.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.relOp1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.logOp.in2*/
+              connect relOp1_6.out1 -> logOp_2.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.velocityControl.switchBlock.ifIn*/
+              connect constant1_29.out1 -> switchBlock_35.ifIn;
+
+            }
+

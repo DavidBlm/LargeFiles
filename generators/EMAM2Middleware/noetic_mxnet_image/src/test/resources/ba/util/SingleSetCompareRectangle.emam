@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+import ba.struct.Rectangle;
+
+//TODO: x has to be (n-1)n/2
+//TODO: EMAM2Cpp does not work with struct generics
+component SingleSetCompareRectangle<N1 n = 2,N1 x = 1>{
+    ports in Rectangle setIn[n],
+          out Rectangle outA[x],
+          out Rectangle outB[x];
+
+    implementation Math{
+        Z counter = 1;
+        for i = 1:n
+            for j = (i+1):n
+                outA(counter) = setIn(i);
+                outB(counter) = setIn(j);
+                counter = counter + 1;
+            end
+        end
+    }
+}

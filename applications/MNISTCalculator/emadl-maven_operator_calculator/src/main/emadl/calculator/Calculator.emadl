@@ -1,0 +1,50 @@
+/* (c) https://github.com/MontiCore/monticore */
+/* Calculator adapted with calculate, receiving the operation as input (for now) */
+package calculator;
+
+component Calculator {
+        ports  
+                in Q(0:1)^13 in1_1,
+                in Q(0:1)^13 in1_2,
+                in Q(0:1)^13 in1_3,
+                in Q(0:1)^13 in2_1,
+                in Q(0:1)^13 in2_2,
+                in Q(0:1)^13 in2_3,
+                in Q(0:1)^13 in_op,
+
+                out Q(0:998001) out1;
+        
+        instance ArgMax<13> number1ones;
+        instance ArgMax<13> number1tens;
+        instance ArgMax<13> number1hundreds;
+        instance ArgMax<13> number2ones;
+        instance ArgMax<13> number2tens;
+        instance ArgMax<13> number2hundreds;
+        instance ArgMax<13> determineOperator;
+        instance DigitCombiner c1;
+        instance DigitCombiner c2;
+        instance Calculate calculate;
+
+
+        connect in1_1 -> number1hundreds.inputVector;
+        connect in1_2 -> number1tens.inputVector;
+        connect in1_3 -> number1ones.inputVector;
+        connect in2_1 -> number2hundreds.inputVector;
+        connect in2_2 -> number2tens.inputVector;
+        connect in2_3 -> number2ones.inputVector;
+        connect in_op -> determineOperator.inputVector;
+
+        connect number1ones.maxIndex -> c1.ones;
+        connect number1tens.maxIndex -> c1.tens;
+        connect number1hundreds.maxIndex -> c1.hundreds;
+        connect number2ones.maxIndex -> c2.ones;
+        connect number2tens.maxIndex -> c2.tens;
+        connect number2hundreds.maxIndex -> c2.hundreds;
+
+        connect c1.number -> calculate.num1;
+        connect c2.number -> calculate.num2;
+        connect determineOperator.maxIndex -> calculate.op;
+
+        connect calculate.result -> out1;
+
+}

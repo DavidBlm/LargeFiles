@@ -1,0 +1,296 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA6.
+  component Oeffentlicher_Demonstrator_FAS_v04FA6 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _Distance_Object_m,
+              in Double _V_Obj_rel_kmh,
+              in Double _V_Vehicle_kmh,
+              out Double _Acceleration_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double distance_Object_m1,
+                in Double v_Obj_rel_kmh1,
+                in Double v_Vehicle_kmh1,
+                out Double acceleration_pc;
+
+              component Tempomat {
+                port
+                  out Double v_CC_delta_kmh;
+
+              }
+instance Tempomat tempomat;
+              component Distronic {
+                port
+                  in Double distance_Object_m,
+                  in Double v_Obj_rel_kmh,
+                  in Double v_Vehicle_ms,
+                  out Double decelerator_pc;
+
+                component Distronic_Enabled {
+                  port
+                    in Double distance_Object_m,
+                    out Double decelerator_pc,
+                    in Double v_Vehicle_ms,
+                    in Double v_Obj_rel_kmh;
+
+                  component Sum_1 {
+                    port
+                      in Double in1,
+                      out Double out1,
+                      in Double in2;
+
+                  }
+instance Sum_1 sum_1;
+                  component LookUpTable2 {
+                    port
+                      in Double in1,
+                      out Double decelerator_pc;
+
+                  }
+instance LookUpTable2 lookUpTable2;
+                  component Mul2 {
+                    port
+                      in Double decelerator_pc,
+                      out Double decelerator_pcOut1,
+                      in Double in2;
+
+                  }
+instance Mul2 mul2;
+                  component Mul_2 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Mul_2 mul_2;
+                  component LookUpTable3 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance LookUpTable3 lookUpTable3;
+  connect mul_2.out1 -> sum_1.in2;
+  connect v_Vehicle_ms -> mul_2.in1;
+  connect sum_1.out1 -> lookUpTable2.in1;
+  connect distance_Object_m -> sum_1.in1;
+  connect lookUpTable3.out1 -> mul2.in2;
+  connect v_Obj_rel_kmh -> lookUpTable3.in1;
+  connect lookUpTable2.decelerator_pc -> mul2.decelerator_pc;
+  connect mul2.decelerator_pcOut1 -> decelerator_pc;
+                }
+instance Distronic_Enabled distronic_Enabled;
+                component SwitchBlock4_1 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock4_1 switchBlock4_1;
+  connect distronic_Enabled.decelerator_pc -> switchBlock4_1.ifIn;
+  connect switchBlock4_1.out1 -> decelerator_pc;
+  connect distance_Object_m -> distronic_Enabled.distance_Object_m;
+  connect v_Vehicle_ms -> distronic_Enabled.v_Vehicle_ms;
+  connect v_Obj_rel_kmh -> distronic_Enabled.v_Obj_rel_kmh;
+              }
+instance Distronic distronic;
+              component FAS_Input {
+                port
+                  in Double distance_Object_m4,
+                  out Double distance_Object_m1,
+                  in Double v_Obj_rel_kmh2,
+                  out Double v_Obj_rel_kmh,
+                  in Double v_Vehicle_kmh1,
+                  out Double v_Vehicle_ms1;
+
+                component Div_2 {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double v_Vehicle_ms;
+
+                }
+instance Div_2 div_2;
+  connect v_Vehicle_kmh1 -> div_2.v_Vehicle_kmh;
+  connect div_2.v_Vehicle_ms -> v_Vehicle_ms1;
+  connect distance_Object_m4 -> distance_Object_m1;
+  connect v_Obj_rel_kmh2 -> v_Obj_rel_kmh;
+              }
+instance FAS_Input fAS_Input;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh,
+                  out Double acceleration_pc,
+                  in Double decelerator_pc;
+
+                component Saturation_1 {
+                  port
+                    in Double in1,
+                    out Double out1;
+
+                }
+instance Saturation_1 saturation_1;
+                component LookUpTable_3 {
+                  port
+                    in Double in1,
+                    out Double out1;
+
+                }
+instance LookUpTable_3 lookUpTable_3;
+                component MinMax1 {
+                  port
+                    in Double in2,
+                    out Double out1;
+
+                }
+instance MinMax1 minMax1;
+                component SwitchBlock_35 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock_35 switchBlock_35;
+                component Mul_3 {
+                  port
+                    in Double acceleration_pc,
+                    out Double out1,
+                    in Double in1;
+
+                }
+instance Mul_3 mul_3;
+                component SwitchBlock2_12 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect saturation_1.out1 -> lookUpTable_3.in1;
+  connect lookUpTable_3.out1 -> minMax1.in2;
+  connect switchBlock_35.acceleration_pc -> mul_3.acceleration_pc;
+  connect mul_3.out1 -> switchBlock2_12.elseIn;
+  connect decelerator_pc -> mul_3.in1;
+  connect minMax1.out1 -> switchBlock_35.elseIn;
+  connect v_CC_delta_kmh -> saturation_1.in1;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+              }
+instance VelocityControl velocityControl;
+  connect distronic.decelerator_pc -> velocityControl.decelerator_pc;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect fAS_Input.distance_Object_m1 -> distronic.distance_Object_m;
+  connect fAS_Input.v_Obj_rel_kmh -> distronic.v_Obj_rel_kmh;
+  connect fAS_Input.v_Vehicle_ms1 -> distronic.v_Vehicle_ms;
+  connect distance_Object_m1 -> fAS_Input.distance_Object_m4;
+  connect v_Obj_rel_kmh1 -> fAS_Input.v_Obj_rel_kmh2;
+  connect v_Vehicle_kmh1 -> fAS_Input.v_Vehicle_kmh1;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double distance_Object_mIn13,
+                out Double distance_Object_m1,
+                in Double v_Obj_rel_kmhIn12,
+                out Double v_Obj_rel_kmh1,
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh1;
+
+  connect distance_Object_mIn13 ->   distance_Object_m1;
+  connect v_Obj_rel_kmhIn12 -> v_Obj_rel_kmh1;
+  connect v_Vehicle_b -> v_Vehicle_kmh1;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2;
+
+  connect acceleration_pc -> acceleration_pcOut2;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.distance_Object_m1 ->   dEMO_FAS_Funktion.distance_Object_m1;
+  connect dEMO_FAS_Input.v_Obj_rel_kmh1 -> dEMO_FAS_Funktion.v_Obj_rel_kmh1;
+  connect dEMO_FAS_Input.v_Vehicle_kmh1 -> dEMO_FAS_Funktion.v_Vehicle_kmh1;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect _Distance_Object_m -> dEMO_FAS_Input.distance_Object_mIn13;
+  connect _V_Obj_rel_kmh -> dEMO_FAS_Input.v_Obj_rel_kmhIn12;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

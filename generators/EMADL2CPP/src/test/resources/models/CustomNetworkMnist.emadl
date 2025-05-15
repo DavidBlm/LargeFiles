@@ -1,0 +1,17 @@
+component CustomNetworkMnist{
+    ports in Z(0:255)^{1, 28, 28} image,
+         out Q(0:1)^{10} predictions;
+
+    implementation CNN {
+        image ->
+        Convolution(kernel=(5,5), channels=20, padding="valid") ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2), padding="valid") ->
+        Convolution(kernel=(5,5), channels=50, padding="valid") ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2), padding="valid") ->
+        FullyConnected(units=500) ->
+        MyELU(alpha=1) ->
+        FullyConnected(units=10) ->
+        Softmax() ->
+		predictions;
+    }
+}

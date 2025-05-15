@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                    component CompareToZero3_15 {
+                      port
+                        in B u,
+                        out B y;
+instance Compare_76_GreaterEquals compare_76;
+instance Constant_111_value_0 constant_111;
+                      /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.risingEdgeDetector2.compareToZero3.compare.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.risingEdgeDetector2.compareToZero3.yOut1*/
+                      connect compare_76.out1 -> y;
+
+                      /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.risingEdgeDetector2.compareToZero3.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.risingEdgeDetector2.compareToZero3.compare.in1*/
+                      connect u -> compare_76.in1;
+
+                      /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.risingEdgeDetector2.compareToZero3.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.risingEdgeDetector2.compareToZero3.compare.in2*/
+                      connect constant_111.out1 -> compare_76.in2;
+
+                    }
+

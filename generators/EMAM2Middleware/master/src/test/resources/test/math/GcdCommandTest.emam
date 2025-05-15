@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component GcdCommandTest{
+    implementation Math{
+        Q^{1,3} a = gcd(10,8);
+    }
+}

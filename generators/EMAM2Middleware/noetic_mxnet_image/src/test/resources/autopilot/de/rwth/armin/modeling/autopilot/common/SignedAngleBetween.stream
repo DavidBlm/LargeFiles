@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+stream SignedAngleBetween for SignedAngleBetween {
+  v1x:     1.0               tick   0.0            tick  1.0            tick    1.0            tick   1.0          tick    1.0          tick    0.0           tick    0.0          ;
+  v1y:     0.0               tick   1.0            tick  1.0            tick    1.0            tick   1.0          tick    1.0          tick    0.0           tick    0.0          ;
+  v2x:     0.0               tick  -1.0            tick -1.0            tick   10.0            tick -10.0          tick    0.0          tick    1.0           tick    0.0          ;
+  v2y:    -1.0               tick   0.0            tick  0.0            tick    2.0            tick -10.0          tick    0.0          tick    1.0           tick    0.0          ;
+  angle:   1.57 +/- 0.01     tick  -1.57 +/- 0.01  tick -2.35 +/- 0.01  tick    0.58 +/- 0.01  tick -3.14 +/- 0.01 tick    0.0 +/- 0.01 tick    0.0 +/- 0.01  tick    0.0 +/- 0.01 ;
+}

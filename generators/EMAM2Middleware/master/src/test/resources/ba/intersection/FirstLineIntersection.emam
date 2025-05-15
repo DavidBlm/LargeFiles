@@ -1,0 +1,37 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.intersection;
+
+//Finds the earliest line intersection from a set of LineIntersection components
+component FirstLineIntersection<N1 m1 = 9, N1 m2 = 45>{
+    ports in B collisionIn[m2],
+          in Q^{2,1} pointsIn[m2],
+
+          out B collisionOut,
+          out Z lIndexA,
+          out Z lIndexB,
+          out Q^{2,1} pos;
+
+	//TODO: bug: must not always be earliest crash pos
+	//TODO: remove: filter all with TimeCutoff and MultiOr
+    implementation Math{
+        Z k = 1;
+        B found = false;
+
+        for i = 1:m1
+            for j = i:m1
+                if found == false
+                    if collisionIn(k)
+                        lIndexA = i;
+                        lIndexB = j;
+                        pos = pointsIn(k);
+                        found = true;
+                    end
+                    k = k + 1;
+                end
+            end
+        end
+
+        collisionOut = found;
+    }
+
+}

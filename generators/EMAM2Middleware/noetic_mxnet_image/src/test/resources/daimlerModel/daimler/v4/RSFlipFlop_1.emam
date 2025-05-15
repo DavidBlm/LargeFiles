@@ -1,0 +1,54 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component RSFlipFlop_1 {
+                    port
+                      out B nOT_Q,
+                      out B q,
+                      in B r,
+                      in B s;
+instance LogOp_N_2_Not logOp_N_2;
+instance Memory_Q_1 memory_Q_1;
+instance One_S_1 one_S_1;
+instance Switch_R_2 switch_R_2;
+instance Switch_S_1 switch_S_1;
+instance Zero_R_1 zero_R_1;
+instance Condition_9 condition_9;
+instance Condition1_5 condition1_5;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.qOut1*/
+                    connect switch_R_2.out1 -> q;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.logOp_N.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.nOT_QOut2*/
+                    connect logOp_N_2.out1 -> nOT_Q;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_S.condition*/
+                    connect condition_9.out1 -> switch_S_1.condition;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_R.condition*/
+                    connect condition1_5.out1 -> switch_R_2.condition;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.sIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.condition.in1*/
+                    connect s -> condition_9.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.rIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.condition1.in1*/
+                    connect r -> condition1_5.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.memory_Q.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_S.elseIn*/
+                    connect memory_Q_1.out1 -> switch_S_1.elseIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_S.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_R.elseIn*/
+                    connect switch_S_1.out1 -> switch_R_2.elseIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.one_S.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_S.ifIn*/
+                    connect one_S_1.out1 -> switch_S_1.ifIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.memory_Q.in1*/
+                    connect switch_R_2.out1 -> memory_Q_1.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.logOp_N.in1*/
+                    connect switch_R_2.out1 -> logOp_N_2.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.zero_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.rSFlipFlop.switch_R.ifIn*/
+                    connect zero_R_1.out1 -> switch_R_2.ifIn;
+
+                  }
+

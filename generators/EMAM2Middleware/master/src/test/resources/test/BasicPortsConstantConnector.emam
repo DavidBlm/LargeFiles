@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicPortsConstantConnector{
+    ports out (-oo:oo) out1,out B out2;
+
+     connect true -> out2;
+
+     connect 1.0 -> out1;
+}

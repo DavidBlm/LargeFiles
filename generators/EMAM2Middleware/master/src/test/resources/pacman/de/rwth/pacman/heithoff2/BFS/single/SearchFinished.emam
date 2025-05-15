@@ -1,0 +1,32 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS.single;
+
+component SearchFinished {
+    ports
+      in Z^{22,19} map,
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in B oldSafe,
+      in B oldSafeFound,
+      
+      out B safeFound,
+      out B safe,
+      out B finished;
+    
+    implementation Math {
+        safeFound = oldSafeFound;
+        safe = oldSafe;
+        finished = 0;
+        Z currentTile = 0;//map(currentY, currentX);
+        if (currentY < 23) && (currentY > 0) && (currentX < 20) && (currentX > 0)
+            currentTile = map(currentY, currentX);
+        end
+        if (currentTile == 0) || (currentTile == 3) // begin within a wall-tile, nothing to check
+            safeFound = 1;
+            safe = 1;
+            finished = 1;
+        elseif (oldSafeFound == 1) || (oldSafe == 0) // already at an intersection or a ghost was found
+            finished = 1;
+        end
+    }
+}

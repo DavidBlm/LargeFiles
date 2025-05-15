@@ -1,0 +1,21 @@
+package digits;
+
+component DigitsInputLayer {
+       ports in Q(0:1)^{1, 28, 28} data,
+            out Q^{128} vector;
+
+       implementation CNN {
+            def conv(channels, kernel=1, stride=1){
+                     Convolution(kernel=(kernel,kernel),channels=channels) ->
+                     Relu() ->
+                     Pooling(pool_type="max", kernel=(2,2), stride=(stride,stride))
+            }
+
+            data ->
+            conv(kernel=5, channels=20, stride=2) ->
+            conv(kernel=5, channels=50, stride=2) ->
+            FullyConnected(units=128) ->
+            vector;
+       }
+}
+

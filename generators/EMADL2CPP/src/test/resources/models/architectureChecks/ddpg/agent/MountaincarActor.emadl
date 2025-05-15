@@ -1,0 +1,21 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ddpg.agent;
+
+component MountaincarActor {
+    ports
+        in Q^{2} state,
+        in Q^{2} state2,
+        out Q(-1:1)^{1} action,
+        out Q(-1:1)^{1} action2;
+
+    implementation CNN {
+        state -> state2 ->
+        FullyConnected(units=300) ->
+        Relu() ->
+        FullyConnected(units=300) ->
+        Relu() ->
+        FullyConnected(units=1) ->
+        Tanh() ->
+        action -> action2;
+    }
+}

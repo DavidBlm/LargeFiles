@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.environment;
+
+
+component ObstacleSelector {
+    ports
+        in Z^{5,2} nextObstaclePositions,
+        in Z index,
+        
+        out Z x,
+        out Z y;
+
+    implementation Math {
+        
+        x = nextObstaclePositions(index,1);
+        y = nextObstaclePositions(index,2);
+        
+    }
+    
+}

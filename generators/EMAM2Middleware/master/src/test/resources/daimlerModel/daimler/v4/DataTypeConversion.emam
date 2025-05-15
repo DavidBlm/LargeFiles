@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component DataTypeConversion {
+      port
+        in Number distance_stat,
+        out (0:3) distance_statOut1;
+    }
+

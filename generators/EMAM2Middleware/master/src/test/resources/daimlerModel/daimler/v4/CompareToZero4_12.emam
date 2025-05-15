@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                        component CompareToZero4_12 {
+                          port
+                            in B u,
+                            out B y;
+instance Compare_60_Equals compare_60;
+instance Constant_88_value_0 constant_88;
+                          /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_no_Repeater.risingEdgeDetector3.compareToZero4.compare.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_no_Repeater.risingEdgeDetector3.compareToZero4.yOut1*/
+                          connect compare_60.out1 -> y;
+
+                          /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_no_Repeater.risingEdgeDetector3.compareToZero4.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_no_Repeater.risingEdgeDetector3.compareToZero4.compare.in1*/
+                          connect u -> compare_60.in1;
+
+                          /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_no_Repeater.risingEdgeDetector3.compareToZero4.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_no_Repeater.risingEdgeDetector3.compareToZero4.compare.in2*/
+                          connect constant_88.out1 -> compare_60.in2;
+
+                        }
+

@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+stream CalculatePidParameters for CalculatePidParameters {
+  currentVelocity:       0.0           tick  1.0           tick 3.0           tick 13.0          tick 15.0          ;
+  desiredVelocity:       0.0           tick  2.0           tick 7.0           tick 13.0          tick 13.0          ;
+  paramP:                1.76 +/- 0.01 tick  1.82 +/- 0.01 tick 2.07 +/- 0.01 tick 3.29 +/- 0.01 tick 3.29 +/- 0.01 ;
+  paramI:                0.0           tick  0.0           tick 0.0           tick 0.0           tick 0.0           ;
+  paramD:                0.0           tick  0.0           tick 0.0           tick 0.0           tick 0.0           ;
+  paramDecayCoefficient: 0.0           tick  0.0           tick 0.0           tick 0.0           tick 0.0           ;
+}

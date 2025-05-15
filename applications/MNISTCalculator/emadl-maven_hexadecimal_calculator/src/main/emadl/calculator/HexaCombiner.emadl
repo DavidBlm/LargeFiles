@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+component HexaCombiner{
+    ports
+            in Z(0:16) hundreds,
+            in Z(0:16) tens,
+            in Z(0:16) ones,
+            out Z(0:4096) number;
+
+    implementation Math{
+        number = ones + 16 * tens + 16 * 16 * hundreds;
+    }
+}

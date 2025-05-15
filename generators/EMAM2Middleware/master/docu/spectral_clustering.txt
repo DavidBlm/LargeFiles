@@ -1,0 +1,62 @@
+
+EmbeddedMontiArc automated component clustering
+
+Objective:
+
+Bundle interconnected top level components of the model into different clusters. The aim is to reduce connection and communication overhead between components by grouping affine components into different clusters which then are connected using ROS.
+
+Procedure:
+
+1)	Convert the symbol table of a component into an adjacency matrix
+o	Order all sub components by name (neccessary for the adjacency matrix).
+o	Create adjacency matrix to use with a clustering algorithm, with subcomponents as nodes and connectors between subcomponents as vertices. Sift out all connectors to the super component.
+2)	Feed adjacency matrix into the selected clustering algorithm
+o	We are using the machine learning library "smile ml" (see: https://github.com/haifengl/smile) which provides a broad range of different clustering and partitioning approaches. As a prime example we are using "spectral clustering" here. For a closer look at this approach, see the section below. 
+o	The clustering algorithm yields multiple cluster labels with the clustered entries of the adjacency matrix assigned to them. We have to convert them back to a set of symbol tables of components representing the clusters.
+3)	Generate middleware tags separating the clusters
+o	This will build the cluster-to-ROS connections.
+o	We won’t take account of ports of the super component and only consider connected top level components.
+o	A connection will be established if the target cluster label is different from the source cluster label thus connecting different clusters with each other.
+4)	Feed result into existing manual clustering architecture
+
+
+Spectral Clustering in a nutshell
+
+The goal of spectral clustering is to cluster data which is connected but not compact or not clustered within convex boundaries. Data is basically seen as a connected graph and clustering is the process of finding partitions in the graph based on the affinity (similarity or adjacency) of vertices. 
+The general approach is to perform dimensionality reduction before clustering in fewer dimensions using a standard clustering method (like k-means) on relevant eigenvectors (the "spectrum") of the matrix representation of a graph (Laplacian matrix). 
+
+Basically we follow three steps in spectral clustering
+
+(1) Pre-processing
+Construct a matrix representation of a graph
+
+(2) Decomposition
+* Compute eigenvalues and eigenvectors of the matrix
+* Map each point to a lower-dimensional representation based on one or more eigenvectors
+
+(3) Grouping
+Assign points to two or more clusters, based on the new representation
+
+
+Pre Pre-processing: How to define the affinity of data points and decide upon the connectivity of a similarity graph?
+
+We have to define both, a way to calculate affinity (similarity function), and a respective graph representation (from which then the similarity matrix is derived). Typically a similarity function evaluates the distance, this can either be the classic Euclidian distance or a Gaussian Kernel similarity function.
+The most wide spread approach to a graph representation is kNN, the k nearest neighbors of a vertex. In this approach the k nearest neighbors of a vertex v vote on where v belongs and thus should be connected to. The goal is to connect vertex vi with vertex vj if vj is among the k-nearest neighbors of vi.
+Because this leads to a directed graph, we need an approach to convert it to an undirected one. This can be done in two ways: Either there's an edge if p is NN of q OR q is NN of p. Or there's an edge if p is NN of q AND q is NN of p (this is called mutual kNN, which is in practice a good choice).
+Other possible approaches to decide on the connectivity of a similarity graph are "epsilon neighborhood" (a threshold based approach to construct a binary adjacency matrix) or a fully connected graph in combination with a Gaussian similarity function.
+
+
+Affinity evaluation: Principal Component Analysis (PCA)
+
+It is the affinity of data points, which defines clusters, rather than the absolute (spatial) location or spatial proximity. 
+Within an affinity matrix, data points belonging to the same cluster have a very similar affinity vector to all other data points (eigenvector). Each eigenvector has an eigenvalue which states how prevalent its vector is in the affinity matrix. So those eigenvectors act like a fingerprint for different clusters, representing all datapoints belonging to a specific cluster, in a lower dimensional space.
+
+
+The Laplacian matrix
+
+The Laplacian matrix L is defined as L= D-A, where D is the degree matrix (a diagonal matrix, containing the number of direct neighbors of a vertex) and A is the (binary) adjacency matrix (Aji=1 if vertecies i and j are connected with an edge, 0 otherwise).
+
+
+Further sources of reading
+
+A detailed discussion of different approaches to evaluating affinity and deeper information on spectral clustering in general can be found here: https://arxiv.org/abs/0711.0189

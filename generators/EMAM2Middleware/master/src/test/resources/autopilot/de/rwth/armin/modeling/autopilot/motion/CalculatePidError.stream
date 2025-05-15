@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+stream CalculatePidError for CalculatePidError {
+  currentVelocity:                           1.0          tick     1.0          tick  1.0          tick  10.0           tick 8.0           tick 10.0          ;
+  desiredVelocity:                           1.0          tick     0.0          tick  5.0          tick   3.0           tick 9.1           tick  9.5          ;
+  error:                                     0.0 +/- 0.01 tick  -100.0 +/- 0.01 tick  5.0 +/- 0.01 tick -10.0 +/- 0.01  tick 1.1 +/- 0.01  tick -0.5 +/- 0.01 ;
+}

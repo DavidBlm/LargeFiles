@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package cartpole;
+
+import cartpole.agent.*;
+import cartpole.policy.*;
+
+component Master {
+    ports
+        in Q^{4} state,
+        out Z action;
+
+    instance CartPoleDQN dqn;
+    instance Greedy policy;
+
+    connect state -> dqn.state;
+    connect dqn.qvalues -> policy.values;
+    connect policy.action -> action;
+}

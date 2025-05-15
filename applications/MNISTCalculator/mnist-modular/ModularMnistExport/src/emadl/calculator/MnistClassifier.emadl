@@ -1,0 +1,13 @@
+package calculator;
+
+component MnistClassifier {
+    ports in Q^{500} vector,
+         out Q(0:1)^{10} softmax;
+
+     implementation CNN {
+            vector ->
+            FullyConnected(units=10) ->
+            Softmax() ->
+            softmax;
+        }
+}

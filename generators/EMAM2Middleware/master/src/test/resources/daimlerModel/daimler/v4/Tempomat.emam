@@ -1,0 +1,305 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component Tempomat {
+              port
+                in (0:100) brakeForce_pedal_pc,
+                out B cC_active_b,
+                in B cruiseControl_b,
+                in B fTS_active_b,
+                in Number in1,
+                /* in Number in10, -- in2 to in49 have the same value as in1 
+                in Number in11,
+                in Number in12,
+                in Number in13,
+                in Number in14,
+                in Number in15,
+                in Number in16,
+                in Number in17,
+                in Number in18,
+                in Number in19,
+                in Number in2,
+                in Number in20,
+                in Number in21,
+                in Number in22,
+                in Number in23,
+                in Number in24,
+                in Number in25,
+                in Number in26,
+                in Number in27,
+                in Number in28,
+                in Number in29,
+                in Number in3,
+                in Number in30,
+                in Number in31,
+                in Number in32,
+                in Number in33,
+                in Number in34,
+                in Number in35,
+                in Number in36,
+                in Number in37,
+                in Number in38,
+                in Number in39,
+                in Number in4,
+                in Number in40,
+                in Number in41,
+                in Number in42,
+                in Number in43,
+                in Number in44,
+                in Number in45,
+                in Number in46,
+                in Number in47,
+                in Number in48,
+                in Number in49,
+                in Number in5,
+                in Number in6,
+                in Number in7,
+                in Number in8,
+                in Number in9, */
+                in (0:2) leverDown_Stat,
+                in (0:2) leverUp_Stat,
+                in B limiter_b,
+                out Number out1,
+                out Number out2,
+                in B parkingBrake_b,
+                out Number v_CC_delta_kmh,
+                in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Constant_38_value_1 constant_38;
+instance Tempomat_Function tempomat_Function;
+instance VERSION_INFO_46 vERSION_INFO_46;
+instance SwitchBlock_34 switchBlock_34;
+instance Condition_44 condition_44;
+instance SwitchBlock1_17 switchBlock1_17;
+instance Condition1_21 condition1_21;
+instance Condition2_11 condition2_11;
+instance SwitchBlock2_11 switchBlock2_11;
+instance Constant1_28_value_0 constant1_28;
+instance Condition3_10 condition3_10;
+instance SwitchBlock3_12 switchBlock3_12;
+instance Constant2_6_value_0 constant2_6;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.v_CC_delta_kmhOut1*/
+              connect switchBlock2_11.out1 -> v_CC_delta_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.cC_active_bOut2*/
+              connect switchBlock3_12.out1 -> cC_active_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.out1*/
+              connect switchBlock_34.out1 -> out1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.out2*/
+              connect switchBlock1_17.out1 -> out2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in1*/
+              connect in1 -> tempomat_Function.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in2*/
+              // connect in2 -> tempomat_Function.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in3*/
+              // connect in3 -> tempomat_Function.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in4*/
+              // connect in4 -> tempomat_Function.in4;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in5*/
+              // connect in5 -> tempomat_Function.in5;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in6*/
+              // connect in6 -> tempomat_Function.in6;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in7*/
+              // connect in7 -> tempomat_Function.in7;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in8 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in8*/
+              // connect in8 -> tempomat_Function.in8;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in9 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in9*/
+              // connect in9 -> tempomat_Function.in9;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in10 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in10*/
+              // connect in10 -> tempomat_Function.in10;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in11 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in11*/
+              // connect in11 -> tempomat_Function.in11;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in12 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in12*/
+              // connect in12 -> tempomat_Function.in12;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in13 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in13*/
+              // connect in13 -> tempomat_Function.in13;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in14 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in14*/
+              // connect in14 -> tempomat_Function.in14;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in15 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in15*/
+              // connect in15 -> tempomat_Function.in15;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in16 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in16*/
+              // connect in16 -> tempomat_Function.in16;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in17 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in17*/
+              // connect in17 -> tempomat_Function.in17;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in18 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in18*/
+              // connect in18 -> tempomat_Function.in18;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in19 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in19*/
+              // connect in19 -> tempomat_Function.in19;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in20 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in20*/
+              // connect in20 -> tempomat_Function.in20;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in21 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in21*/
+              // connect in21 -> tempomat_Function.in21;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in22 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in22*/
+              // connect in22 -> tempomat_Function.in22;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in23 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in23*/
+              // connect in23 -> tempomat_Function.in23;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in24 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in24*/
+              // connect in24 -> tempomat_Function.in24;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in25 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in25*/
+              // connect in25 -> tempomat_Function.in25;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in26 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in26*/
+              // connect in26 -> tempomat_Function.in26;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in27 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in27*/
+              // connect in27 -> tempomat_Function.in27;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in28 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in28*/
+              // connect in28 -> tempomat_Function.in28;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in29 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in29*/
+              // connect in29 -> tempomat_Function.in29;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in30 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in30*/
+              // connect in30 -> tempomat_Function.in30;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in31 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in31*/
+              // connect in31 -> tempomat_Function.in31;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in32 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in32*/
+              // connect in32 -> tempomat_Function.in32;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in33 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in33*/
+              // connect in33 -> tempomat_Function.in33;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in34 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in34*/
+              // connect in34 -> tempomat_Function.in34;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in35 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in35*/
+              // connect in35 -> tempomat_Function.in35;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in36 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in36*/
+              // connect in36 -> tempomat_Function.in36;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in37 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in37*/
+              // connect in37 -> tempomat_Function.in37;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition.in1*/
+              connect constant_38.out1 -> condition_44.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock.ifIn*/
+              connect tempomat_Function.out1 -> switchBlock_34.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock.condition*/
+              connect condition_44.out1 -> switchBlock_34.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in38 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock.elseIn*/
+              connect /* in38 */ in1 -> switchBlock_34.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in39 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in38*/
+              // connect in39 -> tempomat_Function.in38;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in40 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in39*/
+              // connect in40 -> tempomat_Function.in39;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in41 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in40*/
+              // connect in41 -> tempomat_Function.in40;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in42 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in41*/
+              // connect in42 -> tempomat_Function.in41;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in43 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in42*/
+              // connect in43 -> tempomat_Function.in42;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in44 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in43*/
+              // connect in44 -> tempomat_Function.in43;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in45 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in44*/
+              // connect in45 -> tempomat_Function.in44;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in46 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in45*/
+              // connect in46 -> tempomat_Function.in45;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in47 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in46*/
+              // connect in47 -> tempomat_Function.in46;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in48 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.in47*/
+              // connect in48 -> tempomat_Function.in47;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition1.in1*/
+              connect constant_38.out1 -> condition1_21.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.out2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock1.ifIn*/
+              connect tempomat_Function.out2 -> switchBlock1_17.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock1.condition*/
+              connect condition1_21.out1 -> switchBlock1_17.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.in49 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock1.elseIn*/
+              connect /* in49 */ in1 -> switchBlock1_17.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition2.in1*/
+              connect constant_38.out1 -> condition2_11.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock2.condition*/
+              connect condition2_11.out1 -> switchBlock2_11.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.v_CC_delta_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock2.ifIn*/
+              connect tempomat_Function.v_CC_delta_kmh -> switchBlock2_11.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock2.elseIn*/
+              connect constant1_28.out1 -> switchBlock2_11.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition3.in1*/
+              connect constant_38.out1 -> condition3_10.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.condition3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock3.condition*/
+              connect condition3_10.out1 -> switchBlock3_12.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_active_bOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock3.ifIn*/
+              connect tempomat_Function.cC_active_b -> switchBlock3_12.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.constant2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.switchBlock3.elseIn*/
+              connect constant2_6.out1 -> switchBlock3_12.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.fTS_active_bIn8 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.fTS_active_bIn8*/
+              connect fTS_active_b -> tempomat_Function.fTS_active_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.leverDown_StatIn7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.leverDown_StatIn7*/
+              connect leverDown_Stat -> tempomat_Function.leverDown_Stat;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.leverUp_StatIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.leverUp_StatIn6*/
+              connect leverUp_Stat -> tempomat_Function.leverUp_Stat;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.limiter_bIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.limiter_bIn5*/
+              connect limiter_b -> tempomat_Function.limiter_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.v_Vehicle_kmhIn4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.v_Vehicle_kmhIn4*/
+              connect v_Vehicle_kmh -> tempomat_Function.v_Vehicle_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.cruiseControl_bIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cruiseControl_bIn3*/
+              connect cruiseControl_b -> tempomat_Function.cruiseControl_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.brakeForce_pedal_pcIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.brakeForce_pedal_pcIn2*/
+              connect brakeForce_pedal_pc -> tempomat_Function.brakeForce_pedal_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.parkingBrake_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.parkingBrake_bIn1*/
+              connect parkingBrake_b -> tempomat_Function.parkingBrake_b;
+
+            }
+

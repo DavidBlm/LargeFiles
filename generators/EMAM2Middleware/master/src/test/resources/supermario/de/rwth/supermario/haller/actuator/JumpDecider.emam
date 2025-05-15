@@ -1,0 +1,33 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.actuator;
+
+component JumpDecider {
+    ports
+        in Z jumpAdvice,
+        in Z marioResting,
+
+        out Z marioJump;
+
+    implementation Math{
+        //Once Mario lands, he needs to stop "jumping" for once, since the
+        //simulator only jumps once if the jump key is pressed.
+        static Z marioAlreadyRestedOnce = 0;
+        
+        if(marioResting == 0) //We are in the air
+            if(jumpAdvice==1) //Update the "we already rested"-flag
+                marioAlreadyRestedOnce = 0;
+            else
+                marioAlreadyRestedOnce = 1;
+            end
+            marioJump = jumpAdvice;
+        else
+            if(marioAlreadyRestedOnce == 1)
+                marioJump = jumpAdvice;
+            else
+                marioAlreadyRestedOnce = 1;
+                marioJump = 0;
+            end
+        end
+        
+    }
+}

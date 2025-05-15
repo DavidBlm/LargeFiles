@@ -1,0 +1,17 @@
+package vqvae;
+
+component Decoder{
+    ports in Q(-oo:oo)^{16,7,7} encoding,
+          out Q(-oo:oo)^{1,28,28} data;
+
+    implementation CNN {
+        encoding ->
+        UpConvolution(kernel=(4,4), channels=64, stride=(2,2)) ->
+        Relu() ->
+        UpConvolution(kernel=(4,4), channels=32, stride=(2,2)) ->
+        Relu() ->
+        UpConvolution(kernel=(3,3), channels=1, stride=(1,1)) ->
+        Sigmoid() ->
+        data;
+    }
+}

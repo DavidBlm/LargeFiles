@@ -1,0 +1,19 @@
+package calculator;
+
+component MnistInputLayer {
+    ports in Z(0:255)^{1, 28, 28} data,
+         out Q^{500} vector;
+
+    implementation CNN {
+        def conv(channels, kernel=1, stride=1){
+            Convolution(kernel=(kernel,kernel),channels=channels) ->
+            Relu() ->
+            Pooling(pool_type="max", kernel=(2,2), stride=(stride,stride))
+        }
+
+        data ->
+        LoadNetwork(networkDir="modularMnistM2/calculator.MnistComposed.MnistInputLayer_decomposed", networkPrefix="model_MnistInputLayer_decomposed-", numInputs=1, outputShape=500, trainable=false) ->
+        vector;
+    }
+}
+

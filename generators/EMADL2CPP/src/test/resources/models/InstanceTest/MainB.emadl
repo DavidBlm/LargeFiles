@@ -1,0 +1,23 @@
+/* (c) https://github.com/MontiCore/monticore */
+package InstanceTest;
+import NetworkB;
+import CalculateClassB;
+
+component MainB{
+    ports in Z(0:255)^{1, 28, 28} image,
+         out Z(0:9) digit1,
+         out Z(0:9) digit2;
+
+    instance NetworkB<10> (20) net1;
+    instance NetworkB<10> (40) net2;
+
+    instance CalculateClassB outCalc1;
+    instance CalculateClassB outCalc2;
+
+    connect image -> net1.data;
+    connect image -> net2.data;
+    connect net1.predictions -> outCalc1.probabilities;
+    connect net2.predictions -> outCalc2.probabilities;
+    connect outCalc1.digit -> digit1;
+    connect outCalc2.digit -> digit2;
+}

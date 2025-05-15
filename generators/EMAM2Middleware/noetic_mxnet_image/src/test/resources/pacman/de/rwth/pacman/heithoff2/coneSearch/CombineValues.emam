@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch;
+
+// a simple add
+
+component CombineValues {
+    ports 
+      in Z valueCoins,
+      in Z valueEnemies,
+      
+      out Z val;
+      
+    implementation Math {
+        // some weightning here
+        
+        val = valueCoins + valueEnemies;
+    }
+}

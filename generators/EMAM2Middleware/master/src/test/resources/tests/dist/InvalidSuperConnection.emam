@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.dist;
+
+component invalidSuperConnection{
+    port in Q noRosIn;
+
+    component Sub1{
+        port in Q rosIn;
+    }
+
+    instance Sub1 sub1;
+
+    connect noRosIn -> sub1.rosIn;
+}

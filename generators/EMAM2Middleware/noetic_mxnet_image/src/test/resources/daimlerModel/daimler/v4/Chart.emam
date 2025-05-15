@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component Chart {
+                  port
+                    out Number abstand_soll_m,
+                    out B fTS_active_b,
+                    in Number v_Obj_kmh;
+instance Demux demux;
+instance SFunction sFunction;
+instance Terminator_1 terminator_1;
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.sFunction.fTS_active_bOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.fTS_active_bOut1*/
+                  connect sFunction.fTS_active_b -> fTS_active_b;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.sFunction.abstand_soll_mOut3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.abstand_soll_mOut2*/
+                  connect sFunction.abstand_soll_m -> abstand_soll_m;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.sFunction.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.demux.in1*/
+                  connect sFunction.out1 -> demux.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.demux.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.terminator.in1*/
+                  connect demux.out1 -> terminator_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.v_Obj_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.sFunction.in1*/
+                  connect v_Obj_kmh -> sFunction.in1;
+
+                }
+

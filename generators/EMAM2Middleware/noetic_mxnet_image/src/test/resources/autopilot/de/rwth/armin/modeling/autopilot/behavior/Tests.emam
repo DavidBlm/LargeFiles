@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior;
+
+component Tests {
+  port in B in1, out B out1;
+
+  instance TrimPath trimPath;
+}

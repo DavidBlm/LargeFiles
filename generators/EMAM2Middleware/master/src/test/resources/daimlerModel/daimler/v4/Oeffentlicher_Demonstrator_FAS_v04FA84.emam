@@ -1,0 +1,218 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA84.
+  component Oeffentlicher_Demonstrator_FAS_v04FA84 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _Distance_Object_m,
+              out Double _BrakeForce_pc,
+              in Double _V_Vehicle_kmh,
+              out Boolean _Acusti_warn_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double distance_Object_m3,
+                out Double brakeForce_pc,
+                in Double v_Vehicle_kmh1,
+                out Boolean acusti_warn_b;
+
+              component EmergencyBrake {
+                port
+                  in Double distance_Object_m,
+                  out Double brakeForce_Emergency_pc,
+                  in Double v_Vehicle_ms,
+                  out Boolean acusti_warn_b;
+
+                component EmergencyBrake_Function {
+                  port
+                    in Double distance_Object_m,
+                    out Boolean acusti_warn_b,
+                    in Double v_Vehicle_ms;
+
+                  component Div1_1 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Div1_1 div1_1;
+                  component Sum2 {
+                    port
+                      in Double in2,
+                      out Double out1;
+
+                  }
+instance Sum2 sum2;
+                  component Saturation2 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Saturation2 saturation2;
+                  component RelOp_5 {
+                    port
+                      in Double in1,
+                      out Boolean acusti_warn_b,
+                      in Double in2;
+
+                  }
+instance RelOp_5 relOp_5;
+                  component Div_1 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Div_1 div_1;
+  connect div_1.out1 -> relOp_5.in2;
+  connect saturation2.out1 -> relOp_5.in1;
+  connect relOp_5.acusti_warn_b -> acusti_warn_b;
+  connect div1_1.out1 -> sum2.in2;
+  connect distance_Object_m -> div1_1.in1;
+  connect sum2.out1 -> saturation2.in1;
+  connect v_Vehicle_ms -> div_1.in1;
+                }
+instance EmergencyBrake_Function emergencyBrake_Function;
+                component SwitchBlock1_3 {
+                  port
+                    in Boolean ifIn,
+                    out Boolean out1;
+
+                }
+instance SwitchBlock1_3 switchBlock1_3;
+  connect emergencyBrake_Function.acusti_warn_b -> switchBlock1_3.ifIn;
+  connect distance_Object_m ->   emergencyBrake_Function.distance_Object_m;
+  connect v_Vehicle_ms -> emergencyBrake_Function.v_Vehicle_ms;
+  connect switchBlock1_3.out1 -> acusti_warn_b;
+              }
+instance EmergencyBrake emergencyBrake;
+              component VelocityControl {
+                port
+                  in Double brakeForce_Emergency_pc,
+                  out Double brakeForce_pc;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double distance_Object_m6,
+                  out Double distance_Object_m2,
+                  in Double v_Vehicle_kmh1,
+                  out Double v_Vehicle_ms2;
+
+                component Div_2 {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double v_Vehicle_ms;
+
+                }
+instance Div_2 div_2;
+  connect v_Vehicle_kmh1 -> div_2.v_Vehicle_kmh;
+  connect div_2.v_Vehicle_ms -> v_Vehicle_ms2;
+  connect distance_Object_m6 -> distance_Object_m2;
+              }
+instance FAS_Input fAS_Input;
+              component LogOp_1 {
+                port
+                  in Boolean acusti_warn_bIn2,
+                  out Boolean acusti_warn_bOut1;
+
+              }
+instance LogOp_1 logOp_1;
+  connect emergencyBrake.brakeForce_Emergency_pc ->   velocityControl.brakeForce_Emergency_pc;
+  connect velocityControl.brakeForce_pc -> brakeForce_pc;
+  connect fAS_Input.distance_Object_m2 -> emergencyBrake.distance_Object_m;
+  connect fAS_Input.v_Vehicle_ms2 -> emergencyBrake.v_Vehicle_ms;
+  connect distance_Object_m3 -> fAS_Input.distance_Object_m6;
+  connect v_Vehicle_kmh1 -> fAS_Input.v_Vehicle_kmh1;
+  connect emergencyBrake.acusti_warn_b -> logOp_1.acusti_warn_bIn2;
+  connect logOp_1.acusti_warn_bOut1 -> acusti_warn_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double distance_Object_mIn13,
+                out Double distance_Object_m3,
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh1;
+
+  connect distance_Object_mIn13 ->   distance_Object_m3;
+  connect v_Vehicle_b -> v_Vehicle_kmh1;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double brakeForce_pc,
+                out Double brakeForce_pcOut3,
+                in Boolean acusti_warn_b,
+                out Boolean acusti_warn_bOut8;
+
+  connect brakeForce_pc -> brakeForce_pcOut3;
+  connect acusti_warn_b -> acusti_warn_bOut8;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.distance_Object_m3 ->   dEMO_FAS_Funktion.distance_Object_m3;
+  connect dEMO_FAS_Input.v_Vehicle_kmh1 -> dEMO_FAS_Funktion.v_Vehicle_kmh1;
+  connect dEMO_FAS_Funktion.brakeForce_pc -> dEMO_FAS_Output.brakeForce_pc;
+  connect dEMO_FAS_Funktion.acusti_warn_b -> dEMO_FAS_Output.acusti_warn_b;
+  connect _Distance_Object_m -> dEMO_FAS_Input.distance_Object_mIn13;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect dEMO_FAS_Output.brakeForce_pcOut3 -> _BrakeForce_pc;
+  connect dEMO_FAS_Output.acusti_warn_bOut8 -> _Acusti_warn_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

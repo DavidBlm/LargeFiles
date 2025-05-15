@@ -1,0 +1,27 @@
+{
+  "modelsDir": "src/test/resources/autopilot/",
+  "outputDir": "target/evaluation/autopilotSilhouette/",
+  "rootModel": "de.rwth.armin.modeling.autopilot.autopilot",
+  "generators": ["cpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "metric": "Silhouette",
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":{
+          "min": 3,
+          "max": 19,
+          "step": 1
+        }
+      },
+      {
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

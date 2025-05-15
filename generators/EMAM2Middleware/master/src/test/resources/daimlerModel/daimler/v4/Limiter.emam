@@ -1,0 +1,147 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component Limiter {
+              port
+                in (0:100) acceleration_pedal_pc,
+                in Number in1,
+                in Number in2,
+                in Number in3,
+                /* in Number in4, -- are the same as in3
+                in Number in5,
+                in Number in6,
+                in Number in7,
+                in Number in8,
+                in Number in9, */
+                in (0:2) leverDown_stat,
+                in (0:2) leverUp_stat,
+                out B limiter_active_b,
+                in B limiter_b,
+                out Number out1,
+                out Number out2,
+                in B sign_b,
+                in (5 km/h: 1 km/h: 130 km/h) v_Sign_kmh,
+                in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh,
+                out Number vMax_kmh;
+instance Constant_10_value_1 constant_10;
+instance Limiter_Function limiter_Function;
+instance VERSION_INFO_24 vERSION_INFO_24;
+instance SwitchBlock_15 switchBlock_15;
+instance Condition_17 condition_17;
+instance SwitchBlock1_8 switchBlock1_8;
+instance Condition1_9 condition1_9;
+instance Condition2_5 condition2_5;
+instance SwitchBlock2_5 switchBlock2_5;
+instance UnitDelay_5 unitDelay_5;
+instance Condition3_5 condition3_5;
+instance SwitchBlock3_5 switchBlock3_5;
+instance UnitDelay1_5 unitDelay1_5;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.vMax_kmhOut1*/
+              connect switchBlock2_5.out1 -> vMax_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_active_bOut2*/
+              connect switchBlock3_5.out1 -> limiter_active_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.out1*/
+              connect switchBlock_15.out1 -> out1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.out2*/
+              connect switchBlock1_8.out1 -> out2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in1*/
+              connect in1 -> limiter_Function.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition.in1*/
+              connect constant_10.out1 -> condition_17.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock.ifIn*/
+              connect limiter_Function.out1 -> switchBlock_15.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock.condition*/
+              connect condition_17.out1 -> switchBlock_15.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock.elseIn*/
+              connect in2 -> switchBlock_15.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in2*/
+              connect in3 -> limiter_Function.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in3*/
+              // connect in4 -> limiter_Function.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in4*/
+              // connect in5 -> limiter_Function.in4;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in5*/
+              // connect in6 -> limiter_Function.in5;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in6*/
+              // connect in7 -> limiter_Function.in6;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in8 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.in7*/
+              // connect in8 -> limiter_Function.in7;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition1.in1*/
+              connect constant_10.out1 -> condition1_9.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.out2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock1.ifIn*/
+              connect limiter_Function.out2 -> switchBlock1_8.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock1.condition*/
+              connect condition1_9.out1 -> switchBlock1_8.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.in9 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock1.elseIn*/
+              connect /* in9 */ in3 -> switchBlock1_8.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition2.in1*/
+              connect constant_10.out1 -> condition2_5.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock2.condition*/
+              connect condition2_5.out1 -> switchBlock2_5.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.vMax_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock2.ifIn*/
+              connect limiter_Function.vMax_kmh -> switchBlock2_5.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.unitDelay.valueIn*/
+              connect switchBlock2_5.out1 -> unitDelay_5.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.unitDelay.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock2.elseIn*/
+              connect unitDelay_5.valueOut -> switchBlock2_5.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition3.in1*/
+              connect constant_10.out1 -> condition3_5.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.condition3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock3.condition*/
+              connect condition3_5.out1 -> switchBlock3_5.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_active_bOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock3.ifIn*/
+              connect limiter_Function.limiter_active_b -> switchBlock3_5.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.unitDelay1.valueIn*/
+              connect switchBlock3_5.out1 -> unitDelay1_5.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.unitDelay1.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.switchBlock3.elseIn*/
+              connect unitDelay1_5.valueOut -> switchBlock3_5.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.sign_bIn7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.sign_bIn7*/
+              connect sign_b -> limiter_Function.sign_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.v_Sign_kmhIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.v_Sign_kmhIn6*/
+              connect v_Sign_kmh -> limiter_Function.v_Sign_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.leverDown_statIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.leverDown_statIn5*/
+              connect leverDown_stat -> limiter_Function.leverDown_stat;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.leverUp_statIn4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.leverUp_statIn4*/
+              connect leverUp_stat -> limiter_Function.leverUp_stat;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.v_Vehicle_kmhIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.v_Vehicle_kmhIn3*/
+              connect v_Vehicle_kmh -> limiter_Function.v_Vehicle_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.acceleration_pedal_pcIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.acceleration_pedal_pcIn2*/
+              connect acceleration_pedal_pc -> limiter_Function.acceleration_pedal_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_bIn1*/
+              connect limiter_b -> limiter_Function.limiter_b;
+
+            }
+

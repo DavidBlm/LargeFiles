@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component MinMax2 {
+                port
+                  out (0:100) brakeForce_pc,
+                  in Number in1,
+                  in Number in2,
+                  in Number in3,
+                  in Number in4,
+                  in Number in5;
+              }
+

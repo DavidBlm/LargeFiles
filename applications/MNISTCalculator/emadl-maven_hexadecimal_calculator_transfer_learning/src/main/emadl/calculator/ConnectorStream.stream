@@ -1,0 +1,13 @@
+package calculator;
+
+stream ConnectorStream for Connector {
+    image1: file::"/src/main/resources/images/1.png" tick file::"/src/main/resources/images/1.png";
+    image2: file::"/src/main/resources/images/2.png" tick file::"/src/main/resources/images/1.png";
+    image3: file::"/src/main/resources/images/3.png" tick file::"/src/main/resources/images/1.png";
+    image4: file::"/src/main/resources/images/4.png" tick file::"/src/main/resources/images/1.png";
+    image5: file::"/src/main/resources/images/5.png" tick file::"/src/main/resources/images/1.png";
+    image6: file::"/src/main/resources/images/6.png" tick file::"/src/main/resources/images/1.png";
+
+
+    res: 3694 tick 3694; //1401 //579 tick 546 // 222; // durch eine Datei
+}

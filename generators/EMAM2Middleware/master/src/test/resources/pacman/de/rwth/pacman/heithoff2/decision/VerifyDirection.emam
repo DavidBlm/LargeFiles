@@ -1,0 +1,51 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.decision;
+
+component VerifyDirection {
+    ports
+      in Z tryDirection,
+      in B interSection,
+      in B topSafe,
+      in B bottomSafe,
+      in B leftSafe,
+      in B rightSafe,
+      in B topPossible,
+      in B bottomPossible,
+      in B leftPossible,
+      in B rightPossible,
+      
+      out Z newPacManDirection;
+      
+    implementation Math {
+        static Z lastDirection = -1;
+        newPacManDirection = tryDirection;
+        
+        if interSection
+            lastDirection = -1;
+        elseif ((tryDirection == 0) && (lastDirection == 1)) || ((tryDirection == 1) && (lastDirection == 0))
+            if leftSafe && leftPossible
+                newPacManDirection = 2;
+            elseif rightSafe && rightPossible
+                newPacManDirection = 3;
+            end
+            if (tryDirection == 1) && topPossible && topSafe
+                newPacManDirection = 0;
+            elseif (tryDirection == 0) && bottomPossible && bottomSafe
+                newPacManDirection = 1;
+            end
+        elseif ((tryDirection == 2) && (lastDirection == 3)) || ((tryDirection == 3) && (lastDirection == 2))
+            if topSafe && topPossible
+                newPacManDirection = 0;
+            elseif bottomSafe && bottomPossible
+                newPacManDirection = 1;
+            end
+            if (tryDirection == 3) && leftPossible && leftSafe
+                newPacManDirection = 2;
+            elseif (tryDirection == 2) && rightPossible && rightSafe
+                newPacManDirection = 3;
+            end
+        end
+        
+        lastDirection = newPacManDirection;
+    }
+}

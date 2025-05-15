@@ -1,0 +1,70 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.decision;
+
+// compares all values of the safe directions and takes the maximum
+// if the desired direction is blocked (not possible) it tries a direction orthogonal to it
+// if those directions are not safe or blocked too, it tries to go the opposite direction
+// left is prefered over right and up is prefered over down
+
+component CompareValues {
+    ports
+      in B topSafe,
+      in B bottomSafe,
+      in B leftSafe,
+      in B rightSafe,
+      in Z topValue,
+      in Z bottomValue,
+      in Z leftValue,
+      in Z rightValue,
+      in B topPossible,
+      in B bottomPossible,
+      in B leftPossible,
+      in B rightPossible,
+      
+      out Z newPacManDirection;
+    
+    implementation Math {
+        // search maximum
+        Z maxValue = -1;
+        Z newDirection = 0;
+        if topSafe && (topValue > maxValue)
+            maxValue = topValue;
+        end
+        if bottomSafe && (bottomValue > maxValue)
+            maxValue = bottomValue;
+            newDirection = 1;
+        end
+        if leftSafe && (leftValue > maxValue)
+            maxValue = leftValue;
+            newDirection = 2;
+        end
+        if rightSafe && (rightValue > maxValue)
+            newDirection = 3;
+        end
+        // check whether the desired direction is blocked
+        if ((newDirection == 0) && (topPossible == 0)) || ((newDirection == 1) && (bottomPossible == 0))
+            // pick a direction orthogonal to up/down
+            if leftPossible && leftSafe && ((leftValue >= rightValue) || (rightPossible == 0) || (rightSafe == 0))
+                newDirection = 2;
+            elseif rightPossible && rightSafe
+                newDirection = 3;
+            // pick the direction opposite to the original direction
+            elseif topPossible && topSafe && ((topValue >= bottomValue) || (bottomPossible == 0) || (bottomSafe == 0))
+                newDirection = 0;
+            else 
+                newDirection = 1;
+            end
+        elseif ((newDirection == 2) && (leftPossible == 0)) || ((newDirection == 3) && (rightPossible == 0))
+            if topPossible && topSafe && ((topValue >= bottomValue) || (bottomPossible == 0) || (bottomSafe == 0))
+                newDirection = 0;
+            elseif bottomPossible && bottomSafe
+                newDirection = 1;
+            elseif leftPossible && leftSafe && ((leftValue >= rightValue) || (rightPossible == 0) || (rightSafe == 0))
+                newDirection = 2;
+            else
+                newDirection = 3;
+            end
+        end
+        newPacManDirection = newDirection;
+    }
+}

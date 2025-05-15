@@ -1,0 +1,583 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA24.
+  component Oeffentlicher_Demonstrator_FAS_v04FA24Tracing {
+    component DEMO_FAS_1 {
+      port
+        out Double acceleration_pc,
+        in Double v_Vehicle_kmh;
+
+      component DEMO_FAS_2 {
+        port
+          out Double _Acceleration_pc,
+          in Double _V_Vehicle_kmh;
+
+        component Subsystem {
+          port
+            out Double _Acceleration_pc,
+            in Double _V_Vehicle_kmh;
+
+          component DEMO_FAS_3 {
+            port
+              in Double _V_Vehicle_kmh,
+              out Double _CCSetValue_kmh,
+              out Double _Acceleration_pc,
+              in Double _Acceleration_pedal_pc,
+              in Double _BrakeForce_pedal_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double v_Vehicle_kmh,
+                out Double cCSetValue_kmh,
+                out Double acceleration_pc;
+
+              component Tempomat {
+                port
+                  out Double v_CC_delta_kmh,
+                  in Double v_Vehicle_kmh,
+                  out Double out2,
+                  in Double in1;
+
+                component Tempomat_Function {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double out2;
+
+                  component CC_SetValue {
+                    port
+                      in Double v_Vehicle_kmh,
+                      out Double out3,
+                      in Boolean cC_enabled_b;
+
+                    component CC_OnSet_SetValue {
+                      port
+                        in Double v_Vehicle_kmh,
+                        out Double out3;
+
+  connect v_Vehicle_kmh -> out3;
+                    }
+instance CC_OnSet_SetValue cC_OnSet_SetValue;
+                    component SwitchBlock12_4 {
+                      port
+                        in Double ifIn,
+                        out Double out1,
+                        in Boolean condition;
+
+                    }
+instance SwitchBlock12_4 switchBlock12_4;
+                    component SwitchBlock11_4 {
+                      port
+                        in Double elseIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock11_4 switchBlock11_4;
+                    component LogicalOperator6_2 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator6_2 logicalOperator6_2;
+                    component RSFlipFlop_3 {
+                      port
+                        in Boolean r,
+                        out Boolean q;
+
+                      component Condition1_19 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance Condition1_19 condition1_19;
+                      component Switch_R_8 {
+                        port
+                          in Boolean condition,
+                          out Boolean out1;
+
+                      }
+instance Switch_R_8 switch_R_8;
+  connect condition1_19.out1 -> switch_R_8.condition;
+  connect r -> condition1_19.in1;
+  connect switch_R_8.out1 -> q;
+                    }
+instance RSFlipFlop_3 rSFlipFlop_3;
+                    component LogicalOperator2_16 {
+                      port
+                        in Boolean in3,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator2_16 logicalOperator2_16;
+                    component RisingEdgeDetector2_3 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                      component CompareToZero1_16 {
+                        port
+                          in Boolean u,
+                          out Boolean y;
+
+                        component Compare_74 {
+                          port
+                            in Boolean in1,
+                            out Boolean out1;
+
+                        }
+instance Compare_74 compare_74;
+  connect u -> compare_74.in1;
+  connect compare_74.out1 -> y;
+                      }
+instance CompareToZero1_16 compareToZero1_16;
+                      component LogicalOperator_21 {
+                        port
+                          in Boolean in2,
+                          out Boolean out1;
+
+                      }
+instance LogicalOperator_21 logicalOperator_21;
+                      component LogicalOperator2_19 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance LogicalOperator2_19 logicalOperator2_19;
+                      component SwitchBlock_32 {
+                        port
+                          in Boolean ifIn,
+                          out Boolean out1;
+
+                      }
+instance SwitchBlock_32 switchBlock_32;
+  connect compareToZero1_16.y -> logicalOperator_21.in2;
+  connect logicalOperator_21.out1 -> logicalOperator2_19.in1;
+  connect in1 -> compareToZero1_16.u;
+  connect logicalOperator2_19.out1 -> switchBlock_32.ifIn;
+  connect switchBlock_32.out1 -> out1;
+                    }
+instance RisingEdgeDetector2_3 risingEdgeDetector2_3;
+                    component Condition12_4 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance Condition12_4 condition12_4;
+  connect switchBlock12_4.out1 -> switchBlock11_4.elseIn;
+  connect condition12_4.out1 -> switchBlock12_4.condition;
+  connect cC_OnSet_SetValue.out3 -> switchBlock12_4.ifIn;
+  connect logicalOperator2_16.out1 -> risingEdgeDetector2_3.in1;
+  connect risingEdgeDetector2_3.out1 -> condition12_4.in1;
+  connect switchBlock11_4.out1 -> out3;
+  connect rSFlipFlop_3.q -> logicalOperator2_16.in3;
+  connect logicalOperator6_2.out1 -> rSFlipFlop_3.r;
+  connect cC_enabled_b -> logicalOperator6_2.in1;
+  connect v_Vehicle_kmh -> cC_OnSet_SetValue.v_Vehicle_kmh;
+                  }
+instance CC_SetValue cC_SetValue;
+                  component CC_On_Off {
+                    port
+                      in Double v_Vehicle_kmh,
+                      out Boolean cC_active_b;
+
+                    component RelOp1_3 {
+                      port
+                        in Double in1,
+                        out Boolean out1;
+
+                    }
+instance RelOp1_3 relOp1_3;
+                    component LogicalOperator1_6 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator1_6 logicalOperator1_6;
+                    component LogicalOperator_8 {
+                      port
+                        in Boolean in4,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator_8 logicalOperator_8;
+                    component RSFlipFlop_2 {
+                      port
+                        in Boolean r,
+                        out Boolean q;
+
+                      component Condition1_11 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance Condition1_11 condition1_11;
+                      component Switch_R_5 {
+                        port
+                          in Boolean condition,
+                          out Boolean out1;
+
+                      }
+instance Switch_R_5 switch_R_5;
+  connect condition1_11.out1 -> switch_R_5.condition;
+  connect switch_R_5.out1 -> q;
+  connect r -> condition1_11.in1;
+                    }
+instance RSFlipFlop_2 rSFlipFlop_2;
+  connect logicalOperator_8.out1 -> rSFlipFlop_2.r;
+  connect rSFlipFlop_2.q -> cC_active_b;
+  connect logicalOperator1_6.out1 -> logicalOperator_8.in4;
+  connect relOp1_3.out1 -> logicalOperator1_6.in1;
+  connect v_Vehicle_kmh -> relOp1_3.in1;
+                  }
+instance CC_On_Off cC_On_Off;
+  connect cC_On_Off.cC_active_b -> cC_SetValue.cC_enabled_b;
+  connect v_Vehicle_kmh -> cC_SetValue.v_Vehicle_kmh;
+  connect cC_SetValue.out3 -> out2;
+  connect v_Vehicle_kmh -> cC_On_Off.v_Vehicle_kmh;
+                }
+instance Tempomat_Function tempomat_Function;
+                component SwitchBlock1_17 {
+                  port
+                    in Double ifIn,
+                    out Double out1,
+                    in Double elseIn;
+
+                }
+instance SwitchBlock1_17 switchBlock1_17;
+  connect tempomat_Function.out2 -> switchBlock1_17.ifIn;
+  connect switchBlock1_17.out1 -> out2;
+  connect in1 -> switchBlock1_17.elseIn;
+  connect v_Vehicle_kmh -> tempomat_Function.v_Vehicle_kmh;
+              }
+instance Tempomat tempomat;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh,
+                  in Double v_Vehicle_kmh,
+                  out Double acceleration_pc;
+
+                component RelOp_9 {
+                  port
+                    in Double in1,
+                    out Boolean out1;
+
+                }
+instance RelOp_9 relOp_9;
+                component LogOp_2 {
+                  port
+                    in Boolean in1,
+                    out Boolean out1;
+
+                }
+instance LogOp_2 logOp_2;
+                component Condition1_22 {
+                  port
+                    in Boolean in1,
+                    out Boolean out1;
+
+                }
+instance Condition1_22 condition1_22;
+                component SwitchBlock_35 {
+                  port
+                    in Boolean condition,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock_35 switchBlock_35;
+                component Mul_3 {
+                  port
+                    in Double acceleration_pc,
+                    out Double out1;
+
+                }
+instance Mul_3 mul_3;
+                component SwitchBlock2_12 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect switchBlock_35.acceleration_pc -> mul_3.acceleration_pc;
+  connect mul_3.out1 -> switchBlock2_12.elseIn;
+  connect condition1_22.out1 -> switchBlock_35.condition;
+  connect logOp_2.out1 -> condition1_22.in1;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+  connect relOp_9.out1 -> logOp_2.in1;
+  connect v_Vehicle_kmh -> relOp_9.in1;
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double v_Vehicle_kmh5,
+                  out Double v_Vehicle_kmh3;
+
+  connect v_Vehicle_kmh -> v_Vehicle_kmh5;
+  connect v_Vehicle_kmh -> v_Vehicle_kmh3;
+              }
+instance FAS_Input fAS_Input;
+              component Limiter {
+                port
+                  in Double in2,
+                  out Double out1;
+
+                component SwitchBlock_15 {
+                  port
+                    in Double elseIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock_15 switchBlock_15;
+  connect in2 -> switchBlock_15.elseIn;
+  connect switchBlock_15.out1 -> out1;
+              }
+instance Limiter limiter;
+              component UnitDelay_8 {
+                port
+                  in Double valueIn,
+                  out Double valueOut;
+
+              }
+instance UnitDelay_8 unitDelay_8;
+  connect limiter.out1 -> unitDelay_8.valueIn;
+  connect tempomat.out2 -> limiter.in2;
+  connect unitDelay_8.valueOut -> tempomat.in1;
+  connect unitDelay_8.valueOut -> cCSetValue_kmh;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect fAS_Input.v_Vehicle_kmh5 -> tempomat.v_Vehicle_kmh;
+  connect fAS_Input.v_Vehicle_kmh3 -> velocityControl.v_Vehicle_kmh;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh;
+
+  connect v_Vehicle_b -> v_Vehicle_kmh;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double cCSetValue_kmh,
+                out Double cCSetValue_kmhOut4,
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2;
+
+  connect cCSetValue_kmh -> cCSetValue_kmhOut4;
+  connect acceleration_pc -> acceleration_pcOut2;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.v_Vehicle_kmh -> dEMO_FAS_Funktion.v_Vehicle_kmh;
+  connect dEMO_FAS_Funktion.cCSetValue_kmh -> dEMO_FAS_Output.cCSetValue_kmh;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect dEMO_FAS_Output.cCSetValue_kmhOut4 -> _CCSetValue_kmh;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+  connect dEMO_FAS_3._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_3._V_Vehicle_kmh;
+        }
+instance Subsystem subsystem;
+  connect subsystem._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> subsystem._V_Vehicle_kmh;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+  connect dEMO_FAS_2._Acceleration_pc -> acceleration_pc;
+  connect v_Vehicle_kmh -> dEMO_FAS_2._V_Vehicle_kmh;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+    component Memory8 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory8 memory8;
+    component Umgebung {
+      port
+        in Double acceleration_pc,
+        out Double v_Vehicle_kmh;
+
+      component Vehicle {
+        port
+          in Double acceleration_pc,
+          out Double v_Vehicle_kmh;
+
+        component SwitchBlock_36 {
+          port
+            in Double elseIn,
+            out Double out1;
+
+        }
+instance SwitchBlock_36 switchBlock_36;
+        component DiscreteTransferFcnwithinitialstates {
+          port
+            in Double in1,
+            out Double out1;
+
+          component DiscreteStateSpace {
+            port
+              in Double in1,
+              out Double out1;
+
+          }
+instance DiscreteStateSpace discreteStateSpace;
+  connect in1 -> discreteStateSpace.in1;
+  connect discreteStateSpace.out1 -> out1;
+        }
+instance DiscreteTransferFcnwithinitialstates discreteTransferFcnwithinitialstates;
+        component Sum1_4 {
+          port
+            in Double v_Vehicle_kmh,
+            out Double out1;
+
+        }
+instance Sum1_4 sum1_4;
+        component Saturation_2 {
+          port
+            in Double in1,
+            out Double v_Vehicle_kmh;
+
+        }
+instance Saturation_2 saturation_2;
+  connect discreteTransferFcnwithinitialstates.out1 -> sum1_4.v_Vehicle_kmh;
+  connect sum1_4.out1 -> saturation_2.in1;
+  connect switchBlock_36.out1 -> discreteTransferFcnwithinitialstates.in1;
+  connect acceleration_pc -> switchBlock_36.elseIn;
+  connect saturation_2.v_Vehicle_kmh -> v_Vehicle_kmh;
+      }
+instance Vehicle vehicle;
+  connect acceleration_pc -> vehicle.acceleration_pc;
+  connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh;
+    }
+instance Umgebung umgebung;
+  connect memory8.out1 -> umgebung.acceleration_pc;
+  connect umgebung.v_Vehicle_kmh -> dEMO_FAS_1.v_Vehicle_kmh;
+  connect dEMO_FAS_1.acceleration_pc -> memory8.in1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

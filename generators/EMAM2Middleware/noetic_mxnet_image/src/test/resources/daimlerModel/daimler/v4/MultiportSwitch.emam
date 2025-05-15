@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component MultiportSwitch {
+                  port
+                    in Number in1,
+                    in Number in2,
+                    in Number in3,
+                    in Number in4,
+                    out Number out1;
+                }
+

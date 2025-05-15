@@ -1,0 +1,31 @@
+/* (c) https://github.com/MontiCore/monticore */
+component ThreeInputCNN_M14{
+    ports in Z(0:255)^{3, 224, 224} image[3],
+         out Q(0:1)^{10} predictions;
+
+    implementation CNN {
+
+        def conv(filter, channels){
+            Convolution(kernel=filter, channels=channels) ->
+            Relu()
+        }
+
+        def inputGroup(index){
+            [index] ->
+            conv(filter=(3,3), channels=32, ->=3) ->
+            Pooling(pool_type="max", kernel=(2,2), stride=(2,2))
+        }
+
+        image ->
+        inputGroup(index=[0|..|2]) ->
+        Concatenate() ->
+        conv(filter=(3,3), channels=64) ->
+        Pooling(pool_type="max", kernel=(2,2), stride=(2,2)) ->
+        FullyConnected(units=32) ->
+        Relu() ->
+        FullyConnected(units=10) ->
+        Softmax() ->
+        predictions;
+
+    }
+}

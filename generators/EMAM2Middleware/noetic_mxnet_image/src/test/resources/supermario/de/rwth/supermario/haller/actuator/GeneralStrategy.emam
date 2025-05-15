@@ -1,0 +1,41 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.actuator;
+
+
+
+component GeneralStrategy {
+    ports
+        in Z^{1,2} marioPosition,
+        in Q tickSize,
+        out Z jumpAdvice,
+        out Z crouchAdvice,
+        out Z directionAdvice;
+
+
+    implementation Math {
+        //Wait one seconds before being "stuck"
+        Z maxTicks = 0.5 * tickSize; 
+  
+        static Z ticksOnSamePosition = 0;
+        static Z oldXPos = -1;
+        
+        if oldXPos == marioPosition(1,1)
+            ticksOnSamePosition = ticksOnSamePosition + 1;
+        else
+            oldXPos = marioPosition(1,1);
+            ticksOnSamePosition = 0;
+        end
+        
+        if(ticksOnSamePosition > maxTicks)
+            jumpAdvice = 1;
+        else
+            jumpAdvice = 0;
+        end
+    
+        directionAdvice = 1;
+            
+        crouchAdvice = 0;
+    }
+
+        
+}

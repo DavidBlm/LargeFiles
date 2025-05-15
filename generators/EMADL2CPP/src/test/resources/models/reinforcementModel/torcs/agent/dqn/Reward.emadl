@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package torcs.agent.dqn;
+
+component Reward {
+    ports
+        in Q^{5} state,
+        in B isTerminal,
+        out Q reward;
+
+    implementation Math {
+        Q angle = state(1);
+        Q speed = state(2);
+        reward = speed * cos(angle);
+    }
+}

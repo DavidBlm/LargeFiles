@@ -1,0 +1,51 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.intersection;
+
+//TODO: x = (n-1)n/2
+component CollisionToStop<N1 n = 2,N1 x = 1>{
+    ports in B collisionIn[x],
+          in B aIsFasterIn[x],
+          in B active,
+          out B stopOut[n];
+
+    implementation Math{
+        Z^{n} counter;
+        Z^{x} indexLookup;
+        for i = 1:n
+            counter(i) = 0;
+        end
+
+        Z k = 1;
+        Z maxI = n - 1;
+        for i = 1:maxI
+            Z minJ = i + 1;
+            for j = minJ:n
+                counter(i) = counter(i) + 1;
+                counter(j) = counter(j) + 1;
+                //always stop the last one to arrive at the collision point
+                if aIsFasterIn(k)
+                    indexLookup(k) = j;
+                else
+                    indexLookup(k) = i;
+                end
+                k = k + 1;
+            end
+        end
+
+
+        for i = 1:n
+            stopOut(i) = false;
+        end
+
+        if active
+            for i = 1:x
+                if collisionIn(i)
+                    Z curIndex = indexLookup(i);
+                    stopOut(curIndex) = true;
+                end
+            end
+        end
+
+    }
+
+}

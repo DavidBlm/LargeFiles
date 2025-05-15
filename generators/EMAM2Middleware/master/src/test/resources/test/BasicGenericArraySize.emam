@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicGenericArraySize<N1 n=1>{
+    ports in Q(-oo:oo) val1[n],
+          out Q(-oo:oo) valOut[n];
+
+    implementation Math{
+        for i=1:n
+           valOut(i) = val1(i) * 2;
+        end
+
+        for i=1:n
+           valOut(i) = val1(i) * 3;
+        end
+    }
+}

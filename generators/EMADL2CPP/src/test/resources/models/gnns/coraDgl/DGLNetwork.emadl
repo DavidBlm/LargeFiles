@@ -1,0 +1,23 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package coraDgl;
+
+component DGLNetwork{
+    ports in Q(0:1)^{2708, 2708} graph,
+        in Q(0:1)^{2708, 1433} features,
+        out Q(0:oo)^{2708, 7} predictions;
+
+    implementation CNN {
+        layer Relu() layerOne;
+
+        (graph | features) ->
+        GraphConv(input_dim=1433, output_dim=16, nodes=2708) ->
+        /* GraphConv(input_dim=1433, output_dim=16, nodes=2708) -> */
+        /* Reshape(shape=(2708, 16)) -> */
+        layerOne;
+
+        (graph | layerOne.output) ->
+        GraphConv(input_dim=16, output_dim=7, nodes=2708) ->
+        predictions;
+    }
+}

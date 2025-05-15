@@ -1,0 +1,40 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior;
+
+component BehaviorGeneration {
+  port
+    in  Q (-oo m : 0.01 m : oo m)                    currentPositionX,
+    in  Q (-oo m : 0.01 m : oo m)                    currentPositionY,
+    in  Q (-oo m : 0.01 m : oo m)                    currentDirectionX,
+    in  Q (-oo m : 0.01 m : oo m)                    currentDirectionY,
+    in  Z (0 : 100)                                  plannedTrajectoryLength,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}          plannedTrajectoryX,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}          plannedTrajectoryY,
+
+    out Q (-oo m : 0.01 m : oo m)                    desiredDirectionX,
+    out Q (-oo m : 0.01 m : oo m)                    desiredDirectionY,
+    out Q (-oo m : 0.01 m : oo m)                    signedDistanceToTrajectory,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)            desiredVelocity;
+
+  instance TrimPath                                  trimPath;
+  instance CalculateMotionCommands                   calcMotionCmds;
+
+  connect currentPositionX                             ->       trimPath.currentPositionX;
+  connect currentPositionY                             ->       trimPath.currentPositionY;
+  connect plannedTrajectoryLength                      ->       trimPath.plannedTrajectoryLength;
+  connect plannedTrajectoryX                           ->       trimPath.plannedTrajectoryX;
+  connect plannedTrajectoryY                           ->       trimPath.plannedTrajectoryY;
+
+  connect currentPositionX                             ->       calcMotionCmds.currentPositionX;
+  connect currentPositionY                             ->       calcMotionCmds.currentPositionY;
+  connect currentDirectionX                            ->       calcMotionCmds.currentDirectionX;
+  connect currentDirectionY                            ->       calcMotionCmds.currentDirectionY;
+  connect trimPath.trimmedTrajectoryLength             ->       calcMotionCmds.trimmedTrajectoryLength;
+  connect trimPath.trimmedTrajectoryX                  ->       calcMotionCmds.trimmedTrajectoryX;
+  connect trimPath.trimmedTrajectoryY                  ->       calcMotionCmds.trimmedTrajectoryY;
+
+  connect calcMotionCmds.desiredDirectionX             ->       desiredDirectionX;
+  connect calcMotionCmds.desiredDirectionY             ->       desiredDirectionY;
+  connect calcMotionCmds.signedDistanceToTrajectory    ->       signedDistanceToTrajectory;
+  connect calcMotionCmds.desiredVelocity               ->       desiredVelocity;
+}

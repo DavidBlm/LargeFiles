@@ -1,0 +1,109 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component Limiter_SetValue {
+                  port
+                    in Number in1,
+                    in Number in2,
+                    in Number in3,
+                    in Number in4,
+                    in (0:2) leverDown_stat,
+                    in (0:2) leverUp_stat,
+                    out Number out1,
+                    out Number out2;
+instance Constant1_7_value_0 constant1_7;
+instance Constant3_1_value_0 constant3_1;
+instance RelOp1_2_Greater relOp1_2;
+instance RelOp3_1_Greater relOp3_1;
+instance VERSION_INFO_19 vERSION_INFO_19;
+instance V_LimSetValueMinus v_LimSetValueMinus;
+instance V_LimSetValuePlus v_LimSetValuePlus;
+instance RisingEdgeDetector_1 risingEdgeDetector_1;
+instance RisingEdgeDetector1_1 risingEdgeDetector1_1;
+instance SwitchBlock_11 switchBlock_11;
+instance Condition_13 condition_13;
+instance SwitchBlock1_6 switchBlock1_6;
+instance Condition1_7 condition1_7;
+instance SwitchBlock2_3 switchBlock2_3;
+instance Condition2_3 condition2_3;
+instance SwitchBlock3_3 switchBlock3_3;
+instance Condition3_3 condition3_3;
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.out1*/
+                  connect switchBlock_11.out1 -> out1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.out2*/
+                  connect switchBlock2_3.out1 -> out2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.in2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.v_LimiterSetValueIn1*/
+                  connect in2 -> v_LimSetValueMinus.v_LimiterSetValue;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.in1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.v_LimiterSetValueIn1*/
+                  connect in1 -> v_LimSetValuePlus.v_LimiterSetValue;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.relOp3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.risingEdgeDetector.in1In1*/
+                  connect relOp3_1.out1 -> risingEdgeDetector_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.relOp1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.risingEdgeDetector1.in1In1*/
+                  connect relOp1_2.out1 -> risingEdgeDetector1_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.risingEdgeDetector.out1Out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition.in1*/
+                  connect risingEdgeDetector_1.out1 -> condition_13.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock.ifIn*/
+                  connect v_LimSetValuePlus.out1 -> switchBlock_11.ifIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock.condition*/
+                  connect condition_13.out1 -> switchBlock_11.condition;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.risingEdgeDetector1.out1Out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition1.in1*/
+                  connect risingEdgeDetector1_1.out1 -> condition1_7.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock1.ifIn*/
+                  connect v_LimSetValueMinus.out1 -> switchBlock1_6.ifIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock1.condition*/
+                  connect condition1_7.out1 -> switchBlock1_6.condition;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.in3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock1.elseIn*/
+                  connect in3 -> switchBlock1_6.elseIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock.elseIn*/
+                  connect switchBlock1_6.out1 -> switchBlock_11.elseIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.risingEdgeDetector.out1Out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition2.in1*/
+                  connect risingEdgeDetector_1.out1 -> condition2_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.out2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock2.ifIn*/
+                  connect v_LimSetValuePlus.out2 -> switchBlock2_3.ifIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock2.condition*/
+                  connect condition2_3.out1 -> switchBlock2_3.condition;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.risingEdgeDetector1.out1Out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition3.in1*/
+                  connect risingEdgeDetector1_1.out1 -> condition3_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.out2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock3.ifIn*/
+                  connect v_LimSetValueMinus.out2 -> switchBlock3_3.ifIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.condition3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock3.condition*/
+                  connect condition3_3.out1 -> switchBlock3_3.condition;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.in4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock3.elseIn*/
+                  connect in4 -> switchBlock3_3.elseIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.switchBlock2.elseIn*/
+                  connect switchBlock3_3.out1 -> switchBlock2_3.elseIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.relOp1.in2*/
+                  connect constant1_7.out1 -> relOp1_2.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.constant3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.relOp3.in2*/
+                  connect constant3_1.out1 -> relOp3_1.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.leverUp_statIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.relOp3.in1*/
+                  connect leverUp_stat -> relOp3_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.leverDown_statIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.relOp1.in1*/
+                  connect leverDown_stat -> relOp1_2.in1;
+
+                }
+

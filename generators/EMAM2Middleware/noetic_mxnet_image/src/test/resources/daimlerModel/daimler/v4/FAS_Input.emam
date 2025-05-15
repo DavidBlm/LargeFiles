@@ -1,0 +1,159 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component FAS_Input {
+              port
+                in (0:100) acceleration_pedal_pc,
+                out (0:100) acceleration_pedal_pc1,
+                out (0:100) acceleration_pedal_pc2,
+                in (0:100) brakeForce_pedal_pc,
+                out (0:100) brakeForce_pedal_pc1,
+                out (0:100) brakeForce_pedal_pc2,
+                out (0:100) brakeForce_pedal_pc3,
+                in B cruiseControl_b,
+                out B cruiseControl_b1,
+                out (0 m: oo m) distance_Object_m,
+                out (0 m: oo m) distance_Object_m1,
+                out (0 m: oo m) distance_Object_m2,
+                in (0 m: oo m) distance_Object_m3,
+                in (0 m: oo m) distance_Object_m4,
+                in (0 m: oo m) distance_Object_m5,
+                in (0 m: oo m) distance_Object_m6,
+                out (0:3) distance_stat,
+                in (0:3) distance_stat1,
+                in (0:3) distance_stat2,
+                in (0:2) leverDown_stat,
+                out (0:2) leverDown_stat1,
+                out (0:2) leverDown_stat2,
+                in (0:2) leverUp_stat,
+                out (0:2) leverUp_stat1,
+                out (0:2) leverUp_stat2,
+                in B limiter_b,
+                out B limiter_b1,
+                out B limiter_b2,
+                in B parkingBrake_b,
+                out B parkingBrake_b1,
+                in B sign_b,
+                out B sign_b1,
+                out (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+                in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh1,
+                in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh2,
+                in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh3,
+                out (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh4,
+                out Number v_Obj_rel_ms,
+                in (5 km/h: 1 km/h: 130 km/h) v_Sign_kmh,
+                out (5 km/h: 1 km/h: 130 km/h) v_Sign_kmh1,
+                in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh,
+                in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh1,
+                out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh2,
+                out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh3,
+                out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh4,
+                out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh5,
+                out Number v_Vehicle_ms,
+                out Number v_Vehicle_ms1,
+                out Number v_Vehicle_ms2;
+instance Constant_8_value_3_6 constant_8;
+instance Constant1_6_value_3_6 constant1_6;
+instance Div_2 div_2;
+instance Div1_2 div1_2;
+instance VERSION_INFO_12 vERSION_INFO_12;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div.v_Vehicle_msOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_ms*/
+              connect div_2.v_Vehicle_ms -> v_Vehicle_ms;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_Object_m5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_Object_m*/
+              connect distance_Object_m5 -> distance_Object_m;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div.v_Vehicle_msOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_ms1*/
+              connect div_2.v_Vehicle_ms -> v_Vehicle_ms1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_Object_m4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_Object_m1*/
+              connect distance_Object_m4 -> distance_Object_m1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_stat1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_stat*/
+              connect distance_stat1 -> distance_stat;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Obj_rel_kmh2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Obj_rel_kmh*/
+              connect v_Obj_rel_kmh2 -> v_Obj_rel_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div.v_Vehicle_msOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_ms2*/
+              connect div_2.v_Vehicle_ms -> v_Vehicle_ms2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_Object_m6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.distance_Object_m2*/
+              connect distance_Object_m6 -> distance_Object_m2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div1.v_Obj_rel_msOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Obj_rel_ms*/
+              connect div1_2.v_Obj_rel_ms -> v_Obj_rel_ms;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh2*/
+              connect v_Vehicle_kmh -> v_Vehicle_kmh2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Obj_rel_kmh1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Obj_rel_kmh4*/
+              connect v_Obj_rel_kmh1 -> v_Obj_rel_kmh4;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.acceleration_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.acceleration_pedal_pc1*/
+              connect acceleration_pedal_pc -> acceleration_pedal_pc1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh3*/
+              connect v_Vehicle_kmh -> v_Vehicle_kmh3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.brakeForce_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.brakeForce_pedal_pc1*/
+              connect brakeForce_pedal_pc -> brakeForce_pedal_pc1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.brakeForce_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.brakeForce_pedal_pc2*/
+              connect brakeForce_pedal_pc -> brakeForce_pedal_pc2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.limiter_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.limiter_b1*/
+              connect limiter_b -> limiter_b1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.acceleration_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.acceleration_pedal_pc2*/
+              connect acceleration_pedal_pc -> acceleration_pedal_pc2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh4*/
+              connect v_Vehicle_kmh -> v_Vehicle_kmh4;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverUp_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverUp_stat1*/
+              connect leverUp_stat -> leverUp_stat1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverDown_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverDown_stat1*/
+              connect leverDown_stat -> leverDown_stat1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Sign_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Sign_kmh1*/
+              connect v_Sign_kmh -> v_Sign_kmh1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.sign_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.sign_b1*/
+              connect sign_b -> sign_b1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.parkingBrake_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.parkingBrake_b1*/
+              connect parkingBrake_b -> parkingBrake_b1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.brakeForce_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.brakeForce_pedal_pc3*/
+              connect brakeForce_pedal_pc -> brakeForce_pedal_pc3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.cruiseControl_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.cruiseControl_b1*/
+              connect cruiseControl_b -> cruiseControl_b1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh5*/
+              connect v_Vehicle_kmh -> v_Vehicle_kmh5;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.limiter_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.limiter_b2*/
+              connect limiter_b -> limiter_b2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverUp_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverUp_stat2*/
+              connect leverUp_stat -> leverUp_stat2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverDown_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.leverDown_stat2*/
+              connect leverDown_stat -> leverDown_stat2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Obj_rel_kmh3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div1.v_Obj_rel_kmhIn1*/
+              connect v_Obj_rel_kmh3 -> div1_2.v_Obj_rel_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.v_Vehicle_kmh1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div.v_Vehicle_kmhIn1*/
+              connect v_Vehicle_kmh1 -> div_2.v_Vehicle_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div1.in2*/
+              connect constant1_6.out1 -> div1_2.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.fAS_Input.div.in2*/
+              connect constant_8.out1 -> div_2.in2;
+
+            }
+

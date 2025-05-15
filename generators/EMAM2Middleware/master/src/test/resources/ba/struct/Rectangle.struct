@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.struct;
+
+struct Rectangle{
+    Point pointA;
+    Point pointB;
+    Point pointC;
+    Point pointD;
+}

@@ -1,0 +1,174 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS;
+
+import de.rwth.pacman.heithoff2.BFS.start.StartValues;
+
+// search along the current path whether there are ghosts facing to pacman
+// bfssingle1 is given the start values which then calculates the next coordinates 
+//   for bffsingle2
+// the path ends when an intersection is reached
+// then check again whether the surrounding tiles are safe
+
+component BFSearch{
+    ports
+        in Q(0m: 20m) ghostX[4],
+        in Q(1m: 23m) ghostY[4],
+        in Q(0m: 20m) pacManX,
+        in Q(1m: 23m) pacManY,
+        in Z(0 : 1 : 3) ghostDirection[4],
+        in B ghostEatable[4],
+        in Z^{22,19} map,
+        in Q(0m: 20m) startX,
+        in Q(1m: 23m) startY,
+        in Z startDirection,
+        
+        // out B safeFound,
+        // out Q newX,
+        // out Q newY,
+        // out B oldSafe,
+        out B safe;
+        
+    instance StartValues start;
+    instance BFSSingle bfssingle1;
+    instance BFSSingle bfssingle2;
+    instance BFSSingle bfssingle3;
+    instance BFSSingle bfssingle4;
+    instance BFSSingle bfssingle5;
+    instance BFSSingle bfssingle6;
+    instance BFSSingle bfssingle7;
+    instance BFSSingle bfssingle8;
+    instance BFSSingle bfssingle9;
+    instance BFSSingle bfssingl9;
+    instance EndSafe endSafe;
+    
+    connect pacManX -> bfssingle1.oldX;
+    connect pacManY -> bfssingle1.oldY;
+    
+    connect startX               -> bfssingle1.currentX, bfssingle2.oldX;
+    connect startY               -> bfssingle1.currentY, bfssingle2.oldY;
+    connect start.startSafe      -> bfssingle1.oldSafe;
+    connect start.startSafeFound -> bfssingle1.oldSafeFound;
+    connect startDirection       -> bfssingle1.oldDirection;
+    
+    // connect bfssingl9.newX -> newX;
+    // connect bfssingl9.newY -> newY;
+    // connect bfssingl9.safe -> oldSafe;
+    // connect bfssingl9.safeFound -> safeFound;
+    
+    connect bfssingle1.newX      -> bfssingle2.currentX, bfssingle3.oldX;
+    connect bfssingle1.newY      -> bfssingle2.currentY, bfssingle3.oldY;
+    connect bfssingle1.safe      -> bfssingle2.oldSafe;
+    connect bfssingle1.safeFound -> bfssingle2.oldSafeFound;
+    connect bfssingle1.newDirection -> bfssingle2.oldDirection;
+    
+    connect bfssingle2.newX      -> bfssingle3.currentX, bfssingle4.oldX;
+    connect bfssingle2.newY      -> bfssingle3.currentY, bfssingle4.oldY;
+    connect bfssingle2.safe      -> bfssingle3.oldSafe;
+    connect bfssingle2.safeFound -> bfssingle3.oldSafeFound;
+    connect bfssingle2.newDirection -> bfssingle3.oldDirection;
+    
+    connect bfssingle3.newX      -> bfssingle4.currentX, bfssingle5.oldX;
+    connect bfssingle3.newY      -> bfssingle4.currentY, bfssingle5.oldY;
+    connect bfssingle3.safe      -> bfssingle4.oldSafe;
+    connect bfssingle3.safeFound -> bfssingle4.oldSafeFound;
+    connect bfssingle3.newDirection -> bfssingle4.oldDirection;
+    
+    connect bfssingle4.newX      -> bfssingle5.currentX, bfssingle6.oldX;
+    connect bfssingle4.newY      -> bfssingle5.currentY, bfssingle6.oldY;
+    connect bfssingle4.safe      -> bfssingle5.oldSafe;
+    connect bfssingle4.safeFound -> bfssingle5.oldSafeFound;
+    connect bfssingle4.newDirection -> bfssingle5.oldDirection;
+    
+    connect bfssingle5.newX      -> bfssingle6.currentX, bfssingle7.oldX;
+    connect bfssingle5.newY      -> bfssingle6.currentY, bfssingle7.oldY;
+    connect bfssingle5.safe      -> bfssingle6.oldSafe;
+    connect bfssingle5.safeFound -> bfssingle6.oldSafeFound;
+    connect bfssingle5.newDirection -> bfssingle6.oldDirection;
+    
+    connect bfssingle6.newX      -> bfssingle7.currentX, bfssingle8.oldX;
+    connect bfssingle6.newY      -> bfssingle7.currentY, bfssingle8.oldY;
+    connect bfssingle6.safe      -> bfssingle7.oldSafe;
+    connect bfssingle6.safeFound -> bfssingle7.oldSafeFound;
+    connect bfssingle6.newDirection -> bfssingle7.oldDirection;
+    
+    connect bfssingle7.newX      -> bfssingle8.currentX, bfssingle9.oldX;
+    connect bfssingle7.newY      -> bfssingle8.currentY, bfssingle9.oldY;
+    connect bfssingle7.safe      -> bfssingle8.oldSafe;
+    connect bfssingle7.safeFound -> bfssingle8.oldSafeFound;
+    connect bfssingle7.newDirection -> bfssingle8.oldDirection;
+    
+    connect bfssingle8.newX      -> bfssingle9.currentX, bfssingl9.oldX;
+    connect bfssingle8.newY      -> bfssingle9.currentY, bfssingl9.oldY;
+    connect bfssingle8.safe      -> bfssingle9.oldSafe;
+    connect bfssingle8.safeFound -> bfssingle9.oldSafeFound;
+    connect bfssingle8.newDirection -> bfssingle9.oldDirection;
+    
+    connect bfssingle9.newX      -> bfssingl9.currentX;
+    connect bfssingle9.newY      -> bfssingl9.currentY;
+    connect bfssingle9.safe      -> bfssingl9.oldSafe;
+    connect bfssingle9.safeFound -> bfssingl9.oldSafeFound;
+    connect bfssingle9.newDirection -> bfssingl9.oldDirection;
+    
+    connect bfssingl9.newX      -> endSafe.currentX;
+    connect bfssingl9.newY      -> endSafe.currentY;
+    connect bfssingl9.safe      -> endSafe.oldSafe;
+    connect bfssingl9.safeFound -> endSafe.oldSafeFound;
+    connect bfssingl9.newDirection -> endSafe.oldDirection;
+    
+    connect endSafe.safe -> safe;
+    
+    connect ghostX[:] -> bfssingle1.ghostX[:];
+    connect ghostX[:] -> bfssingle2.ghostX[:];
+    connect ghostX[:] -> bfssingle3.ghostX[:];
+    connect ghostX[:] -> bfssingle4.ghostX[:];
+    connect ghostX[:] -> bfssingle5.ghostX[:];
+    connect ghostX[:] -> bfssingle6.ghostX[:];
+    connect ghostX[:] -> bfssingle7.ghostX[:];
+    connect ghostX[:] -> bfssingle8.ghostX[:];
+    connect ghostX[:] -> bfssingle9.ghostX[:];
+    connect ghostX[:] -> bfssingl9.ghostX[:];
+    connect ghostX[:] -> endSafe.ghostX[:];
+    connect ghostY[:] -> bfssingle1.ghostY[:];
+    connect ghostY[:] -> bfssingle2.ghostY[:];
+    connect ghostY[:] -> bfssingle3.ghostY[:];
+    connect ghostY[:] -> bfssingle4.ghostY[:];
+    connect ghostY[:] -> bfssingle5.ghostY[:];
+    connect ghostY[:] -> bfssingle6.ghostY[:];
+    connect ghostY[:] -> bfssingle7.ghostY[:];
+    connect ghostY[:] -> bfssingle8.ghostY[:];
+    connect ghostY[:] -> bfssingle9.ghostY[:];
+    connect ghostY[:] -> bfssingl9.ghostY[:];
+    connect ghostY[:] -> endSafe.ghostY[:];
+    connect ghostDirection[:] -> bfssingle1.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle2.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle3.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle4.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle5.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle6.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle7.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle8.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingle9.ghostDirection[:];
+    connect ghostDirection[:] -> bfssingl9.ghostDirection[:];
+    connect ghostDirection[:] -> endSafe.ghostDirection[:];
+    connect ghostEatable[:] -> bfssingle1.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle2.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle3.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle4.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle5.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle6.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle7.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle8.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingle9.ghostEatable[:];
+    connect ghostEatable[:] -> bfssingl9.ghostEatable[:];
+    connect ghostEatable[:] -> endSafe.ghostEatable[:];
+    connect map -> bfssingle1.map;
+    connect map -> bfssingle2.map;
+    connect map -> bfssingle3.map;
+    connect map -> bfssingle4.map;
+    connect map -> bfssingle5.map;
+    connect map -> bfssingle6.map;
+    connect map -> bfssingle7.map;
+    connect map -> bfssingle8.map;
+    connect map -> bfssingle9.map;
+    connect map -> bfssingl9.map;
+}

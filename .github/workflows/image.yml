@@ -1,0 +1,92 @@
+name: Migrate Docker Images
+on:
+  workflow_dispatch:
+jobs:
+  docker-migration:
+    runs-on: ubuntu-latest
+    env:
+      GITLAB_USERNAME: "David.Blum"
+      GITLABTOKEN: ${{ secrets.GITLABTOKEN }}
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}
+    steps:
+      - name: Log in to GitLab
+        run: |
+          docker login https://git.rwth-aachen.de/ -u "$GITLAB_USERNAME" -p "$GITLABTOKEN"
+      - name: Log in to GitHub
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Migrate Docker images from EMAM2Middleware
+        run: |
+          LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+          IFS="," read -ra IMAGES <<< "ema-ros-kinetic:latest,ema-ros-crystal:latest,ros-noetic:mxnet191"
+          for IMAGE in "${IMAGES[@]}"; do
+            if [[ $IMAGE == :* ]]; then
+              GITLAB_IMAGE="registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2middleware$IMAGE"
+            else
+              GITLAB_IMAGE="registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emam2middleware/$IMAGE"
+            fi
+            LOWERCASE_IMAGE=$(echo "$IMAGE" | tr "[:upper:]" "[:lower:]")
+            if [[ $IMAGE == :* ]]; then
+              GHCR_IMAGE="ghcr.io/$LOWERCASE_OWNER/emam2middleware$LOWERCASE_IMAGE"
+            else
+               GHCR_IMAGE="ghcr.io/$LOWERCASE_OWNER/emam2middleware/$LOWERCASE_IMAGE"
+            fi
+            echo "Pulling image from GitLab: $GITLAB_IMAGE"
+            docker pull "$GITLAB_IMAGE"
+            echo "Tagging image for GHCR: $GHCR_IMAGE"
+            docker tag "$GITLAB_IMAGE" "$GHCR_IMAGE"
+            echo "Pushing image to GHCR: $GHCR_IMAGE"
+            docker push "$GHCR_IMAGE"
+            echo "Removing local image: $GHCR_IMAGE"
+            docker rmi -f $(docker images -q) || true
+          done
+      - name: Migrate Docker images from EMADL2CPP
+        run: |
+          LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+          IFS="," read -ra IMAGES <<< "integrationtests/mxnet:v0.0.3,integrationtests/mxnet:v0.0.4,integrationtests/mxnet:v0.0.5,integrationtests/caffe2:v0.0.5,integrationtests/tensorflow:latest,dockerimages/mxnet170:v0.0.1,dockerimages/mxnet150:v0.0.5,:ema-lab,dockerimages/mxnet170-onnx:v0.0.1,dockerimages/mxnet170-dgl:v0.0.1,dockerimages/tensorflow-onnx:latest,mxnet:latest,mxnet:new,dockerimages/dgl-qd:latest,dockerimages/numcites:latest,mxnet/190:latest,mxnet/190:v0.0.2,dockerimages/pytorch:latest,mxnet170:v0.0.2"
+          for IMAGE in "${IMAGES[@]}"; do
+            if [[ $IMAGE == :* ]]; then
+              GITLAB_IMAGE="registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp$IMAGE"
+            else
+              GITLAB_IMAGE="registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/$IMAGE"
+            fi
+            LOWERCASE_IMAGE=$(echo "$IMAGE" | tr "[:upper:]" "[:lower:]")
+            if [[ $IMAGE == :* ]]; then
+              GHCR_IMAGE="ghcr.io/$LOWERCASE_OWNER/emadl2cpp$LOWERCASE_IMAGE"
+            else
+               GHCR_IMAGE="ghcr.io/$LOWERCASE_OWNER/emadl2cpp/$LOWERCASE_IMAGE"
+            fi
+            echo "Pulling image from GitLab: $GITLAB_IMAGE"
+            docker pull "$GITLAB_IMAGE"
+            echo "Tagging image for GHCR: $GHCR_IMAGE"
+            docker tag "$GITLAB_IMAGE" "$GHCR_IMAGE"
+            echo "Pushing image to GHCR: $GHCR_IMAGE"
+            docker push "$GHCR_IMAGE"
+            echo "Removing local image: $GHCR_IMAGE"
+            docker rmi -f $(docker images -q) || true
+          done
+      - name: Migrate Docker images from MNISTCalculator
+        run: |
+          LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+          IFS="," read -ra IMAGES <<< "mxnet:v0.0.3,mxnet:v0.0.5,caffe2:v0.0.2,tensorflow:latest,mxnet/run:latest"
+          for IMAGE in "${IMAGES[@]}"; do
+            if [[ $IMAGE == :* ]]; then
+              GITLAB_IMAGE="registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/mnistcalculator$IMAGE"
+            else
+              GITLAB_IMAGE="registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/mnistcalculator/$IMAGE"
+            fi
+            LOWERCASE_IMAGE=$(echo "$IMAGE" | tr "[:upper:]" "[:lower:]")
+            if [[ $IMAGE == :* ]]; then
+              GHCR_IMAGE="ghcr.io/$LOWERCASE_OWNER/mnistcalculator$LOWERCASE_IMAGE"
+            else
+               GHCR_IMAGE="ghcr.io/$LOWERCASE_OWNER/mnistcalculator/$LOWERCASE_IMAGE"
+            fi
+            echo "Pulling image from GitLab: $GITLAB_IMAGE"
+            docker pull "$GITLAB_IMAGE"
+            echo "Tagging image for GHCR: $GHCR_IMAGE"
+            docker tag "$GITLAB_IMAGE" "$GHCR_IMAGE"
+            echo "Pushing image to GHCR: $GHCR_IMAGE"
+            docker push "$GHCR_IMAGE"
+            echo "Removing local image: $GHCR_IMAGE"
+            docker rmi -f $(docker images -q) || true
+          done

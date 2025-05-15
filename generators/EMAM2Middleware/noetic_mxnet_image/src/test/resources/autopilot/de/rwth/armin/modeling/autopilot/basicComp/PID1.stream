@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.basicComp;
+
+stream PID1 for PID {
+    desiredVel: 5 tick 5 tick 5 tick 5;
+    currentVel: 0 tick 4 tick 5 tick 10;
+    timeInc  : 0.001 tick 0.0001 tick 0.0001 tick 0.0001;
+
+    engineVal: 2.5 tick 2.5 tick - tick 0.0;
+    breakesVal: 0 tick 0 tick - tick 2.5;
+}

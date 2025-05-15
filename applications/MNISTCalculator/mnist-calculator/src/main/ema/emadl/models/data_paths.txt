@@ -1,0 +1,1 @@
+cNNCalculator.Network src/main/resources/training_data

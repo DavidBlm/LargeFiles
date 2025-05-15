@@ -1,0 +1,40 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.emadlTests;
+
+component ResNet34{
+    ports in Z(0:255)^{3, 224, 224} image,
+         out Q(0:1)^{1000} predictions;
+
+    implementation CNN {
+        def conv(kernel, channels, stride=1, act=true){
+            Convolution(kernel=(kernel,kernel), channels=channels, stride=(stride,stride)) ->
+            BatchNorm() ->
+            Relu(?=act)
+        }
+        def resLayer(channels, stride=1){
+            (
+                conv(kernel=3, channels=channels, stride=stride) ->
+                conv(kernel=3, channels=channels, act=false)
+            |
+                conv(kernel=1, channels=channels, stride=stride, act=false, ? = (stride != 1))
+            ) ->
+            Add() ->
+            Relu()
+        }
+
+        image ->
+        conv(kernel=7, channels=64, stride=2) ->
+        Pooling(pool_type="max", kernel=(3,3), stride=(2,2)) ->
+        resLayer(channels=64, ->=3) ->
+        resLayer(channels=128, stride=2) ->
+        resLayer(channels=128, ->=3) ->
+        resLayer(channels=256, stride=2) ->
+        resLayer(channels=256, ->=5) ->
+        resLayer(channels=512, stride=2) ->
+        resLayer(channels=512, ->=2) ->
+        GlobalPooling(pool_type="avg") ->
+        FullyConnected(units=1000) ->
+        Softmax() ->
+        predictions;
+    }
+}

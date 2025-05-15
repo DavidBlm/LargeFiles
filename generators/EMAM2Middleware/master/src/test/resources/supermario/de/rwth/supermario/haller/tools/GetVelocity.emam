@@ -1,0 +1,32 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.tools;
+
+
+component GetVelocity {
+    ports   //x,y
+    
+        in Z distX,
+        in Z distY,
+        
+        out Z velX,
+        out Z velY;
+
+    implementation Math {
+        static Z oldDistX = -1;
+        static Z oldDistY = -1;
+        
+        //Calculate velocity (distance / ticklength)
+        if(oldDistX != -1)
+            velX = distX - oldDistX;
+            velY = distY - oldDistY;
+            oldDistX = distX;
+            oldDistY = distY;
+            
+        else
+            velX = -1;
+            velY = -1;
+        end
+        
+    }
+    
+}

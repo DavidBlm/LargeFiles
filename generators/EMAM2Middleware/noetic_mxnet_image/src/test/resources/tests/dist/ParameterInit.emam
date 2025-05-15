@@ -1,0 +1,23 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.dist;
+
+component ParameterInit{
+
+    component NoParamComp{
+
+    }
+
+    component ParamComp(Q param){
+
+    }
+
+    component ParamCompMulti(Q param1, Q param2, Q param3){
+
+    }
+
+    instance NoParamComp noParamComp;
+    instance ParamComp(1.0) paramComp1;
+    instance ParamComp(2.0) paramComp2;
+    instance ParamCompMulti(1,2,3) paramComp3;
+    instance ParamCompMulti(4,5,6) paramComp4;
+}

@@ -1,0 +1,38 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+import de.rwth.armin.modeling.autopilot.common.*;
+
+component CalculateEngineAndBrakes {
+  port
+    in Q currentVelocity,
+    in Q desiredVelocity,
+    out Q engine,
+    out Q brakes;
+
+  instance CalculatePidParameters pidParams;
+  instance CalculatePidError pidError;
+  instance Abs abs1;
+  instance PID pid;
+  instance DecideEngineOrBrakes engineOrBrakes;
+
+  connect currentVelocity -> pidParams.currentVelocity;
+  connect desiredVelocity -> pidParams.desiredVelocity;
+
+  connect currentVelocity -> pidError.currentVelocity;
+  connect desiredVelocity -> pidError.desiredVelocity;
+
+  connect pidParams.paramP -> pid.paramP;
+  connect pidParams.paramI -> pid.paramI;
+  connect pidParams.paramD -> pid.paramD;
+  connect pidParams.paramDecayCoefficient -> pid.paramDecayCoefficient;
+
+  connect pidError.error -> abs1.input;
+  connect abs1.output -> pid.error;
+
+  connect pidError.error -> engineOrBrakes.error;
+  connect pid.control -> engineOrBrakes.controlSignal;
+
+  connect engineOrBrakes.engine -> engine;
+  connect engineOrBrakes.brakes -> brakes;
+}

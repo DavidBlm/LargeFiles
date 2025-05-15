@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component Saturation1_2 {
+                port
+                  in Number in1,
+                  out Number out1;
+              }
+

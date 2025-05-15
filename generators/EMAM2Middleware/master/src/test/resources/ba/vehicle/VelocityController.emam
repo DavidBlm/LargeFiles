@@ -1,0 +1,46 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.vehicle;
+
+component VelocityController(adaptable Q holdTimeIn){
+    ports in Q maxVelIn,
+          in Q maxAccelIn,
+          in Q deltaTimeIn,
+          //in Q holdTimeIn,
+          in B slowDownIn,
+          in B resetVelIn;
+
+    ports out Q curVelOut;
+
+    implementation Math{
+        static Q lastVel = 0;
+        static Q holdFor = 0;
+        Q resVel = lastVel;
+
+        if resetVelIn
+            lastVel = maxVelIn;
+            resVel = maxVelIn;
+            holdFor = 0;
+        else
+            if slowDownIn
+                resVel = lastVel - maxAccelIn * deltaTimeIn;
+                holdFor = holdTimeIn;
+            else
+                holdFor = holdFor - deltaTimeIn;
+                if holdFor <= 0
+                    //holdFor is either (-deltaTimeIn)
+                    //or (- time since accel should start)
+                    resVel = lastVel + maxAccelIn * (-holdFor);
+                    holdFor = 0;
+                end
+            end
+        end
+
+        if resVel < 0
+            resVel = 0;
+        elseif resVel > maxVelIn
+            resVel = maxVelIn;
+        end
+        curVelOut = resVel;
+        lastVel = curVelOut;
+    }
+}

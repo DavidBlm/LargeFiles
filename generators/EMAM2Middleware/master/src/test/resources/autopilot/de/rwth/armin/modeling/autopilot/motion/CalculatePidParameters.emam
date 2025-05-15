@@ -1,0 +1,39 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+component CalculatePidParameters {
+  port
+    in  Q       currentVelocity,
+    in  Q       desiredVelocity,
+
+    out Q       paramP,
+    out Q       paramI,
+    out Q       paramD,
+    out Q       paramDecayCoefficient;
+
+  implementation Math {
+    static Q MIN_VELOCITY = 0.5;
+    static Q MAX_VELOCITY = 13.0 - MIN_VELOCITY / 10.0;
+    static Q P_FOR_MIN_VELOCITY = 1.76703;
+    static Q P_FOR_MAX_VELOCITY = 3.29578;
+
+    paramP = 0.0;
+    paramI = 0.0;
+    paramD = 0.0;
+    paramDecayCoefficient = 0.0;
+
+    Q v = currentVelocity;
+    if (desiredVelocity < currentVelocity)
+      v = desiredVelocity;
+    end
+
+    if (v < MIN_VELOCITY)
+      paramP = P_FOR_MIN_VELOCITY;
+    elseif (v > MAX_VELOCITY)
+      paramP = P_FOR_MAX_VELOCITY;
+    else
+      Q diff = v - MIN_VELOCITY;
+      paramP = P_FOR_MIN_VELOCITY + (P_FOR_MAX_VELOCITY - P_FOR_MIN_VELOCITY) * diff / (MAX_VELOCITY - MIN_VELOCITY);
+    end
+  }
+}

@@ -1,0 +1,73 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+      component Accumulator_REL {
+        port
+          out B b_max,
+          out B b_min,
+          in B e,
+          in Number iV,
+          in Number mN,
+          in Number mX,
+          in B r,
+          in Number u,
+          out Number y;
+instance Limit limit;
+instance Memory_Y memory_Y;
+instance Sum_yu sum_yu;
+instance Switch_E switch_E;
+instance Switch_R_9 switch_R_9;
+instance Condition_50 condition_50;
+instance Condition1_26 condition1_26;
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.yOut1*/
+        connect limit.y -> y;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.b_maxOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.b_maxOut2*/
+        connect limit.b_max -> b_max;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.b_minOut3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.b_minOut3*/
+        connect limit.b_min -> b_min;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_E.condition*/
+        connect condition1_26.out1 -> switch_E.condition;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_R.condition*/
+        connect condition_50.out1 -> switch_R_9.condition;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.rIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.condition.in1*/
+        connect r -> condition_50.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.eIn4 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.condition1.in1*/
+        connect e -> condition1_26.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.uIn3*/
+        connect switch_R_9.out1 -> limit.u;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.mXIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.mXIn1*/
+        connect mX -> limit.mX;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.mNIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.mNIn2*/
+        connect mN -> limit.mN;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.limit.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.memory_Y.in1*/
+        connect limit.y -> memory_Y.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.memory_Y.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_E.elseIn*/
+        connect memory_Y.out1 -> switch_E.elseIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.memory_Y.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.sum_yu.in2*/
+        connect memory_Y.out1 -> sum_yu.in2;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.iVIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_R.ifIn*/
+        connect iV -> switch_R_9.ifIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_E.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_R.elseIn*/
+        connect switch_E.out1 -> switch_R_9.elseIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.sum_yu.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.switch_E.ifIn*/
+        connect sum_yu.out1 -> switch_E.ifIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.uIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.accumulator_REL.sum_yu.in1*/
+        connect u -> sum_yu.in1;
+
+      }
+

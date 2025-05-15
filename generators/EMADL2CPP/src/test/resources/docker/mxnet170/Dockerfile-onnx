@@ -1,0 +1,5 @@
+FROM registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/mxnet170:v0.0.1
+
+RUN apt-get update --allow-releaseinfo-change
+RUN apt-get install -y libprotobuf-dev protobuf-compiler
+RUN export CMAKE_ARGS="-DONNX_USE_PROTOBUF_SHARED_LIBS=ON" && pip3 install onnx==1.2.1

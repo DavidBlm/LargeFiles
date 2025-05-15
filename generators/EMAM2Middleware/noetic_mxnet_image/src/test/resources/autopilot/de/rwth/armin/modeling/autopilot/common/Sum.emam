@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component Sum {
+  port
+    in Q t1,
+    in Q t2,
+    out Q result;
+
+  implementation Math {
+    result = t1 + t2;
+  }
+}

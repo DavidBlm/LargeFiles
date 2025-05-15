@@ -1,0 +1,202 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA30b.
+  component Oeffentlicher_Demonstrator_FAS_v04FA30b {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Boolean _Limiter_b,
+              out Boolean _Limiter_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Boolean limiter_b,
+                out Boolean limiter_active_b;
+
+              component Limiter {
+                port
+                  in Boolean limiter_b,
+                  out Boolean limiter_active_b;
+
+                component Limiter_Function {
+                  port
+                    out Boolean limiter_active_b,
+                    in Boolean limiter_b;
+
+                  component Limiter_Enabled {
+                    port
+                      out Boolean limiter_active_b,
+                      in Boolean limiter_b;
+
+                    component Limiter_Deactive {
+                      port
+                        out Boolean limiter_active_b;
+
+                    }
+instance Limiter_Deactive limiter_Deactive;
+                    component Limiter_Active {
+                      port
+                        out Boolean limiter_active_b;
+
+                    }
+instance Limiter_Active limiter_Active;
+                    component SwitchBlock3_2 {
+                      port
+                        in Boolean ifIn,
+                        out Boolean out1;
+
+                    }
+instance SwitchBlock3_2 switchBlock3_2;
+                    component SwitchBlock2_2 {
+                      port
+                        in Boolean elseIn,
+                        out Boolean out1,
+                        in Boolean ifIn,
+                        in Boolean condition;
+
+                    }
+instance SwitchBlock2_2 switchBlock2_2;
+                    component LogicalOperator2_1 {
+                      port
+                        in Boolean in1,
+                        out Boolean out1;
+
+                    }
+instance LogicalOperator2_1 logicalOperator2_1;
+                    component RSFlipFlop_1 {
+                      port
+                        in Boolean r,
+                        out Boolean q;
+
+                      component Condition1_5 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance Condition1_5 condition1_5;
+                      component Switch_R_2 {
+                        port
+                          in Boolean condition,
+                          out Boolean out1;
+
+                      }
+instance Switch_R_2 switch_R_2;
+  connect condition1_5.out1 -> switch_R_2.condition;
+  connect switch_R_2.out1 -> q;
+  connect r -> condition1_5.in1;
+                    }
+instance RSFlipFlop_1 rSFlipFlop_1;
+                    component Condition2_2 {
+                      port
+                        in Boolean in2,
+                        out Boolean out1;
+
+                    }
+instance Condition2_2 condition2_2;
+  connect logicalOperator2_1.out1 -> rSFlipFlop_1.r;
+  connect limiter_b -> logicalOperator2_1.in1;
+  connect limiter_Deactive.limiter_active_b -> switchBlock3_2.ifIn;
+  connect rSFlipFlop_1.q -> condition2_2.in2;
+  connect limiter_Active.limiter_active_b -> switchBlock2_2.ifIn;
+  connect switchBlock3_2.out1 -> switchBlock2_2.elseIn;
+  connect condition2_2.out1 -> switchBlock2_2.condition;
+  connect switchBlock2_2.out1 -> limiter_active_b;
+                  }
+instance Limiter_Enabled limiter_Enabled;
+  connect limiter_Enabled.limiter_active_b -> limiter_active_b;
+  connect limiter_b -> limiter_Enabled.limiter_b;
+                }
+instance Limiter_Function limiter_Function;
+                component SwitchBlock3_5 {
+                  port
+                    in Boolean ifIn,
+                    out Boolean out1;
+
+                }
+instance SwitchBlock3_5 switchBlock3_5;
+  connect limiter_Function.limiter_active_b -> switchBlock3_5.ifIn;
+  connect switchBlock3_5.out1 -> limiter_active_b;
+  connect limiter_b -> limiter_Function.limiter_b;
+              }
+instance Limiter limiter;
+              component FAS_Input {
+                port
+                  in Boolean limiter_b,
+                  out Boolean limiter_b1;
+
+  connect limiter_b -> limiter_b1;
+              }
+instance FAS_Input fAS_Input;
+  connect fAS_Input.limiter_b1 -> limiter.limiter_b;
+  connect limiter_b -> fAS_Input.limiter_b;
+  connect limiter.limiter_active_b -> limiter_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Boolean limiter_bIn5,
+                out Boolean limiter_b;
+
+  connect limiter_bIn5 -> limiter_b;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean limiter_active_b,
+                out Boolean limiter_active_bOut6;
+
+  connect limiter_active_b -> limiter_active_bOut6  ;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.limiter_b -> dEMO_FAS_Funktion.limiter_b;
+  connect dEMO_FAS_Funktion.limiter_active_b -> dEMO_FAS_Output.limiter_active_b;
+  connect _Limiter_b -> dEMO_FAS_Input.limiter_bIn5;
+  connect dEMO_FAS_Output.limiter_active_bOut6 -> _Limiter_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

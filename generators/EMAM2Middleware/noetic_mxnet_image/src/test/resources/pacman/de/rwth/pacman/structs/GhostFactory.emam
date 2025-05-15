@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.structs;
+
+import de.rwth.pacman.structs.Ghost;
+
+component GhostFactory {
+    ports
+        in Q(0m: 342cm) X,
+        in Q(0m: 426cm) Y,
+        in Z(0: 1: 3) Dir,
+        in B Eatable,
+        in B Eaten,
+        out Ghost ghost;
+        
+        implementation Math {
+            ghost.x = X;
+            ghost.y = Y;
+            ghost.dir = Dir;
+            ghost.eatable = Eatable;
+            ghost.eaten = Eaten;
+        }
+}

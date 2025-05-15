@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.environment;
+
+import de.rwth.supermario.haller.tools.GetVelocity;
+
+component Obstacle {
+    ports
+    
+        in Z distX,
+        in Z distY,
+        
+        out Z velX,
+        out Z velY;
+
+    instance GetVelocity velocity;
+    
+    connect distX -> velocity.distX;
+    connect distY -> velocity.distY;
+    connect velocity.velX -> velX;
+    connect velocity.velY -> velY;
+    
+}

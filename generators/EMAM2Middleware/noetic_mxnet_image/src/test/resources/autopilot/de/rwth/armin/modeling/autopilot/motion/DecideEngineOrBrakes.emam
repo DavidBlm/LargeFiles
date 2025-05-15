@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+component DecideEngineOrBrakes {
+  port
+    in Q error,
+    in Q controlSignal,
+    out Q engine,
+    out Q brakes;
+
+  implementation Math {
+    engine = 0.0;
+    brakes = 0.0;
+    if (error > 0)
+      engine = controlSignal;
+    else
+      brakes = controlSignal;
+    end
+  }
+}

@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component FalseBlock_3 {
+                    port
+                      out B y;
+instance Zero_5 zero_5;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.falseBlock.zero.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.falseBlock.yOut1*/
+                    connect zero_5.out1 -> y;
+
+                  }
+

@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package instanceTestCifar;
+
+component CifarNetwork<Z(2:oo) classes = 10>{
+    ports in Z(0:255)^{3, 32, 32} data,
+         out Q(0:1)^{classes} softmax;
+
+    implementation CNN {
+        data ->
+        Convolution(kernel=(5,5), channels=8) ->
+        Convolution(kernel=(5,5), channels=8) ->
+        FullyConnected(units=128) ->
+        Dropout()->
+        FullyConnected(units=classes) ->
+        Softmax() ->
+        softmax;
+
+    }
+}

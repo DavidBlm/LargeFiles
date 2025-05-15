@@ -1,0 +1,25 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component Exponent {
+  port
+    // TODO convert to parameters later
+    in Q x1,
+    in Q y1,
+    in Q x2,
+    in Q y2,
+
+    in Q arg,
+    out Q val;
+
+  implementation Math {
+    if (arg <= x1)
+      val = y1;
+    elseif (arg >= x2)
+      val = y2;
+    else
+      Q k = log( (y1 / y2) ) / (x2 - x1);
+      val = y1 * exp(-k * (arg - x1));
+    end
+  }
+}

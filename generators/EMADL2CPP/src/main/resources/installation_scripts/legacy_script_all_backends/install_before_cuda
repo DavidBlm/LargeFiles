@@ -1,0 +1,79 @@
+#!/bin/bash
+############################ Part 1/2 ######################################
+# This script should help you to get ready to do machine learning          #
+# at SE at RWTH, installing all backends (mxnet/gluon, tensorflow, caffe2. #
+#         - Jonas Eckhardt & Julian Steinsberger-Dührßen -                 #
+############################################################################
+# It is based both on instrcutions and docker files from the git
+# repos as well as our own work
+
+############################################################################
+# Requirements:                                                            #
+############################################################################
+# -Git set up to work with RWTH Gitlab
+# -Virgin Ubuntu 16.04.(No touching, no other version) and not isntalling the system updates
+# -Time: Installation may need more than one hour. It may prompt you
+#        for your passowrd multiple times
+# -Disable Screensaver: It just saves you some time
+# - > 10GB RAM or a swapfile so you have ram+swap > 10GB
+# - > 60GB disk space
+
+###########################################################################
+# Usage:                                                                  #
+###########################################################################
+# chmod u+x installer_bomb.sh
+# ./installer_bomb.sh 
+# Dont use twice. It will fill your ~/.bashrc with garbage
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y --no-install-recommends maven libopencv-dev\
+ python-pip openjdk-8-jdk git wget python python3-numpy gcc build-essential cmake \
+ liblapack-dev libblas-dev libopenblas-dev libboost-dev libarmadillo-dev build-essential \
+ libgoogle-glog-dev libgtest-dev libiomp-dev libleveldb-dev liblmdb-dev \
+ libopenmpi-dev libsnappy-dev libprotobuf-dev openmpi-bin openmpi-doc python-numpy swig
+
+sudo apt install -y --no-install-recommends protobuf-compiler python-dev python-setuptools  \
+ libgflags-dev checkinstall pkg-config yasm gfortran libjpeg8-dev libjasper-dev libpng12-dev \
+ libtiff5-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine2-dev \
+ libgstreamer-plugins-base0.10-dev qt5-default libgtk2.0-dev libtbb-dev libatlas-base-dev \
+ libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libxvidcore-dev \
+ libopencore-amrnb-dev libopencore-amrwb-dev x264 v4l-utils libgphoto2-dev libeigen3-dev \
+ libhdf5-dev doxygen curl unzip autoconf autogen libtool mlocate zlib1g-dev g++ sudo zip automake
+
+
+#Fix JDK version
+sudo update-alternatives --config java
+
+pip install --upgrade pip --user
+pip install numpy opencv-python six lmdb graphviz pyyaml future typing --user
+pip install --no-deps h5py --user
+
+#prepare path variables
+echo "export PATH=\$PATH:\"/usr/local/lib\"" >> ~/.bashrc
+echo "export PYTHON_PATH=\"/usr/local:$(pwd)/pytorch/build:/usr/bin/python:/usr/local/lib\"">> ~/.bashrc
+echo "export LD_LIBRARY_PATH=\"/usr/local/lib\"">> ~/.bashrc
+source ~/.bashrc
+
+
+#Install caffee2
+git clone --recursive https://github.com/pytorch/pytorch.git
+cd pytorch
+git checkout v0.4.0
+git -c submodule.'third_party/nervanagpu'.update=none submodule update --init
+sudo rm -r build
+mkdir build
+cd build
+cmake -DUSE_MPI=OFF ..
+sudo make clean install
+cd ..
+sudo FULL_CAFFE2=1 python setup.py clean install
+sudo cp -r /usr/local/lib/libcaffe2.so /usr/lib/
+cd ..
+
+#Fix protocbuf
+pip2 install protobuf==3.5.1 --user
+
+
+sudo snap install --classic notepadqq
+sudo snap install pycharm-community --classic

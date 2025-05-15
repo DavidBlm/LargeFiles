@@ -1,0 +1,31 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+
+component SpanningSystem{
+
+    ports in Q input,
+          out Q output;
+
+    instance OverallSystem overallSystem1;
+    instance OverallSystem overallSystem2;
+
+    connect input -> overallSystem1.input[1];
+    connect input -> overallSystem1.input[2];
+    connect input -> overallSystem1.input[3];
+    connect input -> overallSystem1.input[4];
+
+    connect overallSystem1.output[4] -> output;
+    connect overallSystem1.output[1] -> output;
+    connect overallSystem1.output[2] -> output;
+    connect overallSystem1.output[3] -> output;
+
+    connect input -> overallSystem2.input[1];
+    connect input -> overallSystem2.input[2];
+    connect input -> overallSystem2.input[3];
+    connect input -> overallSystem2.input[4];
+
+    connect overallSystem2.output[4] -> output;
+    connect overallSystem2.output[1] -> output;
+    connect overallSystem2.output[2] -> output;
+    connect overallSystem2.output[3] -> output;
+}

@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+component Network{
+    ports in Z(0:255)^{1, 28, 28} data,
+         out Q(0:1)^{10} softmax;
+
+    implementation CNN {			
+        data ->
+        AdaNet()->
+        softmax;
+    }
+}

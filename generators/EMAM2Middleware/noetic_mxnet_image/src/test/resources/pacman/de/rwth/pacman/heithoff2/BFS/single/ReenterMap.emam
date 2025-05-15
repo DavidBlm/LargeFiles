@@ -1,0 +1,29 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS.single;
+
+component ReenterMap {
+    ports
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in Q(0m: 20m) oldX,
+      in Q(1m: 23m) oldY,
+      
+      out Q(0m: 20m) newCurrentX,
+      out Q(1m: 23m) newCurrentY,
+      out Q(0m: 20m) newOldX,
+      out Q(1m: 23m) newOldY;
+    
+    implementation Math {
+        newCurrentX = currentX;
+        newCurrentY = currentY;
+        newOldX     = oldX;
+        newOldY     = oldY;
+        if currentX < 2
+            newCurrentX = 18;
+            newOldX = 19;
+        elseif currentX > 18
+            newCurrentX = 2;
+            newOldX = 1;
+        end
+    }
+}

@@ -1,0 +1,295 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA99.
+  component Oeffentlicher_Demonstrator_FAS_v04FA99 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _V_Vehicle_kmh,
+              in Double _V_Obj_rel_kmh,
+              out Double _Acceleration_pc,
+              out Double _BrakeForce_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double v_Vehicle_kmh,
+                in Double v_Obj_rel_kmh,
+                out Double acceleration_pc,
+                out Double brakeForce_pc;
+
+              component FollowToStop {
+                port
+                  in Double v_Vehicle_kmh,
+                  in Double v_Obj_rel_kmh,
+                  out Double fTS_Abstand_soll_m;
+
+                component FollowToStop_Function {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double fTS_Abstand_soll_m,
+                    in Double v_Obj_rel_kmh;
+
+                  component Sum_3 {
+                    port
+                      in Double in1,
+                      out Double v_Obj_kmh,
+                      in Double in2;
+
+                  }
+instance Sum_3 sum_3;
+                  component Chart {
+                    port
+                      in Double v_Obj_kmh,
+                      out Double abstand_soll_m;
+
+                    component SFunction {
+                      port
+                        in Double in1,
+                        out Double abstand_soll_m;
+
+                    }
+instance SFunction sFunction;
+  connect v_Obj_kmh -> sFunction.in1;
+  connect sFunction.abstand_soll_m -> abstand_soll_m;
+                  }
+instance Chart chart;
+  connect sum_3.v_Obj_kmh -> chart.v_Obj_kmh;
+  connect v_Vehicle_kmh -> sum_3.in1;
+  connect v_Obj_rel_kmh -> sum_3.in2;
+  connect chart.abstand_soll_m -> fTS_Abstand_soll_m;
+                }
+instance FollowToStop_Function followToStop_Function;
+                component SwitchBlock1_4 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock1_4 switchBlock1_4;
+  connect followToStop_Function.fTS_Abstand_soll_m -> switchBlock1_4.ifIn;
+  connect v_Vehicle_kmh -> followToStop_Function.v_Vehicle_kmh;
+  connect v_Obj_rel_kmh -> followToStop_Function.v_Obj_rel_kmh;
+  connect switchBlock1_4.out1 -> fTS_Abstand_soll_m;
+              }
+instance FollowToStop followToStop;
+              component FAS_Input {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double v_Vehicle_kmh2,
+                  in Double v_Obj_rel_kmh1,
+                  out Double v_Obj_rel_kmh4;
+
+  connect v_Vehicle_kmh -> v_Vehicle_kmh2;
+  connect v_Obj_rel_kmh1 -> v_Obj_rel_kmh4;
+              }
+instance FAS_Input fAS_Input;
+              component Distronic {
+                port
+                  in Double fTS_Abstand_soll_m,
+                  out Double brakeForce_Distronic_pc;
+
+                component Distronic_FTS_Enabled {
+                  port
+                    in Double fTS_Abstand_soll_m,
+                    out Double brakeForce_Distronic_pc;
+
+                  component Sum_2 {
+                    port
+                      in Double in2,
+                      out Double out1;
+
+                  }
+instance Sum_2 sum_2;
+                  component LookUpTable_2 {
+                    port
+                      in Double in1,
+                      out Double brakeForce_Distronic_pc;
+
+                  }
+instance LookUpTable_2 lookUpTable_2;
+                  component Mul1_3 {
+                    port
+                      in Double brakeForce_Distronic_pc,
+                      out Double brakeForce_Distronic_pcOut1;
+
+                  }
+instance Mul1_3 mul1_3;
+                  component SwitchBlock_3 {
+                    port
+                      in Double elseIn,
+                      out Double brakeForce_Distronic_pc;
+
+                  }
+instance SwitchBlock_3 switchBlock_3;
+  connect lookUpTable_2.brakeForce_Distronic_pc -> mul1_3.brakeForce_Distronic_pc;
+  connect mul1_3.brakeForce_Distronic_pcOut1 -> switchBlock_3.elseIn;
+  connect sum_2.out1 -> lookUpTable_2.in1;
+  connect switchBlock_3.brakeForce_Distronic_pc ->   brakeForce_Distronic_pc;
+  connect fTS_Abstand_soll_m -> sum_2.in2;
+                }
+instance Distronic_FTS_Enabled distronic_FTS_Enabled;
+                component SwitchBlock1_1 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock1_1 switchBlock1_1;
+                component SwitchBlock_4 {
+                  port
+                    in Double elseIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock_4 switchBlock_4;
+  connect distronic_FTS_Enabled.brakeForce_Distronic_pc -> switchBlock1_1.ifIn;
+  connect fTS_Abstand_soll_m -> distronic_FTS_Enabled.fTS_Abstand_soll_m  ;
+  connect switchBlock1_1.out1 -> switchBlock_4.elseIn;
+  connect switchBlock_4.out1 -> brakeForce_Distronic_pc;
+              }
+instance Distronic distronic;
+              component VelocityControl {
+                port
+                  in Double brakeForce_Distronic_pc,
+                  out Double acceleration_pc,
+                  out Double brakeForce_pc;
+
+                component MinMax2 {
+                  port
+                    in Double in4,
+                    out Double brakeForce_pc;
+
+                }
+instance MinMax2 minMax2;
+                component Condition_45 {
+                  port
+                    in Double in1,
+                    out Boolean out1;
+
+                }
+instance Condition_45 condition_45;
+                component SwitchBlock2_12 {
+                  port
+                    in Boolean condition,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect condition_45.out1 -> switchBlock2_12.condition;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+  connect minMax2.brakeForce_pc -> condition_45.in1;
+  connect brakeForce_Distronic_pc -> minMax2.in4;
+  connect minMax2.brakeForce_pc -> brakeForce_pc;
+              }
+instance VelocityControl velocityControl;
+  connect fAS_Input.v_Vehicle_kmh2 -> followToStop.v_Vehicle_kmh;
+  connect fAS_Input.v_Obj_rel_kmh4 -> followToStop.v_Obj_rel_kmh;
+  connect followToStop.fTS_Abstand_soll_m -> distronic.fTS_Abstand_soll_m;
+  connect distronic.brakeForce_Distronic_pc ->   velocityControl.brakeForce_Distronic_pc;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect velocityControl.brakeForce_pc -> brakeForce_pc;
+  connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh;
+  connect v_Obj_rel_kmh -> fAS_Input.v_Obj_rel_kmh1;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh,
+                in Double v_Obj_rel_kmhIn12,
+                out Double v_Obj_rel_kmh;
+
+  connect v_Vehicle_b -> v_Vehicle_kmh;
+  connect v_Obj_rel_kmhIn12 -> v_Obj_rel_kmh;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2,
+                in Double brakeForce_pc,
+                out Double brakeForce_pcOut3;
+
+  connect acceleration_pc -> acceleration_pcOut2;
+  connect brakeForce_pc -> brakeForce_pcOut3;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.v_Vehicle_kmh -> dEMO_FAS_Funktion.v_Vehicle_kmh;
+  connect dEMO_FAS_Input.v_Obj_rel_kmh -> dEMO_FAS_Funktion.v_Obj_rel_kmh;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect dEMO_FAS_Funktion.brakeForce_pc -> dEMO_FAS_Output.brakeForce_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect _V_Obj_rel_kmh -> dEMO_FAS_Input.v_Obj_rel_kmhIn12;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+  connect dEMO_FAS_Output.brakeForce_pcOut3 -> _BrakeForce_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

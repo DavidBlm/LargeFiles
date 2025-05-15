@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package cvae;
+
+component Connector{
+    ports in Q(-oo:oo)^{2} encoding,
+          in Z(0:oo)^{10} label,
+          out Q(-oo:oo)^{1,28,28} res;
+
+    instance Decoder decoder;
+
+    connect encoding -> decoder.encoding;
+    connect label -> decoder.label;
+    connect decoder.data-> res;
+
+}

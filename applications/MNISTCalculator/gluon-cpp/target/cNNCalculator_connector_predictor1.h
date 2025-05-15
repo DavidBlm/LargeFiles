@@ -1,0 +1,34 @@
+#ifndef CNNCALCULATOR_CONNECTOR_PREDICTOR1
+#define CNNCALCULATOR_CONNECTOR_PREDICTOR1
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+#include "armadillo"
+#include "CNNPredictor_cNNCalculator_connector_predictor1.h"
+#include "CNNTranslator.h"
+using namespace arma;
+class cNNCalculator_connector_predictor1{
+const int classes = 10;
+public:
+CNNPredictor_cNNCalculator_connector_predictor1_0 _predictor_0_;
+icube data;
+colvec softmax;
+void init()
+{
+data = icube(1, 28, 28);
+softmax=colvec(classes);
+}
+void execute(){
+    vector<float> data_ = CNNTranslator::translate(data);
+
+    vector<float> softmax_(10);
+
+
+    _predictor_0_.predict(data_, softmax_);
+
+    softmax = CNNTranslator::translateToCol(softmax_, std::vector<size_t> {10});
+
+}
+
+};
+#endif

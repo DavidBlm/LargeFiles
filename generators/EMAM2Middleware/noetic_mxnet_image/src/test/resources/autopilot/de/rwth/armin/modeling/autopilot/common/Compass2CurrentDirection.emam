@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component Compass2CurrentDirection {
+  port
+    in  Q (-oo : 0.001 : oo)              compass,
+    out Q (-1.0 m : 0.001 m : 1.0 m)      currentDirectionX,
+    out Q (-1.0 m : 0.001 m : 1.0 m)      currentDirectionY;
+
+  implementation Math {
+    Q angle = compass + 0.5 * M_PI;
+    currentDirectionX = cos(angle);
+    currentDirectionY = sin(angle);
+  }
+}

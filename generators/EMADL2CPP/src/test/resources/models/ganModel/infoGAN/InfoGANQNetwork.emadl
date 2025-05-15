@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package infoGAN;
+
+component InfoGANQNetwork{
+    ports in Q(-oo:oo)^{512, 4, 4} features,
+         out Q(-oo:oo)^{10} c1;
+
+    implementation CNN {
+
+        features ->
+		FullyConnected(units=128, no_bias=true) ->
+		BatchNorm() ->
+		Relu() ->
+		FullyConnected(units=10, no_bias=true) ->
+		Softmax() ->
+		c1;
+    }
+}

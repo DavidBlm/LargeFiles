@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+component Invariant{
+    ports in Z(0:3)^{1} data[2],
+         out Q(0:1)^{4} pred[3];
+
+    implementation CNN {
+        data[0] ->
+        FullyConnected(units=4) ->
+        Softmax() ->
+        pred[0];
+
+        data[1] ->
+        OneHot(size=4) ->
+        pred[1];
+
+        1 ->
+        OneHot(size=4) ->
+        pred[2];
+    }
+}

@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                        component CompareToZero_6 {
+                          port
+                            in B u,
+                            out B y;
+instance Compare_26_Equals compare_26;
+instance Constant_48_value_0 constant_48;
+                          /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector1.compareToZero.compare.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector1.compareToZero.yOut1*/
+                          connect compare_26.out1 -> y;
+
+                          /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector1.compareToZero.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector1.compareToZero.compare.in1*/
+                          connect u -> compare_26.in1;
+
+                          /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector1.compareToZero.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector1.compareToZero.compare.in2*/
+                          connect constant_48.out1 -> compare_26.in2;
+
+                        }
+

@@ -1,0 +1,39 @@
+ /* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+component Connector {
+    ports in Z(0:255)^{1, 28, 28} image1,
+          in Z(0:255)^{1, 28, 28} image2,
+          in Z(0:255)^{1, 28, 28} image3,
+          in Z(0:255)^{1, 28, 28} image4,
+          in Z(0:255)^{1, 28, 28} image5,
+          in Z(0:255)^{1, 28, 28} image6,
+          out Z(0:1998) res;
+
+    instance Net1 net1;
+    instance Network predictor1;
+    instance Network predictor2;
+    instance Network predictor3;
+    instance Network predictor4;
+    instance Network predictor5;
+    instance Network predictor6;
+
+    instance Calculator cal;
+
+    connect image1 -> predictor1.data;
+    connect image2 -> predictor2.data;
+    connect image3 -> predictor3.data;
+    connect image4 -> predictor4.data;
+    connect image5 -> predictor5.data;
+    connect image6 -> predictor6.data;
+
+    connect predictor1.softmax -> cal.in1_1;
+    connect predictor2.softmax -> cal.in1_2;
+    connect predictor3.softmax -> cal.in1_3;
+    connect predictor4.softmax -> cal.in2_1;
+    connect predictor5.softmax -> cal.in2_2;
+    connect predictor6.softmax -> cal.in2_3;
+
+    connect cal.out1 -> res;
+
+}

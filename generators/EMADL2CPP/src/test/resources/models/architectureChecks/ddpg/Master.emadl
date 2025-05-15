@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ddpg;
+
+import ddpg.agent.*;
+
+component Master {
+    ports
+        in Q^{2} state,
+        out Q(-1:1)^{1} action;
+
+    instance MountaincarActor actor;
+
+    connect state -> actor.state;
+    connect actor.action -> action;
+}

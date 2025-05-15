@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data0", 
+      "inputs": []
+    }, 
+    {
+      "op": "log_softmax", 
+      "name": "softmaxcrossentropyloss0_log_softmax0", 
+      "attrs": {"axis": "-1"}, 
+      "inputs": [[0, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "data1", 
+      "inputs": []
+    }, 
+    {
+      "op": "pick", 
+      "name": "softmaxcrossentropyloss0_pick0", 
+      "attrs": {
+        "axis": "-1", 
+        "keepdims": "True"
+      }, 
+      "inputs": [[1, 0, 0], [2, 0, 0]]
+    }, 
+    {
+      "op": "_mul_scalar", 
+      "name": "softmaxcrossentropyloss0__mulscalar0", 
+      "attrs": {"scalar": "-1.0"}, 
+      "inputs": [[3, 0, 0]]
+    }, 
+    {
+      "op": "mean", 
+      "name": "softmaxcrossentropyloss0_mean0", 
+      "attrs": {
+        "axis": "0", 
+        "exclude": "True"
+      }, 
+      "inputs": [[4, 0, 0]]
+    }
+  ], 
+  "arg_nodes": [0, 2], 
+  "node_row_ptr": [0, 1, 2, 3, 4, 5, 6], 
+  "heads": [[5, 0, 0]], 
+  "attrs": {"mxnet_version": ["int", 10901]}
+}

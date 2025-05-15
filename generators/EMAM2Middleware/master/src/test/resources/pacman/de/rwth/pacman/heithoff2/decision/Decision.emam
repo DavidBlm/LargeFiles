@@ -1,0 +1,47 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.decision;
+
+// Main strategy
+
+component Decision {
+    ports
+      in B topSafe,
+      in B bottomSafe,
+      in B leftSafe,
+      in B rightSafe,
+      in Z topValue,
+      in Z bottomValue,
+      in Z leftValue,
+      in Z rightValue,
+      in Q(-1m: 19m) pacManX,
+      in Q(0m: 22m) pacManY,
+      in Z^{22,19} map,
+      
+      out Z newPacManDirection;
+      
+    instance CompareValues compareValues;     // gives back the desired direction
+    instance PossibleWays possibleWays;       // gives back whether certain directions are blocked
+    instance VerifyDirection verifyDirection; // prevent stuttering
+    instance NextIntersection intersection;   // gives back whether an intersection (more than 3 non-blocked paths) is reached
+    
+    connect pacManX -> possibleWays.pacManX, intersection.pacManX;
+    connect pacManY -> possibleWays.pacManY, intersection.pacManY;
+    connect map -> possibleWays.map, intersection.map;
+    
+    connect topSafe -> compareValues.topSafe, verifyDirection.topSafe;
+    connect bottomSafe -> compareValues.bottomSafe, verifyDirection.bottomSafe;
+    connect leftSafe -> compareValues.leftSafe, verifyDirection.leftSafe;
+    connect rightSafe -> compareValues.rightSafe, verifyDirection.rightSafe;
+    connect topValue -> compareValues.topValue;
+    connect bottomValue -> compareValues.bottomValue;
+    connect leftValue -> compareValues.leftValue;
+    connect rightValue -> compareValues.rightValue;
+    connect possibleWays.topPossible -> compareValues.topPossible, verifyDirection.topPossible;
+    connect possibleWays.bottomPossible -> compareValues.bottomPossible, verifyDirection.bottomPossible;
+    connect possibleWays.leftPossible -> compareValues.leftPossible, verifyDirection.leftPossible;
+    connect possibleWays.rightPossible -> compareValues.rightPossible, verifyDirection.rightPossible;
+    
+    connect intersection.interSectionReached -> verifyDirection.interSection;
+    connect compareValues.newPacManDirection -> verifyDirection.tryDirection;
+    connect verifyDirection.newPacManDirection -> newPacManDirection;
+}

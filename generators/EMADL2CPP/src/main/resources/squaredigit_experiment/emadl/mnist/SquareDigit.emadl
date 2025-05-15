@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package mnist;
+
+component SquareDigit{
+    ports in Z(0:9) inputDigit,
+          out Z(0:81) outputDigit;
+
+    implementation Math{
+        outputDigit = inputDigit * inputDigit;
+    }
+}

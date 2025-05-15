@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component Opti_warn_b {
+      port
+        in B opti_warn_b;
+    }
+

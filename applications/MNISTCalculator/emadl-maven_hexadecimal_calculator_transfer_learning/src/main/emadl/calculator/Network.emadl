@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+/* Increased the number of output classes to 16 (hexa)*/
+package calculator;
+
+component Network{
+    ports in Z(0:255)^{1, 28, 28} data,
+         out Q(0:1)^{16} softmax;
+
+    implementation CNN {
+        def conv(channels, kernel=1, stride=1){
+            Convolution(kernel=(kernel,kernel),channels=channels) ->
+            Relu() ->
+            Pooling(pool_type="max", kernel=(2,2), stride=(stride,stride))
+        }
+
+        data ->
+        LoadNetwork(networkDir="target/pretrained_model/digits.DigitsComposed.DigitsInputLayer_decomposed", networkPrefix="model_DigitsInputLayer_decomposed", numInputs=1, outputShape=500, trainable=true) ->
+        FullyConnected(units=16) ->
+        Softmax() ->
+        softmax;
+    }
+}

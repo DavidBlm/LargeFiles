@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+component Tests {
+  port in B in1, out B out1;
+
+  instance CalculateEngineAndBrakes calculateEngineAndBrakes;
+  instance CalculatePidError calculatePidError;
+  instance CalculatePidParameters calculatePidParameters;
+  instance DecideEngineOrBrakes decideEngineOrBrakes;
+  instance KeepDirection keepDirection;
+  instance MotionPlanning motionPlanning;
+  instance SteeringAngleCorrection steeringAngleCorrection;
+}

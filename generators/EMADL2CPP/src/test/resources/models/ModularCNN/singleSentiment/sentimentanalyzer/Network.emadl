@@ -1,0 +1,24 @@
+/* (c) https://github.com/MontiCore/monticore */
+package sentimentanalyzer;
+
+component Network<Z(1:oo) n = 128>{
+    ports in Z(0:oo)^{n} data_0,
+		  in Z(0:oo)^{n} data_1,
+		  in Z(0:oo)^{1} data_2,
+          out Q(0:1)^{2} softmax;
+
+    implementation CNN {
+        (data_0 | data_1 | data_2) ->
+        LoadNetwork(
+            networkDir="tag:bert_small",
+            networkPrefix="classBertSmallUnPooled-",
+            numInputs=3,
+            outputShape=(128, 768)
+        ) ->
+        FullyConnected(units=768) ->
+		FullyConnected(units=2) ->
+		Softmax() ->
+        softmax;
+    }
+}
+

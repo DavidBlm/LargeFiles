@@ -1,0 +1,18 @@
+/* (c) https://github.com/MontiCore/monticore */
+package calculator;
+
+
+component Network{
+    ports in Z(0:255)^{1, 28, 28} data,
+         out Q(0:1)^{10} softmax;
+
+    instance Net1<500> net1;
+    instance Net2<500> net2;
+
+
+    connect data -> net1.data;
+    connect net1.dataOutput -> net2.dataInput;
+    connect net2.softmax -> softmax;
+
+
+}

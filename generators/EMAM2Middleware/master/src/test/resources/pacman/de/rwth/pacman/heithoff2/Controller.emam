@@ -1,0 +1,53 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2;
+
+import de.rwth.pacman.heithoff2.BFS.Paths;
+import de.rwth.pacman.heithoff2.decision.Decision;
+import de.rwth.pacman.heithoff2.coneSearch.ConeSearches;
+
+component Controller {
+    ports
+      in Q(-1m: 19m) ghostX[4],
+      in Q(0m: 22m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      in B ghostEaten[4],
+      in Q(-1m: 19m) pacManX,
+      in Q(0m: 22m) pacManY,
+      in B pacManEaten,
+      in Z(0:oo) pacManLives,
+      in Z(0:oo) pacManScore,
+      in Z^{22,19} map,
+      
+      out Z(0 : 1 : 3) newPacManDirection;
+      
+    instance Paths safePaths;         // gives back whether certain paths are safe
+    instance Decision decision;       // main strategy
+    instance ConeSearches coneSearch; // searches for coins and enemies
+    instance NormalizePosition normalize;
+      
+    connect ghostX[:] -> normalize.ghostX[:], coneSearch.ghostX[:];
+    connect ghostY[:] -> normalize.ghostY[:], coneSearch.ghostY[:];
+    connect ghostDirection[:] -> safePaths.ghostDirection[:], coneSearch.ghostDirection[:];
+    connect ghostEatable[:] -> safePaths.ghostEatable[:], coneSearch.ghostEatable[:];
+    connect pacManX -> normalize.pacManX, decision.pacManX, coneSearch.currentX;
+    connect pacManY -> normalize.pacManY, decision.pacManY, coneSearch.currentY;
+    connect map -> safePaths.map, decision.map, coneSearch.map;
+    connect normalize.newPacManX -> safePaths.pacManX;
+    connect normalize.newPacManY -> safePaths.pacManY;
+    connect normalize.newGhostX[:] -> safePaths.ghostX[:];
+    connect normalize.newGhostY[:] -> safePaths.ghostY[:]; 
+    
+    connect safePaths.topSafe -> decision.topSafe;
+    connect safePaths.bottomSafe -> decision.bottomSafe;
+    connect safePaths.leftSafe -> decision.leftSafe;
+    connect safePaths.rightSafe -> decision.rightSafe;
+    
+    connect coneSearch.topValue -> decision.topValue;
+    connect coneSearch.bottomValue -> decision.bottomValue;
+    connect coneSearch.leftValue -> decision.leftValue;
+    connect coneSearch.rightValue -> decision.rightValue;
+    
+    connect decision.newPacManDirection -> newPacManDirection;
+      
+}

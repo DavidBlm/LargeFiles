@@ -1,0 +1,53 @@
+package mnist;
+
+component EfficientNetBase<Z(2:oo) classes = 10>{
+    ports in Z(0:255)^{1, 28, 28} image,
+          out Q(0:1)^{classes} predictions;
+
+    implementation CNN {
+        def stem(channels){
+            Convolution(kernel=(3,3), channels=channels, stride=(2, 2), padding="same") ->
+            BatchNorm() ->
+            Relu()
+        }
+
+        def conv(channels){
+            Convolution(kernel=(3,3), channels=channels, stride=(1, 1), padding="same") ->
+            BatchNorm() ->
+            Relu()
+        }
+
+        def reductionConv(channels){
+            Convolution(kernel=(3,3), channels=channels, stride=(2, 2), padding="same") ->
+            BatchNorm() ->
+            Relu()
+        }
+
+        def residualBlock(channels){
+            conv(channels=channels) ->
+            conv(channels=channels) ->
+            Relu()
+        }
+
+        def reductionBlock(channels){
+            (
+                conv(channels=channels) ->
+                conv(channels=channels) ->
+                reductionConv(channels=channels)
+            |
+                reductionConv(channels=channels)
+            ) ->
+            Add()
+        }
+
+        image ->
+        stem(channels=4) ->
+        residualBlock(-> = 4, channels=16) ->
+        reductionBlock(channels=16) ->
+        residualBlock(-> = 4, channels=32) ->
+        reductionBlock(channels=32) ->
+        FullyConnected(units=classes) ->
+        Softmax() ->
+        predictions;
+    }
+}

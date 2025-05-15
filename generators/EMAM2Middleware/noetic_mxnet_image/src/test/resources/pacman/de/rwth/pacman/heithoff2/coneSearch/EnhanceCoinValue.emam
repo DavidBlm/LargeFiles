@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch;
+
+// enhance the buiscuit and coin value if they are too far away
+// this way pacman finds distant buiscuits and coins as well
+
+component EnhanceCoinValue {
+    ports
+      in Z valueIn[4],
+      out Z valueOut[4];
+    
+    implementation Math {
+        Z max = -1;
+        Z index = -1;
+        
+        for i = 1:4
+            if max < valueIn(i)
+                max = valueIn(i);
+                index = i;
+            end
+            valueOut(i) = valueIn(i);
+        end
+        if max < 10
+            valueOut(index) = 100;
+        end
+    }
+}

@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+      component DiscreteTransferFcnwithinitialstates {
+        port
+          in Number in1,
+          out Number out1;
+instance DiscreteStateSpace discreteStateSpace;
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.discreteTransferFcnwithinitialstates.discreteStateSpace.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.discreteTransferFcnwithinitialstates.out1Out1*/
+        connect discreteStateSpace.out1 -> out1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.discreteTransferFcnwithinitialstates.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.discreteTransferFcnwithinitialstates.discreteStateSpace.in1*/
+        connect in1 -> discreteStateSpace.in1;
+
+      }
+

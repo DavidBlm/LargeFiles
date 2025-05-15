@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component CC_OnSet_SetValue {
+                    port
+                      out Number out1,
+                      out Number out2,
+                      out Number out3,
+                      in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance VERSION_INFO_42 vERSION_INFO_42;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_OnSet_SetValue.v_Vehicle_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_OnSet_SetValue.out1*/
+                    connect v_Vehicle_kmh -> out1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_OnSet_SetValue.v_Vehicle_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_OnSet_SetValue.out2*/
+                    connect v_Vehicle_kmh -> out2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_OnSet_SetValue.v_Vehicle_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_OnSet_SetValue.out3*/
+                    connect v_Vehicle_kmh -> out3;
+
+                  }
+

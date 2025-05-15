@@ -1,0 +1,35 @@
+/* (c) https://github.com/MontiCore/monticore */
+package pipeline;
+
+component LinearPipeline{
+
+     ports out Z accuracy;
+
+    component Data_Access(String pathToDatasource){
+        ports out String trainData,
+              out String testData;
+    }
+
+    component Training(String networkImplementation){
+        ports in String trainData,
+              out String trained_model_path,
+              out Z accuracy,
+              out Z loss;
+    }
+
+    component Evaluation {
+        ports in String testData,
+              in String trained_model_path,
+              out Z accuracy;
+    }
+
+    instance Data_Access data_access_step;
+    instance Training training_step;
+    instance Evaluation evaluation_step;
+
+    connect data_access_step.trainData -> training_step.trainData;
+    connect data_access_step.testData -> evaluation_step.testData;
+    connect training_step.trained_model_path -> evaluation_step.trained_model_path;
+    connect evaluation_step.accuracy -> accuracy;
+
+}

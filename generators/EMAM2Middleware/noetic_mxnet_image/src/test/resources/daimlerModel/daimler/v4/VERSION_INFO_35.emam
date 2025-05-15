@@ -1,0 +1,6 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                        component VERSION_INFO_35 {
+instance Copyright_35 copyright_35;
+                        }
+

@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+//TODO: x has to be (n-1)n/2
+//TODO: remove once EMAM2Cpp works with matrix generics
+component SingleSetCompareMatrix<N1 rows = 3,N1 cols = 10, N1 n = 2,N1 x = 1>{
+    ports in Q^{rows,cols} setIn[n],
+          out Q^{rows,cols} outA[x],
+          out Q^{rows,cols} outB[x];
+
+    implementation Math{
+        Z counter = 1;
+        for i = 1:n
+            for j = (i+1):n
+                outA(counter) = setIn(i);
+                outB(counter) = setIn(j);
+                counter = counter + 1;
+            end
+        end
+    }
+}

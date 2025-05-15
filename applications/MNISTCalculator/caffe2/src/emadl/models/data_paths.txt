@@ -1,0 +1,2 @@
+cNNCalculator.Network resources/training_data
+cNNCalculator.VGG16 resources/training_data

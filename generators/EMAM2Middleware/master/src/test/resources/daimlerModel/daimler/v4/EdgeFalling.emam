@@ -1,0 +1,42 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component EdgeFalling {
+                    port
+                      in B iV,
+                      in B r,
+                      in B u,
+                      out B y;
+instance LogOp_A_2_And logOp_A_2;
+instance LogOp_N_3_Not logOp_N_3;
+instance Memory_U_2 memory_U_2;
+instance Switch_R_3 switch_R_3;
+instance Condition_19 condition_19;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.logOp_A.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.yOut1*/
+                    connect logOp_A_2.out1 -> y;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.switch_R.condition*/
+                    connect condition_19.out1 -> switch_R_3.condition;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.rIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.condition.in1*/
+                    connect r -> condition_19.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.switch_R.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.logOp_A.in2*/
+                    connect switch_R_3.out1 -> logOp_A_2.in2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.logOp_N.in1*/
+                    connect u -> logOp_N_3.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.memory_U.in1*/
+                    connect u -> memory_U_2.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.logOp_N.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.logOp_A.in1*/
+                    connect logOp_N_3.out1 -> logOp_A_2.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.memory_U.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.switch_R.elseIn*/
+                    connect memory_U_2.out1 -> switch_R_3.elseIn;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.iVIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.switch_R.ifIn*/
+                    connect iV -> switch_R_3.ifIn;
+
+                  }
+

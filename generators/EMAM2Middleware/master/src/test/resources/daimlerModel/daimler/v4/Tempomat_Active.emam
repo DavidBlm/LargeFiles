@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component Tempomat_Active {
+                    port
+                      in Number in1,
+                      out Number v_CC_delta_kmh,
+                      in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Sum_6 sum_6;
+instance VERSION_INFO_25 vERSION_INFO_25;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Active.sum.v_CC_delta_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Active.v_CC_delta_kmhOut1*/
+                    connect sum_6.v_CC_delta_kmh -> v_CC_delta_kmh;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Active.in1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Active.sum.in2*/
+                    connect in1 -> sum_6.in2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Active.v_Vehicle_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Active.sum.in1*/
+                    connect v_Vehicle_kmh -> sum_6.in1;
+
+                  }
+

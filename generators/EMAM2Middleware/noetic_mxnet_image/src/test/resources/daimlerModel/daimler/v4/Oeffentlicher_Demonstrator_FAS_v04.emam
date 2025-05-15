@@ -1,0 +1,100 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+component Oeffentlicher_Demonstrator_FAS_v04 {
+instance DEMO_FAS_1 dEMO_FAS_1;
+instance SimToRealTime simToRealTime;
+instance Umgebung umgebung;
+instance Memory1_16 memory1_16;
+instance Memory2_16 memory2_16;
+instance Memory3 memory3;
+instance Memory4 memory4;
+instance Memory5 memory5;
+instance Memory6 memory6;
+instance Memory7 memory7;
+instance Memory8 memory8;
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cC_active_b*/
+  connect memory1_16.out1 -> umgebung.cC_active_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cCSetValue_kmh*/
+  connect memory2_16.out1 -> umgebung.cCSetValue_kmh;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiterSetValue_kmh*/
+  connect memory3.out1 -> umgebung.limiterSetValue_kmh;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiter_active_b*/
+  connect memory4.out1 -> umgebung.limiter_active_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory5.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.opti_warn_b*/
+  connect memory5.out1 -> umgebung.opti_warn_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acusti_warn_b*/
+  connect memory6.out1 -> umgebung.acusti_warn_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory7.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.brakeForce_pc*/
+  connect memory7.out1 -> umgebung.brakeForce_pc;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.memory8.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acceleration_pc*/
+  connect memory8.out1 -> umgebung.acceleration_pc;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.cC_active_b -> adas.oeffentlicher_Demonstrator_FAS_v04.memory1.in1*/
+  connect dEMO_FAS_1.cC_active_b -> memory1_16.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.cCSetValue_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.memory2.in1*/
+  connect dEMO_FAS_1.cCSetValue_kmh -> memory2_16.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.limiterSetValue_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.memory3.in1*/
+  connect dEMO_FAS_1.limiterSetValue_kmh -> memory3.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.limiter_active_b -> adas.oeffentlicher_Demonstrator_FAS_v04.memory4.in1*/
+  connect dEMO_FAS_1.limiter_active_b -> memory4.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.opti_warn_b -> adas.oeffentlicher_Demonstrator_FAS_v04.memory5.in1*/
+  connect dEMO_FAS_1.opti_warn_b -> memory5.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.acusti_warn_b -> adas.oeffentlicher_Demonstrator_FAS_v04.memory6.in1*/
+  connect dEMO_FAS_1.acusti_warn_b -> memory6.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.brakeForce_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.memory7.in1*/
+  connect dEMO_FAS_1.brakeForce_pc -> memory7.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.acceleration_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.memory8.in1*/
+  connect dEMO_FAS_1.acceleration_pc -> memory8.in1;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.parkingBrake_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.parkingBrake_b*/
+  connect umgebung.parkingBrake_b -> dEMO_FAS_1.parkingBrake_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.brakeForce_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.brakeForce_pedal_pc*/
+  connect umgebung.brakeForce_pedal_pc -> dEMO_FAS_1.brakeForce_pedal_pc;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acceleration_pedal_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.acceleration_pedal_pc*/
+  connect umgebung.acceleration_pedal_pc -> dEMO_FAS_1.acceleration_pedal_pc;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cruiseControl_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.cruiseControl_b*/
+  connect umgebung.cruiseControl_b -> dEMO_FAS_1.cruiseControl_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiter_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.limiter_b*/
+  connect umgebung.limiter_b -> dEMO_FAS_1.limiter_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.leverUp_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.leverUp_stat*/
+  connect umgebung.leverUp_stat -> dEMO_FAS_1.leverUp_stat;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.leverDown_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.leverDown_stat*/
+  connect umgebung.leverDown_stat -> dEMO_FAS_1.leverDown_stat;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Vehicle_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.v_Vehicle_kmh*/
+  connect umgebung.v_Vehicle_kmh -> dEMO_FAS_1.v_Vehicle_kmh;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Sign_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.v_Sign_kmh*/
+  connect umgebung.v_Sign_kmh -> dEMO_FAS_1.v_Sign_kmh;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sign_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.sign_b*/
+  connect umgebung.sign_b -> dEMO_FAS_1.sign_b;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.distance_stat -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.distance_stat*/
+  connect umgebung.distance_stat -> dEMO_FAS_1.distance_stat;
+
+  /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Obj_rel_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.v_Obj_rel_kmh*/
+  connect umgebung.v_Obj_rel_kmh -> dEMO_FAS_1.v_Obj_rel_kmh;
+
+}
+

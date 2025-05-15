@@ -1,0 +1,18 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data", 
+      "inputs": []
+    }, 
+    {
+      "op": "_copy", 
+      "name": "simpleembedding0_identity0", 
+      "inputs": [[0, 0, 0]]
+    }
+  ], 
+  "arg_nodes": [0], 
+  "node_row_ptr": [0, 1, 2], 
+  "heads": [[1, 0, 0]], 
+  "attrs": {"mxnet_version": ["int", 10501]}
+}

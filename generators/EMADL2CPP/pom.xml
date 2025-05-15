@@ -1,0 +1,428 @@
+<!-- (c) https://github.com/MontiCore/monticore -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <!-- == PROJECT COORDINATES ============================================= -->
+
+    <groupId>de.monticore.lang.monticar</groupId>
+    <artifactId>embedded-montiarc-emadl-generator</artifactId>
+    <version>0.5.17-SNAPSHOT</version>
+
+    <!-- == PROJECT DEPENDENCIES ============================================= -->
+    <properties>
+        <!-- .. SE-Libraries .................................................. -->
+        <emadl.version>0.4.11-SNAPSHOT</emadl.version>
+        <CNNArch.version>0.4.13-SNAPSHOT</CNNArch.version>
+        <cnnarch-generator.version>0.4.20-SNAPSHOT</cnnarch-generator.version>
+        <cnnarch-mxnet-generator.version>0.4.9-SNAPSHOT</cnnarch-mxnet-generator.version>
+        <cnnarch-caffe2-generator.version>0.4.9-SNAPSHOT</cnnarch-caffe2-generator.version>
+        <cnnarch-tensorflow-generator.version>0.4.9-SNAPSHOT</cnnarch-tensorflow-generator.version>
+        <cnnarch-pytorch-generator.version>0.0.1-SNAPSHOT</cnnarch-pytorch-generator.version>
+        <cnnarch-gluon-generator.version>0.5.9-SNAPSHOT</cnnarch-gluon-generator.version>
+        <monticore-runtime.version>5.0.1</monticore-runtime.version>
+        <schemalang.version>1.0.1-SNAPSHOT</schemalang.version>
+        <montipipes.version>0.0.3-SNAPSHOT</montipipes.version>
+
+        <!-- .. Libraries .................................................. -->
+        <guava.version>25.1-jre</guava.version>
+        <junit.version>4.13.1</junit.version>
+        <logback.version>1.1.2</logback.version>
+        <jscience.version>4.3.1</jscience.version>
+
+        <!-- .. Plugins ....................................................... -->
+        <assembly.plugin>2.5.4</assembly.plugin>
+        <compiler.plugin>3.3</compiler.plugin>
+        <source.plugin>2.4</source.plugin>
+        <shade.plugin>2.4.3</shade.plugin>
+        <jacoco.plugin>0.8.1</jacoco.plugin>
+
+        <!-- Classifiers -->
+        <grammars.classifier>grammars</grammars.classifier>
+        <cli.classifier>cli</cli.classifier>
+
+        <!-- .. Misc .......................................................... -->
+        <java.version>1.8</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+
+
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.14.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore</groupId>
+            <artifactId>monticore-runtime</artifactId>
+            <version>${monticore-runtime.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.montipipes</groupId>
+            <artifactId>montipipes</artifactId>
+            <version>${montipipes.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnnarch-generator</artifactId>
+            <version>${cnnarch-generator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnnarch-mxnet-generator</artifactId>
+            <version>${cnnarch-mxnet-generator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnnarch-gluon-generator</artifactId>
+            <version>${cnnarch-gluon-generator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnnarch-tensorflow-generator</artifactId>
+            <version>${cnnarch-tensorflow-generator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnnarch-caffe2-generator</artifactId>
+            <version>${cnnarch-caffe2-generator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnnarch-pytorch-generator</artifactId>
+            <version>${cnnarch-pytorch-generator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>cnn-arch</artifactId>
+            <version>${CNNArch.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.monticore.lang.monticar</groupId>
+            <artifactId>embedded-montiarc-deeplearning</artifactId>
+            <version>${emadl.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.30</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mlflow</groupId>
+            <artifactId>mlflow-client</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-settings -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-settings</artifactId>
+            <version>3.8.5</version>
+        </dependency>
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.8.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.shared/maven-invoker -->
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-invoker</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.6.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-utils -->
+        <!-- Needed to parse maven settings.xml file -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-model -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+
+        <!-- .. Test Libraries ............................................... -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jscience</groupId>
+            <artifactId>jscience</artifactId>
+            <version>${jscience.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.8.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-io</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.monticore.lang</groupId>
+            <artifactId>conflang</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.monticore.lang</groupId>
+            <artifactId>schemalang</artifactId>
+            <version>${schemalang.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <!-- == PROJECT BUILD SETTINGS =========================================== -->
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+            </plugin>
+
+            <!-- Test coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Other Configuration -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin}</version>
+                <configuration>
+                    <useIncrementalCompilation>true</useIncrementalCompilation>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>de.monticore.lang.monticar.emadl.generator.MontiAnnaCli</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Source Jar Configuration -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>create source jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                        <configuration>
+                            <excludeResources>false</excludeResources>
+                            <includes>
+                                <include>**/*.java</include>
+                                <include>**/*.ftl</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                    <!-- aggregated reports for multi-module projects -->
+                    <aggregate>true</aggregate>
+                    <check/>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>de.monticore.lang.monticar</groupId>
+                                    <artifactId>cnnarch-generator</artifactId>
+                                    <version>${cnnarch-generator.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                    <includes>schemas/**/*.*</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>se-nexus</id>
+            <url>https://nexus.se.rwth-aachen.de/content/repositories/embeddedmontiarc-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>se-nexus</id>
+            <url>https://nexus.se.rwth-aachen.de/content/repositories/embeddedmontiarc-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

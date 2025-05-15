@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+      component Saturation_2 {
+        port
+          in Number in1,
+          out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+      }
+

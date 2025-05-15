@@ -1,0 +1,24 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.environment;
+
+
+component ObstacleWatcher {
+    ports
+    
+        in Z ObstacleDistX,
+        in Z ObstacleDistY,
+        
+        out Z inJumpRange;
+
+    implementation Math {
+        //Empirical distance values
+        Z jumpRangeX = 96;
+        
+        if((abs(ObstacleDistX) < jumpRangeX) && (ObstacleDistX != -1))
+            inJumpRange = 1;
+        else
+            inJumpRange = 0;
+        end
+        
+    }
+}

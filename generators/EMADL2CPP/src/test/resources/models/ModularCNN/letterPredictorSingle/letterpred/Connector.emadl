@@ -1,0 +1,15 @@
+ /* (c) https://github.com/MontiCore/monticore */
+package letterpred;
+
+component Connector {
+    ports in Z(0:255)^{1, 28, 28} image1,
+          out Z(0:26) res;
+
+    instance Network predictor1;
+    instance ArgMax<26> argMax;
+
+    connect image1 -> predictor1.data;
+    connect predictor1.softmax -> argMax.inputVector;
+
+    connect argMax.maxIndex -> res;
+}

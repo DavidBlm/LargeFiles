@@ -1,0 +1,599 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA84.
+  component Oeffentlicher_Demonstrator_FAS_v04FA84Tracing {
+    component DEMO_FAS_1 {
+      port
+        out Double acceleration_pc,
+        in Double v_Vehicle_kmh,
+        out Double brakeForce_pc,
+        in Double v_Obj_rel_kmh;
+
+      component DEMO_FAS_2 {
+        port
+          out Double _Acceleration_pc,
+          in Double _V_Vehicle_kmh,
+          out Double _BrakeForce_pc,
+          in Double _V_Obj_rel_kmh;
+
+        component Subsystem {
+          port
+            out Double _Acceleration_pc,
+            in Double _V_Vehicle_kmh,
+            out Double _BrakeForce_pc,
+            in Double _V_Obj_rel_kmh;
+
+          component DEMO_FAS_3 {
+            port
+              in Double _Distance_Object_m,
+              out Double _BrakeForce_pc,
+              in Double _V_Vehicle_kmh,
+              out Double _Acceleration_pc,
+              out Boolean _Acusti_warn_b,
+              in Double _V_Obj_rel_kmh,
+              out Double _CCSetValue_kmh,
+              out Double _LimiterSetValue_kmh;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double distance_Object_m3,
+                out Double brakeForce_pc,
+                in Double v_Vehicle_kmh1,
+                out Boolean acusti_warn_b,
+                in Double v_Obj_rel_kmh2,
+                out Double acceleration_pc;
+
+              component EmergencyBrake {
+                port
+                  in Double distance_Object_m,
+                  out Double brakeForce_Emergency_pc,
+                  in Double v_Vehicle_ms,
+                  out Boolean acusti_warn_b,
+                  in Double v_Obj_rel_ms;
+
+                component EmergencyBrake_Function {
+                  port
+                    in Double distance_Object_m,
+                    out Boolean acusti_warn_b,
+                    out Double brakeForce_Emergency_pc,
+                    in Double v_Vehicle_ms,
+                    in Double v_Obj_rel_ms;
+
+                  component Div1_1 {
+                    port
+                      in Double in1,
+                      out Double out1,
+                      in Double in2;
+
+                  }
+instance Div1_1 div1_1;
+                  component Sum2 {
+                    port
+                      in Double in2,
+                      out Double out1;
+
+                  }
+instance Sum2 sum2;
+                  component Saturation2 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Saturation2 saturation2;
+                  component RelOp_5 {
+                    port
+                      in Double in1,
+                      out Boolean acusti_warn_b,
+                      in Double in2;
+
+                  }
+instance RelOp_5 relOp_5;
+                  component Condition_5 {
+                    port
+                      in Boolean in1,
+                      out Boolean out1;
+
+                  }
+instance Condition_5 condition_5;
+                  component SwitchBlock_5 {
+                    port
+                      in Boolean condition,
+                      out Double out1;
+
+                  }
+instance SwitchBlock_5 switchBlock_5;
+                  component MinMax_1 {
+                    port
+                      in Double in1,
+                      out Double brakeForce_Emergency_pc,
+                      in Double in2;
+
+                  }
+instance MinMax_1 minMax_1;
+                  component Div_1 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Div_1 div_1;
+                  component Saturation1_1 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Saturation1_1 saturation1_1;
+                  component RelOp1_1 {
+                    port
+                      in Double in2,
+                      out Boolean out1;
+
+                  }
+instance RelOp1_1 relOp1_1;
+                  component Condition1_2 {
+                    port
+                      in Boolean in1,
+                      out Boolean out1;
+
+                  }
+instance Condition1_2 condition1_2;
+                  component SwitchBlock1_2 {
+                    port
+                      in Boolean condition,
+                      out Double out1;
+
+                  }
+instance SwitchBlock1_2 switchBlock1_2;
+  connect saturation1_1.out1 -> div1_1.in2;
+  connect v_Obj_rel_ms -> saturation1_1.in1;
+  connect div_1.out1 -> relOp_5.in2;
+  connect relOp_5.acusti_warn_b -> condition_5.in1;
+  connect saturation2.out1 -> relOp_5.in1;
+  connect relOp_5.acusti_warn_b -> acusti_warn_b;
+  connect switchBlock_5.out1 -> minMax_1.in1;
+  connect condition_5.out1 -> switchBlock_5.condition;
+  connect switchBlock1_2.out1 -> minMax_1.in2;
+  connect minMax_1.brakeForce_Emergency_pc ->   brakeForce_Emergency_pc;
+  connect div1_1.out1 -> sum2.in2;
+  connect distance_Object_m -> div1_1.in1;
+  connect sum2.out1 -> saturation2.in1;
+  connect div_1.out1 -> relOp1_1.in2;
+  connect v_Vehicle_ms -> div_1.in1;
+  connect condition1_2.out1 -> switchBlock1_2.condition;
+  connect relOp1_1.out1 -> condition1_2.in1;
+                }
+instance EmergencyBrake_Function emergencyBrake_Function;
+                component SwitchBlock1_3 {
+                  port
+                    in Boolean ifIn,
+                    out Boolean out1,
+                    in Boolean elseIn;
+
+                }
+instance SwitchBlock1_3 switchBlock1_3;
+                component UnitDelay1_2 {
+                  port
+                    in Boolean valueIn,
+                    out Boolean valueOut;
+
+                }
+instance UnitDelay1_2 unitDelay1_2;
+                component SwitchBlock_6 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock_6 switchBlock_6;
+  connect emergencyBrake_Function.acusti_warn_b -> switchBlock1_3.ifIn;
+  connect emergencyBrake_Function.brakeForce_Emergency_pc -> switchBlock_6.ifIn;
+  connect distance_Object_m ->   emergencyBrake_Function.distance_Object_m;
+  connect v_Vehicle_ms -> emergencyBrake_Function.v_Vehicle_ms;
+  connect v_Obj_rel_ms -> emergencyBrake_Function.v_Obj_rel_ms;
+  connect switchBlock1_3.out1 -> unitDelay1_2.valueIn;
+  connect unitDelay1_2.valueOut -> switchBlock1_3.elseIn;
+  connect switchBlock1_3.out1 -> acusti_warn_b;
+  connect switchBlock_6.out1 -> brakeForce_Emergency_pc;
+              }
+instance EmergencyBrake emergencyBrake;
+              component VelocityControl {
+                port
+                  in Double brakeForce_Emergency_pc,
+                  out Double brakeForce_pc,
+                  out Double acceleration_pc;
+
+                component MinMax2 {
+                  port
+                    in Double in5,
+                    out Double brakeForce_pc;
+
+                }
+instance MinMax2 minMax2;
+                component Condition_45 {
+                  port
+                    in Double in1,
+                    out Boolean out1;
+
+                }
+instance Condition_45 condition_45;
+                component SwitchBlock2_12 {
+                  port
+                    in Boolean condition,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect condition_45.out1 -> switchBlock2_12.condition;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+  connect minMax2.brakeForce_pc -> condition_45.in1;
+  connect brakeForce_Emergency_pc -> minMax2.in5;
+  connect minMax2.brakeForce_pc -> brakeForce_pc;
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double distance_Object_m6,
+                  out Double distance_Object_m2,
+                  in Double v_Vehicle_kmh1,
+                  out Double v_Vehicle_ms2,
+                  in Double v_Obj_rel_kmh3,
+                  out Double v_Obj_rel_ms;
+
+                component Div_2 {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double v_Vehicle_ms;
+
+                }
+instance Div_2 div_2;
+                component Div1_2 {
+                  port
+                    in Double v_Obj_rel_kmh,
+                    out Double v_Obj_rel_ms;
+
+                }
+instance Div1_2 div1_2;
+  connect v_Obj_rel_kmh3 -> div1_2.v_Obj_rel_kmh;
+  connect div1_2.v_Obj_rel_ms -> v_Obj_rel_ms;
+  connect v_Vehicle_kmh1 -> div_2.v_Vehicle_kmh;
+  connect div_2.v_Vehicle_ms -> v_Vehicle_ms2;
+  connect distance_Object_m6 -> distance_Object_m2;
+              }
+instance FAS_Input fAS_Input;
+              component LogOp_1 {
+                port
+                  in Boolean acusti_warn_bIn2,
+                  out Boolean acusti_warn_bOut1;
+
+              }
+instance LogOp_1 logOp_1;
+  connect emergencyBrake.brakeForce_Emergency_pc ->   velocityControl.brakeForce_Emergency_pc;
+  connect velocityControl.brakeForce_pc -> brakeForce_pc;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect fAS_Input.distance_Object_m2 -> emergencyBrake.distance_Object_m;
+  connect fAS_Input.v_Vehicle_ms2 -> emergencyBrake.v_Vehicle_ms;
+  connect fAS_Input.v_Obj_rel_ms -> emergencyBrake.v_Obj_rel_ms;
+  connect distance_Object_m3 -> fAS_Input.distance_Object_m6;
+  connect v_Vehicle_kmh1 -> fAS_Input.v_Vehicle_kmh1;
+  connect v_Obj_rel_kmh2 -> fAS_Input.v_Obj_rel_kmh3;
+  connect emergencyBrake.acusti_warn_b -> logOp_1.acusti_warn_bIn2;
+  connect logOp_1.acusti_warn_bOut1 -> acusti_warn_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double distance_Object_mIn13,
+                out Double distance_Object_m3,
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh1,
+                in Double v_Obj_rel_kmhIn12,
+                out Double v_Obj_rel_kmh2;
+
+  connect distance_Object_mIn13 ->   distance_Object_m3;
+  connect v_Vehicle_b -> v_Vehicle_kmh1;
+  connect v_Obj_rel_kmhIn12 -> v_Obj_rel_kmh2;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double brakeForce_pc,
+                out Double brakeForce_pcOut3,
+                in Boolean acusti_warn_b,
+                out Boolean acusti_warn_bOut8,
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2;
+
+  connect brakeForce_pc -> brakeForce_pcOut3;
+  connect acusti_warn_b -> acusti_warn_bOut8;
+  connect acceleration_pc -> acceleration_pcOut2;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.distance_Object_m3 ->   dEMO_FAS_Funktion.distance_Object_m3;
+  connect dEMO_FAS_Input.v_Vehicle_kmh1 -> dEMO_FAS_Funktion.v_Vehicle_kmh1;
+  connect dEMO_FAS_Input.v_Obj_rel_kmh2 -> dEMO_FAS_Funktion.v_Obj_rel_kmh2;
+  connect dEMO_FAS_Funktion.brakeForce_pc -> dEMO_FAS_Output.brakeForce_pc;
+  connect dEMO_FAS_Funktion.acusti_warn_b -> dEMO_FAS_Output.acusti_warn_b;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect _Distance_Object_m -> dEMO_FAS_Input.distance_Object_mIn13;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect _V_Obj_rel_kmh -> dEMO_FAS_Input.v_Obj_rel_kmhIn12;
+  connect dEMO_FAS_Output.brakeForce_pcOut3 -> _BrakeForce_pc;
+  connect dEMO_FAS_Output.acusti_warn_bOut8 -> _Acusti_warn_b;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+  connect dEMO_FAS_3._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_3._V_Vehicle_kmh;
+  connect dEMO_FAS_3._BrakeForce_pc -> _BrakeForce_pc;
+  connect _V_Obj_rel_kmh -> dEMO_FAS_3._V_Obj_rel_kmh;
+        }
+instance Subsystem subsystem;
+  connect subsystem._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> subsystem._V_Vehicle_kmh;
+  connect subsystem._BrakeForce_pc -> _BrakeForce_pc;
+  connect _V_Obj_rel_kmh -> subsystem._V_Obj_rel_kmh;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+  connect dEMO_FAS_2._Acceleration_pc -> acceleration_pc;
+  connect v_Vehicle_kmh -> dEMO_FAS_2._V_Vehicle_kmh;
+  connect dEMO_FAS_2._BrakeForce_pc -> brakeForce_pc;
+  connect v_Obj_rel_kmh -> dEMO_FAS_2._V_Obj_rel_kmh;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+    component Memory8 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory8 memory8;
+    component Umgebung {
+      port
+        in Double acceleration_pc,
+        out Double v_Vehicle_kmh,
+        in Double brakeForce_pc,
+        out Double v_Obj_rel_kmh;
+
+      component Vehicle {
+        port
+          in Double acceleration_pc,
+          out Double v_Vehicle_kmh,
+          in Double brakeForce_pc;
+
+        component SwitchBlock_36 {
+          port
+            in Double elseIn,
+            out Double out1,
+            in Boolean condition;
+
+        }
+instance SwitchBlock_36 switchBlock_36;
+        component DiscreteTransferFcnwithinitialstates {
+          port
+            in Double in1,
+            out Double out1;
+
+          component DiscreteStateSpace {
+            port
+              in Double in1,
+              out Double out1;
+
+          }
+instance DiscreteStateSpace discreteStateSpace;
+  connect in1 -> discreteStateSpace.in1;
+  connect discreteStateSpace.out1 -> out1;
+        }
+instance DiscreteTransferFcnwithinitialstates discreteTransferFcnwithinitialstates;
+        component Sum1_4 {
+          port
+            in Double v_Vehicle_kmh,
+            out Double out1;
+
+        }
+instance Sum1_4 sum1_4;
+        component Saturation_2 {
+          port
+            in Double in1,
+            out Double v_Vehicle_kmh;
+
+        }
+instance Saturation_2 saturation_2;
+        component SwitchBlock1_20 {
+          port
+            in Double ifIn,
+            out Double out1;
+
+        }
+instance SwitchBlock1_20 switchBlock1_20;
+        component Condition_51 {
+          port
+            in Double in1,
+            out Boolean out1;
+
+        }
+instance Condition_51 condition_51;
+  connect switchBlock1_20.out1 -> condition_51.in1;
+  connect brakeForce_pc -> switchBlock1_20.ifIn;
+  connect condition_51.out1 -> switchBlock_36.condition;
+  connect switchBlock_36.out1 -> discreteTransferFcnwithinitialstates.in1;
+  connect acceleration_pc -> switchBlock_36.elseIn;
+  connect discreteTransferFcnwithinitialstates.out1 -> sum1_4.v_Vehicle_kmh;
+  connect sum1_4.out1 -> saturation_2.in1;
+  connect saturation_2.v_Vehicle_kmh -> v_Vehicle_kmh;
+      }
+instance Vehicle vehicle;
+      component Object {
+        port
+          in Double v_Vehicle_kmh,
+          out Double v_Obj_rel_kmh;
+
+        component Add {
+          port
+            in Double in1,
+            out Double v_Obj_rel_kmh;
+
+        }
+instance Add add;
+  connect v_Vehicle_kmh -> add.in1;
+  connect add.v_Obj_rel_kmh -> v_Obj_rel_kmh;
+      }
+instance Object object;
+  connect vehicle.v_Vehicle_kmh -> object.v_Vehicle_kmh;
+  connect acceleration_pc -> vehicle.acceleration_pc;
+  connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh;
+  connect brakeForce_pc -> vehicle.brakeForce_pc;
+  connect object.v_Obj_rel_kmh -> v_Obj_rel_kmh;
+    }
+instance Umgebung umgebung;
+    component Memory7 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory7 memory7;
+  connect dEMO_FAS_1.brakeForce_pc -> memory7.in1;
+  connect memory7.out1 -> umgebung.brakeForce_pc;
+  connect dEMO_FAS_1.acceleration_pc -> memory8.in1;
+  connect memory8.out1 -> umgebung.acceleration_pc;
+  connect umgebung.v_Vehicle_kmh -> dEMO_FAS_1.v_Vehicle_kmh;
+  connect umgebung.v_Obj_rel_kmh -> dEMO_FAS_1.v_Obj_rel_kmh;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

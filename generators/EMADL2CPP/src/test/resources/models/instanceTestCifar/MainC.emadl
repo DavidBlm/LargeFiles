@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package instanceTestCifar;
+import NetworkB;
+import CalculateClassB;
+import ArgMax;
+import ResultAdder;
+
+component MainC{
+    ports in Z(0:255)^{3, 32, 32} image1,
+         in Z(0:255)^{3, 32, 32} image2,
+         out Z(0:20) result;
+
+    instance CifarNetwork<10> net1;
+    instance CifarNetwork<10> net2;
+
+    instance ArgMax<10> calculateClass1;
+    instance ArgMax<10> calculateClass2;
+
+    instance ResultAdder adder;
+
+    connect image1 -> net1.data;
+    connect image2 -> net2.data;
+    connect net1.softmax -> calculateClass1.inputVector;
+    connect net2.softmax -> calculateClass2.inputVector;
+    connect calculateClass1.maxIndex -> adder.number1;
+    connect calculateClass2.maxIndex -> adder.number1;
+    connect adder.sum -> result;
+}

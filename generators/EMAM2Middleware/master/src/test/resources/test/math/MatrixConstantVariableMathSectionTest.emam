@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component MatrixConstantVariableMathSectionTest{
+    implementation Math{
+        Q^{2,2} a = [1 0; 0 1];
+    }
+}

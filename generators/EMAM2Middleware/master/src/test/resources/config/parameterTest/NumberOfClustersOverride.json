@@ -1,0 +1,27 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/cliTest/flattenSpectralMultiOverride/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp","roscpp"],
+  "clusteringParameters":{
+    "flatten":true,
+    "numberOfClusters":5,
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":2
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":3
+      },
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":10
+      },
+      {
+        "name":"Markov"
+      }
+    ]
+  }
+}

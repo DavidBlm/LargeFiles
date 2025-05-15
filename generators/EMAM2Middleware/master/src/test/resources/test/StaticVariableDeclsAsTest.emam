@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component StaticVariableDeclAsTest{
+    implementation Math{
+        static Q storage = 2;
+    }
+}

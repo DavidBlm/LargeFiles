@@ -1,0 +1,19 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component CompareToZero_3 {
+                    port
+                      in B u,
+                      out B y;
+instance Compare_11_Equals compare_11;
+instance Constant_26_value_0 constant_26;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.compare.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.yOut1*/
+                    connect compare_11.out1 -> y;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.uIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.compare.in1*/
+                    connect u -> compare_11.in1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.compare.in2*/
+                    connect constant_26.out1 -> compare_11.in2;
+
+                  }
+

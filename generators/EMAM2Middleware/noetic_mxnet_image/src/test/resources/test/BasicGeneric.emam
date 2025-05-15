@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicGeneric<N1 n = 1>{
+    ports in Q(-oo:oo)^{n,n} mat1,
+          out Q(-oo:oo)^{n,n} matOut;
+
+    implementation Math{
+        matOut = mat1 * 2;
+    }
+}

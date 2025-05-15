@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package torcs.agent;
+
+import torcs.agent.network.TorcsActor;
+
+component TorcsAgent {
+    ports
+        in Q^{29} state,
+        out Q(-1:1)^{3} action;
+
+    instance TorcsActor actor;
+
+    connect state -> actor.state;
+    connect actor.action -> action;
+}

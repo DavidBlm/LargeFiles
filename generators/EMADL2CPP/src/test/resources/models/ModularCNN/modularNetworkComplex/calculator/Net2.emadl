@@ -1,0 +1,14 @@
+package calculator;
+
+component Net2 {
+    ports in Z(0:255)^{500} dataInput,
+         out Q(0:1)^{10} softmax;
+
+    instance Net3 net3;
+    instance Net4 net4;
+
+
+    connect dataInput -> net3.data;
+    connect net3.dataOutput -> net4.dataInput;
+    connect net4.softmax -> softmax;
+}

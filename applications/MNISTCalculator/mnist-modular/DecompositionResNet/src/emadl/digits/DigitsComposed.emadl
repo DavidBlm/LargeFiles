@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package digits;
+
+component DigitsComposed {
+    ports in Q(0:1)^{1, 28, 28} image,
+         out Q(0:1)^{10} predictions;
+
+    instance DigitsInputLayer digitsinputlayer;
+    instance DigitsClassifier digitsclassifier;
+
+    connect image -> digitsinputlayer.data;
+    connect digitsinputlayer.vector -> digitsclassifier.vector;
+    connect digitsclassifier.softmax -> predictions;
+
+}

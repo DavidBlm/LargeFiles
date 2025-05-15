@@ -1,0 +1,137 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component CC_On_Off {
+                  port
+                    in (0:100) brakeForce_pedal_pc,
+                    out B cC_active_b,
+                    in B cruiseControl_b,
+                    in B fTS_active_b,
+                    in (0:2) leverDown_stat,
+                    in (0:2) leverUp_stat,
+                    in B limiter_b,
+                    in B parkingBrake_b,
+                    in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Constant_40_value_0 constant_40;
+instance Constant1_12_value_20 constant1_12;
+instance Constant2_3_value_0 constant2_3;
+instance Constant3_2_value_0 constant3_2;
+instance EdgeFalling edgeFalling;
+instance EdgeRising1 edgeRising1;
+instance FalseBlock1_1 falseBlock1_1;
+instance FalseBlock2_1 falseBlock2_1;
+instance LogicalOperator_8_Or logicalOperator_8;
+instance LogicalOperator1_6_And logicalOperator1_6;
+instance LogicalOperator2_6_Not logicalOperator2_6;
+instance LogicalOperator3_1_Or logicalOperator3_1;
+instance LogicalOperator4_1_And logicalOperator4_1;
+instance LogicalOperator5_1_Not logicalOperator5_1;
+instance LogicalOperator6_1_Or logicalOperator6_1;
+instance LogicalOperator7_Not logicalOperator7;
+instance RSFlipFlop_2 rSFlipFlop_2;
+instance RelOp_6_Greater relOp_6;
+instance RelOp1_3_Smaller relOp1_3;
+instance RelOp2_2_Greater relOp2_2;
+instance RelOp3_2_Greater relOp3_2;
+instance Terminator_3 terminator_3;
+instance VERSION_INFO_28 vERSION_INFO_28;
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.qOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.cC_active_bOut1*/
+                  connect rSFlipFlop_2.q -> cC_active_b;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.fTS_active_bIn8 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator7.in1*/
+                  connect fTS_active_b -> logicalOperator7.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator7.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator1.in2*/
+                  connect logicalOperator7.out1 -> logicalOperator1_6.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator.in4*/
+                  connect logicalOperator1_6.out1 -> logicalOperator_8.in4;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeRising1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator3.in1*/
+                  connect edgeRising1.y -> logicalOperator3_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeRising1.uIn1*/
+                  connect logicalOperator6_1.out1 -> edgeRising1.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator2.in1*/
+                  connect logicalOperator6_1.out1 -> logicalOperator2_6.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.falseBlock2.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeRising1.iVIn3*/
+                  connect falseBlock2_1.y -> edgeRising1.iV;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeRising1.rIn2*/
+                  connect logicalOperator2_6.out1 -> edgeRising1.r;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator4.in2*/
+                  connect logicalOperator3_1.out1 -> logicalOperator4_1.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.constant3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp3.in2*/
+                  connect constant3_2.out1 -> relOp3_2.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.constant2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp.in2*/
+                  connect constant2_3.out1 -> relOp_6.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator6.in2*/
+                  connect relOp_6.out1 -> logicalOperator6_1.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator6.in1*/
+                  connect relOp3_2.out1 -> logicalOperator6_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator5.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator4.in1*/
+                  connect logicalOperator5_1.out1 -> logicalOperator4_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.limiter_bIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator5.in1*/
+                  connect limiter_b -> logicalOperator5_1.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.cruiseControl_bIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.rIn2*/
+                  connect cruiseControl_b -> edgeFalling.r;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.cruiseControl_bIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.uIn1*/
+                  connect cruiseControl_b -> edgeFalling.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.cruiseControl_bIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator3.in2*/
+                  connect cruiseControl_b -> logicalOperator3_1.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.falseBlock1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.iVIn3*/
+                  connect falseBlock1_1.y -> edgeFalling.iV;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.edgeFalling.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator.in1*/
+                  connect edgeFalling.y -> logicalOperator_8.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.v_Vehicle_kmhIn4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp1.in1*/
+                  connect v_Vehicle_kmh -> relOp1_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.leverUp_statIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp3.in1*/
+                  connect leverUp_stat -> relOp3_2.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.leverDown_statIn7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp.in1*/
+                  connect leverDown_stat -> relOp_6.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator1.in1*/
+                  connect relOp1_3.out1 -> logicalOperator1_6.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp1.in2*/
+                  connect constant1_12.out1 -> relOp1_3.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.brakeForce_pedal_pcIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp2.in1*/
+                  connect brakeForce_pedal_pc -> relOp2_2.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.nOT_QOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.terminator.in1*/
+                  connect rSFlipFlop_2.nOT_Q -> terminator_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.parkingBrake_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator.in2*/
+                  connect parkingBrake_b -> logicalOperator_8.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp2.in2*/
+                  connect constant_40.out1 -> relOp2_2.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.relOp2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator.in3*/
+                  connect relOp2_2.out1 -> logicalOperator_8.in3;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.rIn2*/
+                  connect logicalOperator_8.out1 -> rSFlipFlop_2.r;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.logicalOperator4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_On_Off.rSFlipFlop.sIn1*/
+                  connect logicalOperator4_1.out1 -> rSFlipFlop_2.s;
+
+                }
+

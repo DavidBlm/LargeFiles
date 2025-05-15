@@ -1,0 +1,87 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+      component RealTimeTimerAdapter {
+        port
+          in Number in1,
+          out Number out1;
+instance Constant1_32_value_Minus_10 constant1_32;
+instance Constant10_2_value_1 constant10_2;
+instance Constant11_1_value_1 constant11_1;
+instance Constant12_1_value_Minus_1 constant12_1;
+instance Constant13_1_value_1 constant13_1;
+instance Constant15_value_1_1 constant15;
+instance Div1_3 div1_3;
+instance LogOp1_1_And logOp1_1;
+instance RelOp2_5_Greater relOp2_5;
+instance RelOp3_5_SmallerEquals relOp3_5;
+instance RelOp4_3_GreaterEquals relOp4_3;
+instance Sum_15 sum_15;
+instance SwitchBlock2_13 switchBlock2_13;
+instance SwitchBlock3_13 switchBlock3_13;
+instance Condition_46 condition_46;
+instance Condition1_23 condition1_23;
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.out1Out1*/
+        connect switchBlock2_13.out1 -> out1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock2.condition*/
+        connect condition1_23.out1 -> switchBlock2_13.condition;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock3.condition*/
+        connect condition_46.out1 -> switchBlock3_13.condition;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.logOp1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.condition.in1*/
+        connect logOp1_1.out1 -> condition_46.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.condition1.in1*/
+        connect relOp2_5.out1 -> condition1_23.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp2.in1*/
+        connect in1 -> relOp2_5.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock2.ifIn*/
+        connect in1 -> switchBlock2_13.ifIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp3.in1*/
+        connect in1 -> relOp3_5.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp4.in1*/
+        connect in1 -> relOp4_3.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.div1.in1*/
+        connect in1 -> div1_3.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.constant10.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp2.in2*/
+        connect constant10_2.out1 -> relOp2_5.in2;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.constant11.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp3.in2*/
+        connect constant11_1.out1 -> relOp3_5.in2;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock2.elseIn*/
+        connect switchBlock3_13.out1 -> switchBlock2_13.elseIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.constant12.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp4.in2*/
+        connect constant12_1.out1 -> relOp4_3.in2;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.logOp1.in1*/
+        connect relOp3_5.out1 -> logOp1_1.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.relOp4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.logOp1.in2*/
+        connect relOp4_3.out1 -> logOp1_1.in2;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.constant13.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock3.ifIn*/
+        connect constant13_1.out1 -> switchBlock3_13.ifIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.sum.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.switchBlock3.elseIn*/
+        connect sum_15.out1 -> switchBlock3_13.elseIn;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.div1.in2*/
+        connect constant1_32.out1 -> div1_3.in2;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.constant15.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.sum.in1*/
+        connect constant15.out1 -> sum_15.in1;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.div1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.realTimeTimerAdapter.sum.in2*/
+        connect div1_3.out1 -> sum_15.in2;
+
+      }
+

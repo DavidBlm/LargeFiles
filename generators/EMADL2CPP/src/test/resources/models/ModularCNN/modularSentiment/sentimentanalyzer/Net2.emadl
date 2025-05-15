@@ -1,0 +1,14 @@
+package sentimentanalyzer;
+
+component Net2{
+    ports in Z(0:oo)^{128, 768} data,
+          out Q(0:1)^{2} softmax;
+
+    implementation CNN {
+        data ->
+		FullyConnected(units=768) ->
+        FullyConnected(units=2) ->
+        Softmax() ->
+        softmax;
+    }
+}

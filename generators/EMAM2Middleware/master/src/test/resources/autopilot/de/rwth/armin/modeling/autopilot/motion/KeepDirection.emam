@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.motion;
+
+import de.rwth.armin.modeling.autopilot.common.SignedAngleBetween;
+
+component KeepDirection {
+  port
+    in  Q                               currentDirectionX,
+    in  Q                               currentDirectionY,
+    in  Q                               desiredDirectionX,
+    in  Q                               desiredDirectionY,
+
+    out Q                               steeringAngle;
+
+  instance SignedAngleBetween           sab;
+
+  connect currentDirectionX     ->      sab.v1x;
+  connect currentDirectionY     ->      sab.v1y;
+  connect desiredDirectionX     ->      sab.v2x;
+  connect desiredDirectionY     ->      sab.v2y;
+  connect sab.angle             ->      steeringAngle;
+}

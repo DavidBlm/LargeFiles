@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component Mul_3 {
+                port
+                  in (0:100) acceleration_pc,
+                  in Number in1,
+                  in Number in3,
+                  out Number out1;
+              }
+

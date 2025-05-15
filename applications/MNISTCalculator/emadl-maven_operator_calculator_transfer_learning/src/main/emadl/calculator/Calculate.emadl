@@ -1,0 +1,33 @@
+/* (c) https://github.com/MontiCore/monticore */
+/* (c) Adapted Add function with an operator input. Each operator bears an integer label different from the number labels,*/
+/*except for the slash, as handwritten it ressembles 1 too much.*/
+/* The default is addition.*/
+package calculator;
+
+component Calculate{
+    ports
+            in Z(0:999) num1,
+            in Z(0:999) num2,
+            in Z(0:13) op,
+            out Q(0:998001) result;
+
+    implementation Math{
+
+
+
+                if op == 10
+                    result = num1 + num2;
+                elseif op == 11
+                    result = num1 - num2;
+                elseif op == 12
+                    result = num1 * num2;
+                elseif op == 1
+                    result = num1 / num2;
+                else
+                    /*Default*/
+                    result = num1 + num2;
+                end
+
+
+    }
+}

@@ -1,0 +1,216 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component Distronic {
+              port
+                out (0:100) brakeForce_Distronic_pc,
+                in B cC_active_b,
+                out (0:100) decelerator_pc,
+                in (0 m: oo m) distance_Object_m,
+                in (0:3) distance_stat,
+                in Number fTS_Abstand_soll_m,
+                in B fTS_active_b,
+                in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+                in Number v_Vehicle_ms;
+instance Constant_2_value_1 constant_2;
+instance Distronic_Deactive distronic_Deactive;
+instance Distronic_Disabled distronic_Disabled;
+instance Distronic_Enabled distronic_Enabled;
+instance Distronic_FTS_Enabled distronic_FTS_Enabled;
+instance VERSION_INFO_9 vERSION_INFO_9;
+instance SwitchBlock_4 switchBlock_4;
+instance Condition_4 condition_4;
+instance SwitchBlock1_1 switchBlock1_1;
+instance Condition1_1 condition1_1;
+instance SwitchBlock2_1 switchBlock2_1;
+instance Condition2_1 condition2_1;
+instance SwitchBlock3_1 switchBlock3_1;
+instance Condition3_1 condition3_1;
+instance UnitDelay_1 unitDelay_1;
+instance SwitchBlock4_1 switchBlock4_1;
+instance Condition4_1 condition4_1;
+instance SwitchBlock5_1 switchBlock5_1;
+instance Condition5_1 condition5_1;
+instance SwitchBlock6_1 switchBlock6_1;
+instance Condition6_1 condition6_1;
+instance SwitchBlock7_1 switchBlock7_1;
+instance Condition7_1 condition7_1;
+instance UnitDelay1_1 unitDelay1_1;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.brakeForce_Distronic_pcOut1*/
+              connect switchBlock_4.out1 -> brakeForce_Distronic_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.decelerator_pcOut2*/
+              connect switchBlock4_1.out1 -> decelerator_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition.in1*/
+              connect constant_2.out1 -> condition_4.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition.in2*/
+              connect cC_active_b -> condition_4.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition.in3*/
+              connect fTS_active_b -> condition_4.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock.condition*/
+              connect condition_4.out1 -> switchBlock_4.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Enabled.brakeForce_Distronic_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock.ifIn*/
+              connect distronic_Enabled.brakeForce_Distronic_pc -> switchBlock_4.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition1.in1*/
+              connect constant_2.out1 -> condition1_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition1.in2*/
+              connect cC_active_b -> condition1_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition1.in3*/
+              connect fTS_active_b -> condition1_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock1.condition*/
+              connect condition1_1.out1 -> switchBlock1_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_FTS_Enabled.brakeForce_Distronic_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock1.ifIn*/
+              connect distronic_FTS_Enabled.brakeForce_Distronic_pc -> switchBlock1_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock.elseIn*/
+              connect switchBlock1_1.out1 -> switchBlock_4.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition2.in1*/
+              connect constant_2.out1 -> condition2_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition2.in2*/
+              connect cC_active_b -> condition2_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition2.in3*/
+              connect fTS_active_b -> condition2_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock2.condition*/
+              connect condition2_1.out1 -> switchBlock2_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Disabled.brakeForce_Distronic_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock2.ifIn*/
+              connect distronic_Disabled.brakeForce_Distronic_pc -> switchBlock2_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock1.elseIn*/
+              connect switchBlock2_1.out1 -> switchBlock1_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition3.in1*/
+              connect constant_2.out1 -> condition3_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition3.in2*/
+              connect cC_active_b -> condition3_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition3.in3*/
+              connect fTS_active_b -> condition3_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock3.condition*/
+              connect condition3_1.out1 -> switchBlock3_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Deactive.brakeForce_Distronic_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock3.ifIn*/
+              connect distronic_Deactive.brakeForce_Distronic_pc -> switchBlock3_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock2.elseIn*/
+              connect switchBlock3_1.out1 -> switchBlock2_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.unitDelay.valueIn*/
+              connect switchBlock_4.out1 -> unitDelay_1.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.unitDelay.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock3.elseIn*/
+              connect unitDelay_1.valueOut -> switchBlock3_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition4.in1*/
+              connect constant_2.out1 -> condition4_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition4.in2*/
+              connect cC_active_b -> condition4_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition4.in3*/
+              connect fTS_active_b -> condition4_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock4.condition*/
+              connect condition4_1.out1 -> switchBlock4_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Enabled.decelerator_pcOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock4.ifIn*/
+              connect distronic_Enabled.decelerator_pc -> switchBlock4_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition5.in1*/
+              connect constant_2.out1 -> condition5_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition5.in2*/
+              connect cC_active_b -> condition5_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition5.in3*/
+              connect fTS_active_b -> condition5_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition5.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock5.condition*/
+              connect condition5_1.out1 -> switchBlock5_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_FTS_Enabled.decelerator_pcOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock5.ifIn*/
+              connect distronic_FTS_Enabled.decelerator_pc -> switchBlock5_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock5.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock4.elseIn*/
+              connect switchBlock5_1.out1 -> switchBlock4_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition6.in1*/
+              connect constant_2.out1 -> condition6_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition6.in2*/
+              connect cC_active_b -> condition6_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition6.in3*/
+              connect fTS_active_b -> condition6_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock6.condition*/
+              connect condition6_1.out1 -> switchBlock6_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Disabled.decelerator_pcOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock6.ifIn*/
+              connect distronic_Disabled.decelerator_pc -> switchBlock6_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock5.elseIn*/
+              connect switchBlock6_1.out1 -> switchBlock5_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition7.in1*/
+              connect constant_2.out1 -> condition7_1.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.cC_active_bIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition7.in2*/
+              connect cC_active_b -> condition7_1.in2;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_active_bIn6 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition7.in3*/
+              connect fTS_active_b -> condition7_1.in3;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.condition7.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock7.condition*/
+              connect condition7_1.out1 -> switchBlock7_1.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Deactive.decelerator_pcOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock7.ifIn*/
+              connect distronic_Deactive.decelerator_pc -> switchBlock7_1.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock7.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock6.elseIn*/
+              connect switchBlock7_1.out1 -> switchBlock6_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.unitDelay1.valueIn*/
+              connect switchBlock4_1.out1 -> unitDelay1_1.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.unitDelay1.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.switchBlock7.elseIn*/
+              connect unitDelay1_1.valueOut -> switchBlock7_1.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.fTS_Abstand_soll_mIn7 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_FTS_Enabled.fTS_Abstand_soll_mIn2*/
+              connect fTS_Abstand_soll_m -> distronic_FTS_Enabled.fTS_Abstand_soll_m;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distance_statIn4 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Enabled.distance_statIn3*/
+              connect distance_stat -> distronic_Enabled.distance_stat;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.v_Vehicle_msIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Enabled.v_Vehicle_msIn1*/
+              connect v_Vehicle_ms -> distronic_Enabled.v_Vehicle_ms;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.v_Obj_rel_kmhIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Enabled.v_Obj_rel_kmhIn4*/
+              connect v_Obj_rel_kmh -> distronic_Enabled.v_Obj_rel_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.v_Obj_rel_kmhIn5 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_FTS_Enabled.v_Obj_rel_kmhIn3*/
+              connect v_Obj_rel_kmh -> distronic_FTS_Enabled.v_Obj_rel_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distance_Object_mIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_Enabled.distance_Object_mIn2*/
+              connect distance_Object_m -> distronic_Enabled.distance_Object_m;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distance_Object_mIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distronic.distronic_FTS_Enabled.distance_Object_mIn1*/
+              connect distance_Object_m -> distronic_FTS_Enabled.distance_Object_m;
+
+            }
+

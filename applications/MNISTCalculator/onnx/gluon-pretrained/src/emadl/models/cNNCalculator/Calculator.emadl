@@ -1,0 +1,45 @@
+/* (c) https://github.com/MontiCore/monticore */
+package cNNCalculator;
+
+component Calculator {
+        ports  
+                in Q(0:1)^10 in1_1,
+                in Q(0:1)^10 in1_2,
+                in Q(0:1)^10 in1_3,
+                in Q(0:1)^10 in2_1,
+                in Q(0:1)^10 in2_2,
+                in Q(0:1)^10 in2_3,
+
+                out Z(0:1998) out1;
+        
+        instance ArgMax<10> number1ones;
+        instance ArgMax<10> number1tens;
+        instance ArgMax<10> number1hundreds;
+        instance ArgMax<10> number2ones;
+        instance ArgMax<10> number2tens;
+        instance ArgMax<10> number2hundreds;
+        instance DigitCombiner c1;
+        instance DigitCombiner c2;
+        instance Add add;
+        
+
+        connect in1_1 -> number1hundreds.inputVector;
+        connect in1_2 -> number1tens.inputVector;
+        connect in1_3 -> number1ones.inputVector;
+        connect in2_1 -> number2hundreds.inputVector;
+        connect in2_2 -> number2tens.inputVector;
+        connect in2_3 -> number2ones.inputVector;
+
+        connect number1ones.maxIndex -> c1.ones;
+        connect number1tens.maxIndex -> c1.tens;
+        connect number1hundreds.maxIndex -> c1.hundreds;
+        connect number2ones.maxIndex -> c2.ones;
+        connect number2tens.maxIndex -> c2.tens;
+        connect number2hundreds.maxIndex -> c2.hundreds;
+
+        connect c1.number -> add.num1;
+        connect c2.number -> add.num2;
+
+        connect add.sum -> out1;
+
+}

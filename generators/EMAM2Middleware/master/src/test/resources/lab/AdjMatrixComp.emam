@@ -1,0 +1,31 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+
+component AdjMatrixComp{
+
+
+    component Sub1{
+        ports out Q qOut1,
+              out Q qOut2,
+              out Q qOut3;
+    }
+
+    component Sub2{
+        ports in Q qIn;
+    }
+
+    component Sub3{
+        ports in Q qIn1,
+              in Q qIn2;
+
+    }
+
+    instance Sub1 sub1;
+    instance Sub2 sub2;
+    instance Sub3 sub3;
+
+    connect sub1.qOut1 -> sub2.qIn;
+    connect sub1.qOut2 -> sub3.qIn1;
+    connect sub1.qOut3 -> sub3.qIn2;
+
+}

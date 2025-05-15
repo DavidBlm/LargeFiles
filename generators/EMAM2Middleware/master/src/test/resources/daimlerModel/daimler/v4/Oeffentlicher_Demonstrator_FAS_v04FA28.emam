@@ -1,0 +1,191 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA28.
+  component Oeffentlicher_Demonstrator_FAS_v04FA28 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _BrakeForce_pedal_pc,
+              in Boolean _ParkingBrake_b,
+              out Boolean _CC_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double brakeForce_pedal_pc,
+                in Boolean parkingBrake_b,
+                out Boolean cC_active_b;
+
+              component Tempomat {
+                port
+                  in Double brakeForce_pedal_pc,
+                  in Boolean parkingBrake_b,
+                  out Boolean cC_active_b;
+
+                component Tempomat_Function {
+                  port
+                    in Double brakeForce_pedal_pc,
+                    out Boolean cC_active_b,
+                    in Boolean parkingBrake_b;
+
+                  component CC_On_Off {
+                    port
+                      in Double brakeForce_pedal_pc,
+                      out Boolean cC_active_b,
+                      in Boolean parkingBrake_b;
+
+                    component RelOp2_2 {
+                      port
+                        in Double in1,
+                        out Boolean out1;
+
+                    }
+instance RelOp2_2 relOp2_2;
+                    component LogicalOperator_8 {
+                      port
+                        in Boolean in3,
+                        out Boolean out1,
+                        in Boolean in2;
+
+                    }
+instance LogicalOperator_8 logicalOperator_8;
+                    component RSFlipFlop_2 {
+                      port
+                        in Boolean r,
+                        out Boolean q;
+
+                      component Condition1_11 {
+                        port
+                          in Boolean in1,
+                          out Boolean out1;
+
+                      }
+instance Condition1_11 condition1_11;
+                      component Switch_R_5 {
+                        port
+                          in Boolean condition,
+                          out Boolean out1;
+
+                      }
+instance Switch_R_5 switch_R_5;
+  connect condition1_11.out1 -> switch_R_5.condition;
+  connect switch_R_5.out1 -> q;
+  connect r -> condition1_11.in1;
+                    }
+instance RSFlipFlop_2 rSFlipFlop_2;
+  connect logicalOperator_8.out1 -> rSFlipFlop_2.r;
+  connect rSFlipFlop_2.q -> cC_active_b;
+  connect relOp2_2.out1 -> logicalOperator_8.in3;
+  connect parkingBrake_b -> logicalOperator_8.in2;
+  connect brakeForce_pedal_pc -> relOp2_2.in1;
+                  }
+instance CC_On_Off cC_On_Off;
+  connect brakeForce_pedal_pc -> cC_On_Off.brakeForce_pedal_pc;
+  connect cC_On_Off.cC_active_b -> cC_active_b;
+  connect parkingBrake_b -> cC_On_Off.parkingBrake_b;
+                }
+instance Tempomat_Function tempomat_Function;
+                component SwitchBlock3_12 {
+                  port
+                    in Boolean ifIn,
+                    out Boolean out1;
+
+                }
+instance SwitchBlock3_12 switchBlock3_12;
+  connect tempomat_Function.cC_active_b -> switchBlock3_12.ifIn;
+  connect switchBlock3_12.out1 -> cC_active_b;
+  connect brakeForce_pedal_pc -> tempomat_Function.brakeForce_pedal_pc;
+  connect parkingBrake_b -> tempomat_Function.parkingBrake_b;
+              }
+instance Tempomat tempomat;
+              component FAS_Input {
+                port
+                  in Double brakeForce_pedal_pc,
+                  out Double brakeForce_pedal_pc3,
+                  in Boolean parkingBrake_b,
+                  out Boolean parkingBrake_b1;
+
+  connect brakeForce_pedal_pc -> brakeForce_pedal_pc3;
+  connect parkingBrake_b -> parkingBrake_b1;
+              }
+instance FAS_Input fAS_Input;
+  connect fAS_Input.brakeForce_pedal_pc3 -> tempomat.brakeForce_pedal_pc;
+  connect fAS_Input.parkingBrake_b1 -> tempomat.parkingBrake_b;
+  connect brakeForce_pedal_pc -> fAS_Input.brakeForce_pedal_pc;
+  connect parkingBrake_b -> fAS_Input.parkingBrake_b;
+  connect tempomat.cC_active_b -> cC_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double brakeForce_pedal_pcIn2,
+                out Double brakeForce_pedal_pc,
+                in Boolean parkingBrake_bIn1,
+                out Boolean parkingBrake_b;
+
+  connect brakeForce_pedal_pcIn2 ->   brakeForce_pedal_pc;
+  connect parkingBrake_bIn1 -> parkingBrake_b;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean cC_active_b,
+                out Boolean cC_active_bOut1;
+
+  connect cC_active_b -> cC_active_bOut1;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.brakeForce_pedal_pc ->   dEMO_FAS_Funktion.brakeForce_pedal_pc;
+  connect dEMO_FAS_Input.parkingBrake_b -> dEMO_FAS_Funktion.parkingBrake_b;
+  connect dEMO_FAS_Funktion.cC_active_b -> dEMO_FAS_Output.cC_active_b;
+  connect _BrakeForce_pedal_pc -> dEMO_FAS_Input.brakeForce_pedal_pcIn2  ;
+  connect _ParkingBrake_b -> dEMO_FAS_Input.parkingBrake_bIn1;
+  connect dEMO_FAS_Output.cC_active_bOut1 -> _CC_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

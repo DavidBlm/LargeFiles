@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+
+component Michael{
+    ports in Q input,
+          out Q out1;
+
+    implementation Math{
+        out1 = input + input;
+    }
+
+}

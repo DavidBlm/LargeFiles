@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package torcs.agent.network;
+
+component TorcsCritic {
+    ports
+        in Q^{29} state,
+        in Q(-1:1)^{3} action,
+        out Q(-oo:oo)^{1} qvalues;
+    
+    implementation CNN {
+        (state | action)->
+        Concatenate() ->
+        FullyConnected(units=300) ->
+        Relu() -> 
+        FullyConnected(units=600) ->
+        Relu() ->
+        FullyConnected(units=1) ->
+        qvalues;
+    }
+}

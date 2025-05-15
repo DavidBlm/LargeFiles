@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component SwitchBlock2_12 {
+                port
+                  out (0:100) acceleration_pc,
+                  in B condition,
+                  in Number elseIn,
+                  in Number ifIn;
+              }
+

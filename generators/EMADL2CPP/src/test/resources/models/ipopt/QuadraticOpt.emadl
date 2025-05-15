@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+package ipopt;
+//
+component QuadraticOpt{
+
+    implementation Math{
+        Q^{3,3} A = [1,0,0;0,2,0;0,0,3];
+        Q^{3,7} B = [1,1;2,2;3,3];
+        Q^{3,2} C = [2,2,3;3,4,4];
+        Q^{3} c = [4;5;6];
+        Q d = 42;
+        Q^{2} f = [3;3];
+        Q^{2} h = [6;5];
+
+        Q val = minimize(Q^{3} x) //or: maximize
+           //abs(0.5) * x' * A * x + abs(x' * x); //abs(x' * x) -> abs(ADMAT)
+           0.5 * x' * A * x + c' * x + d;// ADMat.h:44 ( "+ d" not possible due to dimensions)
+
+           //x * x'; //Fails with ADMat.h:89 (assert error) (Matrices must have same dimensions)
+        subject to
+            //Debug restraint
+          B * x <= f; //Assertion failure at ADMat.h:295
+          C * x == h;
+        end
+    }
+}

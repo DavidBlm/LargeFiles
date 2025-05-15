@@ -1,0 +1,61 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component FollowToStop {
+              port
+                out Number fTS_Abstand_soll_m,
+                out B fTS_active_b,
+                in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+                in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Constant_9_value_1 constant_9;
+instance FollowToStop_Function followToStop_Function;
+instance VERSION_INFO_14 vERSION_INFO_14;
+instance Condition_7 condition_7;
+instance SwitchBlock_7 switchBlock_7;
+instance UnitDelay_3 unitDelay_3;
+instance Condition1_4 condition1_4;
+instance SwitchBlock1_4 switchBlock1_4;
+instance UnitDelay1_3 unitDelay1_3;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.fTS_active_bOut1*/
+              connect switchBlock_7.out1 -> fTS_active_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.fTS_Abstand_soll_mOut2*/
+              connect switchBlock1_4.out1 -> fTS_Abstand_soll_m;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.condition.in1*/
+              connect constant_9.out1 -> condition_7.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock.condition*/
+              connect condition_7.out1 -> switchBlock_7.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.fTS_active_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock.ifIn*/
+              connect followToStop_Function.fTS_active_b -> switchBlock_7.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.unitDelay.valueIn*/
+              connect switchBlock_7.out1 -> unitDelay_3.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.unitDelay.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock.elseIn*/
+              connect unitDelay_3.valueOut -> switchBlock_7.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.condition1.in1*/
+              connect constant_9.out1 -> condition1_4.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock1.condition*/
+              connect condition1_4.out1 -> switchBlock1_4.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.fTS_Abstand_soll_mOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock1.ifIn*/
+              connect followToStop_Function.fTS_Abstand_soll_m -> switchBlock1_4.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.unitDelay1.valueIn*/
+              connect switchBlock1_4.out1 -> unitDelay1_3.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.unitDelay1.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.switchBlock1.elseIn*/
+              connect unitDelay1_3.valueOut -> switchBlock1_4.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.v_Obj_rel_kmhIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.v_Obj_rel_kmhIn2*/
+              connect v_Obj_rel_kmh -> followToStop_Function.v_Obj_rel_kmh;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.v_Vehicle_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.v_Vehicle_kmhIn1*/
+              connect v_Vehicle_kmh -> followToStop_Function.v_Vehicle_kmh;
+
+            }
+

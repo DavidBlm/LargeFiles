@@ -1,0 +1,771 @@
+name: EMADL2CPP
+on:
+  push:
+    paths:
+      - 'generators/EMADL2CPP/**'
+  workflow_dispatch:
+env:
+  CI_PROJECT_ID : 17712
+  CI_API_V4_URL : https://git.rwth-aachen.de/api/v4
+  GITLABTOKEN : ${{ secrets.GITLABTOKEN }}
+jobs:
+  FileChanges:
+    runs-on: ubuntu-latest
+    outputs:
+      runbuildDockerMXNet150: ${{steps.buildDockerMXNet150.outputs.run}}
+      runbuildDockerMXNet170: ${{steps.buildDockerMXNet170.outputs.run}}
+      runbuildDockerMXNet170onnx: ${{steps.buildDockerMXNet170onnx.outputs.run}}
+      runbuildDockerTensorflowONNX: ${{steps.buildDockerTensorflowONNX.outputs.run}}
+      runbuildDockerMXNet170DGL: ${{steps.buildDockerMXNet170DGL.outputs.run}}
+      runbuildDockerDGLQD: ${{steps.buildDockerDGLQD.outputs.run}}
+      runbuildDockerPyTorch: ${{steps.buildDockerPyTorch.outputs.run}}
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Check for file changes
+        run: |
+          CHANGES=$(git diff --name-only HEAD^ HEAD)
+          echo "$CHANGES"
+          echo "$CHANGES" > diff.txt
+      - name: Check buildDockerMXNet150
+        id: buildDockerMXNet150
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/mxnet150'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+      - name: Check buildDockerMXNet170
+        id: buildDockerMXNet170
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/mxnet170'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+      - name: Check buildDockerMXNet170onnx
+        id: buildDockerMXNet170onnx
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/mxnet170'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+      - name: Check buildDockerTensorflowONNX
+        id: buildDockerTensorflowONNX
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/tensorflow'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+      - name: Check buildDockerMXNet170DGL
+        id: buildDockerMXNet170DGL
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/mxnet170'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+      - name: Check buildDockerDGLQD
+        id: buildDockerDGLQD
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/dglqd'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+      - name: Check buildDockerPyTorch
+        id: buildDockerPyTorch
+        run: |
+          run=false
+          if cat diff.txt | grep '^.*src/test/resources/docker/pytorch'; then
+            echo "RUN"
+            run=true
+          else
+            echo "DONT RUN"
+          fi
+          echo "run=$run" >> $GITHUB_OUTPUT
+  docker_phase:
+    needs: [buildDockerDGLQD, buildDockerPyTorch, buildDockerMXNet170DGL, buildDockerMXNet170onnx, buildDockerTensorflowONNX, buildDockerMXNet150, buildDockerMXNet170]
+    if: ${{ !cancelled()}}
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "Finished stage docker"
+          if: ${{!contains(needs.*.result, 'failure')}}
+        - run: |
+            echo "Failed stage docker"
+            exit 1
+          if: ${{contains(needs.*.result, 'failure')}}
+  linux_phase:
+    needs: [docker_phase, modularityTest, integrationGluonJobLinux, integrationPythonWrapperTest, integrationCaffe2JobLinux, integrationPyTorchJobLinux, UnitTestJobLinux, integrationMXNetJobLinux, integrationTensorflowJobLinux, artifact-extraction]
+    if: ${{ !cancelled()}}
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "Finished stage linux"
+          if: ${{!contains(needs.*.result, 'failure')}}
+        - run: |
+            echo "Failed stage linux"
+            exit 1
+          if: ${{contains(needs.*.result, 'failure')}}
+  deploy_phase:
+    needs: [linux_phase, githubjob, git_masterJobLinux]
+    if: ${{ !cancelled()}}
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "Finished stage deploy"
+          if: ${{!contains(needs.*.result, 'failure')}}
+        - run: |
+            echo "Failed stage deploy"
+            exit 1
+          if: ${{contains(needs.*.result, 'failure')}}
+
+  githubjob:
+    needs: linux_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure')  &&  github.ref == 'refs/heads/master'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull maven:3-jdk-8
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} maven:3-jdk-8 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+            eval $(ssh-agent -s)
+            ssh-add <(echo "$GITHUB_SSH_PRIV_KEY")
+            echo "$GITHUB_SSH_PRIV_KEY" | tr -d '\r' | ssh-add -
+            git config --global user.email "kusmenko@se-rwth.de"
+            git config --global user.name "EMA CI Robot"
+            mkdir -p ~/.ssh
+            echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+            git clone git@github.com:MontiCore/EmbeddedMontiArc.git
+            cd EmbeddedMontiArc
+            git subtree pull --prefix $PRJ_NAME https://git.rwth-aachen.de/monticore/EmbeddedMontiArc/${PRJ_NAME}.git master --squash
+            git push --force
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  git_masterJobLinux:
+    needs: linux_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure')  &&  github.ref == 'refs/heads/master'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull maven:3-jdk-8
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} maven:3-jdk-8 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  integrationMXNetJobLinux:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker pull ghcr.io/davidblm/emadl2cpp/dockerimages/mxnet150:v0.0.5
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} ghcr.io/davidblm/emadl2cpp/dockerimages/mxnet150:v0.0.5 tail -f /dev/null
+      - name: Script
+        continue-on-error: true
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B  -U clean install --settings settings.xml -Dtest=IntegrationMXNetTest -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  integrationCaffe2JobLinux:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker pull ghcr.io/davidblm/emadl2cpp/integrationtests/caffe2:v0.0.5
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} ghcr.io/davidblm/emadl2cpp/integrationtests/caffe2:v0.0.5 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B  -U clean install --settings settings.xml -Dtest=IntegrationCaffe2Test -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  integrationGluonJobLinux:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker pull ghcr.io/davidblm/emadl2cpp/dockerimages/mxnet170:v0.0.1
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} ghcr.io/davidblm/emadl2cpp/dockerimages/mxnet170:v0.0.1 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            ln /usr/bin/python3 /usr/bin/python -f
+            python -m pip install -U pip
+            python -m pip install scikit-image
+            python -m pip install opencv-python
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=IntegrationGluonTest -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integrationGluonJobLinux
+          retention-days: 7
+          path: |
+            generators/EMADL2CPP/target
+
+  integrationTensorflowJobLinux:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/integrationtests/tensorflow
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/integrationtests/tensorflow tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=IntegrationTensorflowTest -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  integrationPyTorchJobLinux:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/pytorch
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/dockerimages/pytorch tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest="MontiAnnaGeneratorTest#testPyTorchBackendArtefactsGenerationWithEMADLGenerator,ConfigurationTest,PersistentLoggingDataTest,TrackingTest" -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  integrationPythonWrapperTest:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2pythonwrapper/tests/mvn-swig:latest
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2pythonwrapper/tests/mvn-swig:latest tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U  clean install --settings settings.xml -Dtest=IntegrationPythonWrapperTest -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integrationPythonWrapperTest
+          retention-days: 7
+          path: |
+            generators/EMADL2CPP/target
+
+  modularityTest:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/generators/emadl2cpp/mxnet/190 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            export TZ=Europe/Berlin && apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata
+            apt update && apt install libopencv-dev python3-opencv libopenblas-dev liblapack-dev -y
+            ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+            dpkg-reconfigure --frontend noninteractive tzdata
+            ln /usr/bin/python3 /usr/bin/python -f
+            python -m pip install -U pip
+            python -m pip install scikit-image
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest=ModularBasicTest -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+
+  UnitTestJobLinux:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/gans/mnist-infogan/gans_mxnet:latest
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} registry.git.rwth-aachen.de/monticore/embeddedmontiarc/applications/gans/mnist-infogan/gans_mxnet:latest tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B -U clean install --settings settings.xml -Dtest="GenerationTest,SymtabTest*" -Dmaven.wagon.http.retryHandler.count=50 -Dmaven.wagon.http.connectionTimeout=6000000 -Dmaven.wagon.http.readTimeout=600000000
+        run: docker exec build-container bash -c "$SCRIPT"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: UnitTestJobLinux
+          retention-days: 7
+          path: |
+            generators/EMADL2CPP/target
+
+  buildDockerMXNet150:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerMXNet150 == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/mxnet150
+
+  buildDockerMXNet170:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerMXNet170 == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/mxnet170
+
+  buildDockerMXNet170onnx:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerMXNet170onnx == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/mxnet170
+
+  buildDockerTensorflowONNX:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerTensorflowONNX == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/tensorflow
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+            docker build -t ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/tensorflow-onnx:latest -f Dockerfile-onnx .
+            docker push ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/tensorflow-onnx:latest
+
+  buildDockerMXNet170DGL:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerMXNet170DGL == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/mxnet170
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+            docker build -t ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/mxnet170-dgl:v0.0.1 -f Dockerfile-dgl .
+            docker push ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/mxnet170-dgl:v0.0.1
+
+  buildDockerDGLQD:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerDGLQD == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/dglqd
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+            docker build -t ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/dgl-qd:latest -f Dockerfile .
+            docker push ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/dgl-qd:latest
+
+  buildDockerPyTorch:
+    needs: FileChanges
+    if: ${{needs.FileChanges.outputs.runbuildDockerPyTorch == 'true'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            cd src/test/resources/docker/pytorch
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            LOWERCASE_OWNER=$(echo "${{ github.repository_owner }}" | tr "[:upper:]" "[:lower:]")
+            docker build -t ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/pytorch:latest -f Dockerfile .
+            docker push ghcr.io/$LOWERCASE_OWNER/emadl2cpp/dockerimages/pytorch:latest
+
+  artifact-extraction:
+    needs: docker_phase
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Start Docker Container
+        run: |
+          docker pull ubuntu:22.04
+          docker run --name build-container -d -v $(pwd):/workspace --network=host  -e CI_API_V4_URL=$CI_API_V4_URL -e GITLABTOKEN=${{ secrets.GITLABTOKEN }} ubuntu:22.04 tail -f /dev/null
+      - name: Script
+        env:
+          SCRIPT: |
+            cd /workspace
+            cd generators/EMADL2CPP
+            apt-get update -qq && apt-get install -y -qq openjdk-11-jre-headless python3 python3-pip git
+            cd extractor
+            pip3 install -r requirements.txt
+            python3 extract.py ${{ secrets.GITLABTOKEN }}
+        run: docker exec build-container bash -c "$SCRIPT"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: artifact-extraction
+          retention-days: 7
+          path: |
+            generators/EMADL2CPP/extractor/output
+
+  pages:
+    needs: artifact-extraction
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure')  &&  github.ref == 'refs/heads/master'}}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout latest commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Restore large files
+        run: |
+          ls
+          find . -type f -name '*.part*' | sort | while read part; do
+          echo "Restoring $part"
+          base=$(echo "$part" | sed 's/.part.*//')
+          cat "$part" >> "$base"
+          rm "$part"
+          done
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-extraction
+          path: |
+            generators/EMADL2CPP/extractor/output
+      - name: Script
+        run: |
+            cd generators/EMADL2CPP
+            mkdir .public
+            cp -r extractor/output/html/* .public
+            mv .public public
+      - name: Upload Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: generators/EMADL2CPP/public/
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
+

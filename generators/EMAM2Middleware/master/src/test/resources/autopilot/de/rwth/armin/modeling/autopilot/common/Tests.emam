@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component Tests {
+  port in B in1, out B out1;
+
+  instance Abs abs;
+  instance EnsureBounds eb1;
+  instance EnsureBoundsForBrakes eb2;
+  instance EnsureBoundsForEngine eb3;
+  instance EnsureBoundsForSteeringAngle eb4;
+  instance PID pid;
+  instance SignedAngleBetween sab;
+  instance Sum sum;
+}

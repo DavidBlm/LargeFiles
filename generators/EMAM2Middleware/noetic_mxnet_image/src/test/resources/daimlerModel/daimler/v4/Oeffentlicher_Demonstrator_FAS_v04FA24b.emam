@@ -1,0 +1,458 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA24b.
+  component Oeffentlicher_Demonstrator_FAS_v04FA24b {
+    component DEMO_FAS_1 {
+      port
+        out Double brakeForce_pc,
+        in Double v_Vehicle_kmh,
+        out Double acceleration_pc;
+
+      component DEMO_FAS_2 {
+        port
+          out Double _BrakeForce_pc,
+          in Double _V_Vehicle_kmh,
+          out Double _Acceleration_pc;
+
+        component Subsystem {
+          port
+            out Double _BrakeForce_pc,
+            in Double _V_Vehicle_kmh,
+            out Double _Acceleration_pc;
+
+          component DEMO_FAS_3 {
+            port
+              in Double _V_Vehicle_kmh,
+              out Double _CCSetValue_kmh,
+              in Double _BrakeForce_pedal_pc,
+              out Double _BrakeForce_pc,
+              in Double _Acceleration_pedal_pc,
+              out Double _Acceleration_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double v_Vehicle_kmh,
+                out Double cCSetValue_kmh,
+                in Double brakeForce_pedal_pc,
+                out Double brakeForce_pc,
+                in Double acceleration_pedal_pc,
+                out Double acceleration_pc;
+
+              component Tempomat {
+                port
+                  out Double v_CC_delta_kmh,
+                  in Double v_Vehicle_kmh,
+                  out Double out2;
+
+                component Tempomat_Function {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double out2;
+
+                  component CC_SetValue {
+                    port
+                      in Double v_Vehicle_kmh,
+                      out Double out3;
+
+                    component CC_OnSet_SetValue {
+                      port
+                        in Double v_Vehicle_kmh,
+                        out Double out3;
+
+  connect v_Vehicle_kmh -> out3;
+                    }
+instance CC_OnSet_SetValue cC_OnSet_SetValue;
+                    component SwitchBlock12_4 {
+                      port
+                        in Double ifIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock12_4 switchBlock12_4;
+                    component SwitchBlock11_4 {
+                      port
+                        in Double elseIn,
+                        out Double out1;
+
+                    }
+instance SwitchBlock11_4 switchBlock11_4;
+  connect cC_OnSet_SetValue.out3 -> switchBlock12_4.ifIn;
+  connect v_Vehicle_kmh -> cC_OnSet_SetValue.v_Vehicle_kmh;
+  connect switchBlock12_4.out1 -> switchBlock11_4.elseIn;
+  connect switchBlock11_4.out1 -> out3;
+                  }
+instance CC_SetValue cC_SetValue;
+  connect v_Vehicle_kmh -> cC_SetValue.v_Vehicle_kmh;
+  connect cC_SetValue.out3 -> out2;
+                }
+instance Tempomat_Function tempomat_Function;
+                component SwitchBlock1_17 {
+                  port
+                    in Double ifIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock1_17 switchBlock1_17;
+  connect tempomat_Function.out2 -> switchBlock1_17.ifIn;
+  connect switchBlock1_17.out1 -> out2;
+  connect v_Vehicle_kmh -> tempomat_Function.v_Vehicle_kmh;
+              }
+instance Tempomat tempomat;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh,
+                  in Double brakeForce_pedal_pc,
+                  out Double brakeForce_pc,
+                  in Double acceleration_pedal_pc,
+                  out Double acceleration_pc;
+
+                component MinMax2 {
+                  port
+                    in Double in3,
+                    out Double brakeForce_pc;
+
+                }
+instance MinMax2 minMax2;
+                component MinMax1 {
+                  port
+                    in Double in1,
+                    out Double out1;
+
+                }
+instance MinMax1 minMax1;
+                component SwitchBlock_35 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock_35 switchBlock_35;
+                component Mul_3 {
+                  port
+                    in Double acceleration_pc,
+                    out Double out1;
+
+                }
+instance Mul_3 mul_3;
+                component SwitchBlock2_12 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect brakeForce_pedal_pc -> minMax2.in3;
+  connect minMax2.brakeForce_pc -> brakeForce_pc;
+  connect switchBlock_35.acceleration_pc -> mul_3.acceleration_pc;
+  connect mul_3.out1 -> switchBlock2_12.elseIn;
+  connect minMax1.out1 -> switchBlock_35.elseIn;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+  connect acceleration_pedal_pc -> minMax1.in1;
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double v_Vehicle_kmh5,
+                  in Double brakeForce_pedal_pc,
+                  out Double brakeForce_pedal_pc1,
+                  in Double acceleration_pedal_pc,
+                  out Double acceleration_pedal_pc1;
+
+  connect v_Vehicle_kmh -> v_Vehicle_kmh5;
+  connect brakeForce_pedal_pc -> brakeForce_pedal_pc1;
+  connect acceleration_pedal_pc -> acceleration_pedal_pc1;
+              }
+instance FAS_Input fAS_Input;
+              component Limiter {
+                port
+                  in Double in2,
+                  out Double out1;
+
+                component SwitchBlock_15 {
+                  port
+                    in Double elseIn,
+                    out Double out1;
+
+                }
+instance SwitchBlock_15 switchBlock_15;
+  connect in2 -> switchBlock_15.elseIn;
+  connect switchBlock_15.out1 -> out1;
+              }
+instance Limiter limiter;
+              component UnitDelay_8 {
+                port
+                  in Double valueIn,
+                  out Double valueOut;
+
+              }
+instance UnitDelay_8 unitDelay_8;
+  connect fAS_Input.brakeForce_pedal_pc1 -> velocityControl.brakeForce_pedal_pc;
+  connect fAS_Input.acceleration_pedal_pc1 ->   velocityControl.acceleration_pedal_pc;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect velocityControl.brakeForce_pc -> brakeForce_pc;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect fAS_Input.v_Vehicle_kmh5 -> tempomat.v_Vehicle_kmh;
+  connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh;
+  connect brakeForce_pedal_pc -> fAS_Input.brakeForce_pedal_pc;
+  connect acceleration_pedal_pc ->   fAS_Input.acceleration_pedal_pc;
+  connect limiter.out1 -> unitDelay_8.valueIn;
+  connect tempomat.out2 -> limiter.in2;
+  connect unitDelay_8.valueOut -> cCSetValue_kmh;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh,
+                in Double brakeForce_pedal_pcIn2,
+                out Double brakeForce_pedal_pc,
+                in Double _Acceleration_pedal_pc,
+                out Double acceleration_pedal_pc;
+
+  connect v_Vehicle_b -> v_Vehicle_kmh;
+  connect brakeForce_pedal_pcIn2 ->   brakeForce_pedal_pc;
+  connect _Acceleration_pedal_pc ->   acceleration_pedal_pc;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double cCSetValue_kmh,
+                out Double cCSetValue_kmhOut4,
+                in Double brakeForce_pc,
+                out Double brakeForce_pcOut3,
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2;
+
+  connect cCSetValue_kmh -> cCSetValue_kmhOut4;
+  connect brakeForce_pc -> brakeForce_pcOut3;
+  connect acceleration_pc -> acceleration_pcOut2;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.v_Vehicle_kmh -> dEMO_FAS_Funktion.v_Vehicle_kmh;
+  connect dEMO_FAS_Input.brakeForce_pedal_pc ->   dEMO_FAS_Funktion.brakeForce_pedal_pc;
+  connect dEMO_FAS_Input.acceleration_pedal_pc ->   dEMO_FAS_Funktion.acceleration_pedal_pc;
+  connect dEMO_FAS_Funktion.cCSetValue_kmh -> dEMO_FAS_Output.cCSetValue_kmh;
+  connect dEMO_FAS_Funktion.brakeForce_pc -> dEMO_FAS_Output.brakeForce_pc;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect _BrakeForce_pedal_pc -> dEMO_FAS_Input.brakeForce_pedal_pcIn2  ;
+  connect _Acceleration_pedal_pc ->   dEMO_FAS_Input._Acceleration_pedal_pc;
+  connect dEMO_FAS_Output.cCSetValue_kmhOut4 -> _CCSetValue_kmh;
+  connect dEMO_FAS_Output.brakeForce_pcOut3 -> _BrakeForce_pc;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+  connect dEMO_FAS_3._BrakeForce_pc -> _BrakeForce_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_3._V_Vehicle_kmh;
+  connect dEMO_FAS_3._Acceleration_pc -> _Acceleration_pc;
+        }
+instance Subsystem subsystem;
+  connect subsystem._BrakeForce_pc -> _BrakeForce_pc;
+  connect _V_Vehicle_kmh -> subsystem._V_Vehicle_kmh;
+  connect subsystem._Acceleration_pc -> _Acceleration_pc;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+  connect dEMO_FAS_2._BrakeForce_pc -> brakeForce_pc;
+  connect v_Vehicle_kmh -> dEMO_FAS_2._V_Vehicle_kmh;
+  connect dEMO_FAS_2._Acceleration_pc -> acceleration_pc;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+    component Memory7 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory7 memory7;
+    component Umgebung {
+      port
+        in Double brakeForce_pc,
+        out Double v_Vehicle_kmh,
+        in Double acceleration_pc;
+
+      component Vehicle {
+        port
+          in Double brakeForce_pc,
+          out Double v_Vehicle_kmh,
+          in Double acceleration_pc;
+
+        component SwitchBlock1_20 {
+          port
+            in Double ifIn,
+            out Double out1;
+
+        }
+instance SwitchBlock1_20 switchBlock1_20;
+        component Condition_51 {
+          port
+            in Double in1,
+            out Boolean out1;
+
+        }
+instance Condition_51 condition_51;
+        component SwitchBlock_36 {
+          port
+            in Boolean condition,
+            out Double out1,
+            in Double elseIn;
+
+        }
+instance SwitchBlock_36 switchBlock_36;
+        component DiscreteTransferFcnwithinitialstates {
+          port
+            in Double in1,
+            out Double out1;
+
+          component DiscreteStateSpace {
+            port
+              in Double in1,
+              out Double out1;
+
+          }
+instance DiscreteStateSpace discreteStateSpace;
+  connect in1 -> discreteStateSpace.in1;
+  connect discreteStateSpace.out1 -> out1;
+        }
+instance DiscreteTransferFcnwithinitialstates discreteTransferFcnwithinitialstates;
+        component Sum1_4 {
+          port
+            in Double v_Vehicle_kmh,
+            out Double out1;
+
+        }
+instance Sum1_4 sum1_4;
+        component Saturation_2 {
+          port
+            in Double in1,
+            out Double v_Vehicle_kmh;
+
+        }
+instance Saturation_2 saturation_2;
+  connect switchBlock1_20.out1 -> condition_51.in1;
+  connect brakeForce_pc -> switchBlock1_20.ifIn;
+  connect condition_51.out1 -> switchBlock_36.condition;
+  connect switchBlock_36.out1 -> discreteTransferFcnwithinitialstates.in1;
+  connect acceleration_pc -> switchBlock_36.elseIn;
+  connect discreteTransferFcnwithinitialstates.out1 -> sum1_4.v_Vehicle_kmh;
+  connect sum1_4.out1 -> saturation_2.in1;
+  connect saturation_2.v_Vehicle_kmh -> v_Vehicle_kmh;
+      }
+instance Vehicle vehicle;
+  connect brakeForce_pc -> vehicle.brakeForce_pc;
+  connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh;
+  connect acceleration_pc -> vehicle.acceleration_pc;
+    }
+instance Umgebung umgebung;
+    component Memory8 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory8 memory8;
+  connect dEMO_FAS_1.brakeForce_pc -> memory7.in1;
+  connect memory7.out1 -> umgebung.brakeForce_pc;
+  connect dEMO_FAS_1.acceleration_pc -> memory8.in1;
+  connect memory8.out1 -> umgebung.acceleration_pc;
+  connect umgebung.v_Vehicle_kmh -> dEMO_FAS_1.v_Vehicle_kmh;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

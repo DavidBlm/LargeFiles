@@ -1,0 +1,6 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component VERSION_INFO_46 {
+instance Copyright_46 copyright_46;
+              }
+

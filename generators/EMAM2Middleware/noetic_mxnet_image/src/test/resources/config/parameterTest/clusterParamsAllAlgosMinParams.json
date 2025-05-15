@@ -1,0 +1,26 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/cliTest/allAlgos/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp","roscpp"],
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":3
+      },
+      {
+        "name":"DBScan",
+        "min_pts":5,
+        "radius":2.5
+      },
+      {
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

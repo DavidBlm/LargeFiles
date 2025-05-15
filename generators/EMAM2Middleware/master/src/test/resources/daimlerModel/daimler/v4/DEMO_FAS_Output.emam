@@ -1,0 +1,46 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+          component DEMO_FAS_Output {
+            port
+              in (0:100) acceleration_pc,
+              out (0:100) acceleration_pcOut2,
+              in B acusti_warn_b,
+              out B acusti_warn_bOut8,
+              in (0:100) brakeForce_pc,
+              out (0:100) brakeForce_pcOut3,
+              in B cC_active_b,
+              out B cC_active_bOut1,
+              in (0 km/h: 1 km/h: 250 km/h) cCSetValue_kmh,
+              out (0 km/h: 1 km/h: 250 km/h) cCSetValue_kmhOut4,
+              in B limiter_active_b,
+              out B limiter_active_bOut6,
+              in (0 km/h: 1 km/h: 250 km/h) limiterSetValue_kmh,
+              out (0 km/h: 1 km/h: 250 km/h) limiterSetValue_kmhOut5,
+              in B opti_warn_b,
+              out B opti_warn_bOut7;
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.cC_active_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.cC_active_bOut1*/
+            connect cC_active_b -> cC_active_bOut1;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.acceleration_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.acceleration_pcOut2*/
+            connect acceleration_pc -> acceleration_pcOut2;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.brakeForce_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.brakeForce_pcOut3*/
+            connect brakeForce_pc -> brakeForce_pcOut3;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.cCSetValue_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.cCSetValue_kmhOut4*/
+            connect cCSetValue_kmh -> cCSetValue_kmhOut4;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.limiterSetValue_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.limiterSetValue_kmhOut5*/
+            connect limiterSetValue_kmh -> limiterSetValue_kmhOut5;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.limiter_active_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.limiter_active_bOut6*/
+            connect limiter_active_b -> limiter_active_bOut6;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.opti_warn_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.opti_warn_bOut7*/
+            connect opti_warn_b -> opti_warn_bOut7;
+
+            /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.acusti_warn_b -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Output.acusti_warn_bOut8*/
+            connect acusti_warn_b -> acusti_warn_bOut8;
+
+          }
+

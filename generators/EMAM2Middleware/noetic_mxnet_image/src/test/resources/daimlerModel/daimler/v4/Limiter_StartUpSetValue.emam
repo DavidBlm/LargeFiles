@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component Limiter_StartUpSetValue {
+                  port
+                    out Number out1;
+instance Constant_25_value_300 constant_25;
+instance VERSION_INFO_22 vERSION_INFO_22;
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_StartUpSetValue.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_StartUpSetValue.out1*/
+                  connect constant_25.out1 -> out1;
+
+                }
+

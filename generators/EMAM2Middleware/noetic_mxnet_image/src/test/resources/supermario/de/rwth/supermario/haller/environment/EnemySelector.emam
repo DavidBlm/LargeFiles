@@ -1,0 +1,21 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.environment;
+
+
+component EnemySelector {
+    ports
+    
+        in Z^{5,2} nextEnemyPositions,
+        in Z index,
+        
+        out Z x,
+        out Z y;
+
+    implementation Math {
+        
+        x = nextEnemyPositions(index,1);
+        y = nextEnemyPositions(index,2);
+
+    }
+    
+}

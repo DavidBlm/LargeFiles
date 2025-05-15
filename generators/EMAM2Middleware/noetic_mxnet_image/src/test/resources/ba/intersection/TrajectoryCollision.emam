@@ -1,0 +1,44 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.intersection;
+import ba.util.TrajectoryToLines;
+import ba.util.LineIntersection;
+import ba.util.DualSetCompareMatrix;
+
+//TODO: m1 = m -1, m2 = m1(m1+1)/2
+component TrajectoryCollision<N1 m = 10, N1 m1 = 9, N1 m2 = 45>{
+    ports in Q^{3,m} trajectoryA,
+          in Q^{3,m} trajectoryB,
+          in Q cutoffTime,
+          out B collision,
+          out B aIsFasterOut;
+
+    instance TrajectoryToLines<10,9> trajectoryToLinesA;
+    instance TrajectoryToLines<10,9> trajectoryToLinesB;
+    instance DualSetCompareMatrix<4,1,9,45> dualSetCompare;
+    instance LineIntersection lineIntersection[m2];
+    instance FirstLineIntersection<9,45> firstLineIntersection;
+	//TODO: filter then get first 
+    instance TimeCutoffFilter<10>(2.0) timeCutoffFilter;
+
+    connect trajectoryA -> trajectoryToLinesA.trajectoryIn;
+    connect trajectoryB -> trajectoryToLinesB.trajectoryIn;
+
+    connect lineIntersection[:].intersects -> firstLineIntersection.collisionIn[:];
+    connect lineIntersection[:].point -> firstLineIntersection.pointsIn[:];
+
+    connect firstLineIntersection.collisionOut -> timeCutoffFilter.collisionIn;
+    connect firstLineIntersection.lIndexA -> timeCutoffFilter.indexInA;
+    connect firstLineIntersection.lIndexB -> timeCutoffFilter.indexInB;
+    connect firstLineIntersection.pos -> timeCutoffFilter.colPosIn;
+    connect trajectoryA -> timeCutoffFilter.trajectoryInA;
+    connect trajectoryB -> timeCutoffFilter.trajectoryInB;
+    connect cutoffTime -> timeCutoffFilter.timeCutoff;
+    connect timeCutoffFilter.collisionOut -> collision;
+    connect timeCutoffFilter.aIsFasterOut -> aIsFasterOut;
+
+    connect trajectoryToLinesA.lineOut[:] -> dualSetCompare.setInA[:];
+    connect trajectoryToLinesB.lineOut[:] -> dualSetCompare.setInB[:];
+
+    connect dualSetCompare.outA[:] -> lineIntersection[:].lineA;
+    connect dualSetCompare.outB[:] -> lineIntersection[:].lineB;
+}

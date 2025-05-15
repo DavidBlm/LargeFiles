@@ -1,0 +1,16 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component BrakeAssistant {
+              port
+                in (0:100) brakeForce_pedal_pc,
+                out (0:100) brakeForceBoosted_pc;
+instance Brake_Booster brake_Booster;
+instance VERSION_INFO_2 vERSION_INFO_2;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.brakeForceBoosted_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brakeForceBoosted_pcOut1*/
+              connect brake_Booster.brakeForceBoosted_pc -> brakeForceBoosted_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brakeForce_pedal_pcIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.brakeForce_pedal_pcIn1*/
+              connect brakeForce_pedal_pc -> brake_Booster.brakeForce_pedal_pc;
+
+            }
+

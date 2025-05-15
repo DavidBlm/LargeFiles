@@ -1,0 +1,24 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component V_LimSetValueMinus {
+                    port
+                      out Number out1,
+                      out Number out2,
+                      in Number v_LimiterSetValue;
+instance Parameter_1 parameter_1;
+instance Sum_4 sum_4;
+instance VERSION_INFO_20 vERSION_INFO_20;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.sum.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.out1*/
+                    connect sum_4.out1 -> out1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.sum.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.out2*/
+                    connect sum_4.out1 -> out2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.parameter.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.sum.in2*/
+                    connect parameter_1.out1 -> sum_4.in2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.v_LimiterSetValueIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValueMinus.sum.in1*/
+                    connect v_LimiterSetValue -> sum_4.in1;
+
+                  }
+

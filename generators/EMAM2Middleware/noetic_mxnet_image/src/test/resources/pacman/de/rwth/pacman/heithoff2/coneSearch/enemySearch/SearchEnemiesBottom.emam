@@ -1,0 +1,46 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch.enemySearch;
+
+component SearchEnemiesBottom {
+    ports
+      in Q(-1m: 19m) currentX,
+      in Q(0m: 22m) currentY,
+      in Q(-1m: 19m) ghostX[4],
+      in Q(0m: 22m) ghostY[4],
+      in Z ghostDirection[4],
+      in B ghostEatable[4],
+      in Z ghostNormalWeight,
+      in Z ghostFacingPacManWight,
+      in Z ghostEatableWeight,
+      
+      out Z val;
+      
+    implementation Math {
+        val = 0;
+        for i = 1:8
+            Z indexY = round(currentY) + i;
+            if indexY < 22
+                for j = (-i):i
+                    Z indexX = round(currentX) + j;
+                    if (indexX > 0) && (indexX < 19)
+                        for i = 1:4
+                            Z xG = round(ghostX(i));
+                            Z yG = round(ghostY(i));
+                            if (abs (xG - indexX) < 0.1) && (abs(yG - indexY) < 0.1)
+                                Z multiplyer = ghostNormalWeight;
+                                if ghostDirection(i) == 0 // Facing towards PacMan
+                                    multiplyer = ghostFacingPacManWight;
+                                end
+                                if ghostEatable(i)
+                                    multiplyer = ghostEatableWeight;
+                                end
+                                Q dist = sqrt(i*i + j*j);
+                                val = val + (multiplyer/dist);
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    }
+}

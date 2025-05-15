@@ -1,0 +1,135 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior2;
+
+component FollowTrajectory {
+  port
+    in  B                                        isDriveToFirstPosition,
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionX,
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionY,
+    in  Z (0 : 100)                              trimmedTrajectoryLength,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryX,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryY,
+
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionX,
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionY,
+    out Q (-oo m : 0.01 m : oo m)                signedDistanceToTrajectory,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        minVelocity,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        maxVelocity,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        distance;
+
+  implementation Math {
+    // change to params later
+    static Q BEZIER_COEF = 0.1;
+    static Q TURN_ANGLE_THRESHOLD = 10.0 * M_PI / 180.0; // 10 degrees
+    static Q EPSILON = 0.00001;
+    static Q REACHED_POSITION_THRESHOLD = 5.0;
+    desiredDirectionX = 0.0;
+    desiredDirectionY = 0.0;
+    signedDistanceToTrajectory = 0.0;
+    minVelocity = 0.0;
+    maxVelocity = 0.0;
+    distance = 0.0;
+    if (isDriveToFirstPosition)
+      Q doNothing;
+    elseif (trimmedTrajectoryLength >= 2)
+      maxVelocity = 17.0;
+      // SIGNED DISTANCE
+      Q p1x = trimmedTrajectoryX(1,1);
+      Q p1y = trimmedTrajectoryY(1,1);
+      Q p2x = trimmedTrajectoryX(1,2);
+      Q p2y = trimmedTrajectoryY(1,2);
+      Q v12x = p2x - p1x;
+      Q v12y = p2y - p1y;
+      Q v12_sqr_norm = v12x*v12x + v12y*v12y;
+      Q v12_norm = sqrt(v12_sqr_norm);
+      if (v12_norm > EPSILON)
+        // https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Line_defined_by_two_points
+        signedDistanceToTrajectory = -(v12y*currentPositionX - v12x*currentPositionY + p2x*p1y - p1x*p2y) / v12_norm;
+      end
+      // DESIRED DIRECTION
+      Q nextX = currentPositionX;
+      Q nextY = currentPositionY;
+      if (trimmedTrajectoryLength >= 3)
+        Q interp_p1x = trimmedTrajectoryX(1,1);
+        Q interp_p1y = trimmedTrajectoryY(1,1);
+        Q interp_p2x = trimmedTrajectoryX(1,2);
+        Q interp_p2y = trimmedTrajectoryY(1,2);
+        Q interp_p3x = trimmedTrajectoryX(1,3);
+        Q interp_p3y = trimmedTrajectoryY(1,3);
+        // Bezier interpolation
+        Q t = BEZIER_COEF; // higher value => closer to p3
+        Q a = 1.0 - t;
+        Q b = t;
+        Q k1 = a * a;
+        Q k2 = 2 * a * b;
+        Q k3 = b * b;
+        nextX = k1 * interp_p1x + k2 * interp_p2x + k3 * interp_p3x;
+        nextY = k1 * interp_p1y + k2 * interp_p2y + k3 * interp_p3y;
+        Q dist_to_next_sqr = (nextX-currentPositionX)*(nextX-currentPositionX) + (nextY-currentPositionY)*(nextY-currentPositionY);
+        Q dist_to_next = sqrt(dist_to_next_sqr);
+        if (dist_to_next <= REACHED_POSITION_THRESHOLD)
+          // interpolated point is too close, another point needs to be found
+          Q is_go_on_1 = 1;
+          for j = 2:trimmedTrajectoryLength
+            if (is_go_on_1)
+              Q point_x = trimmedTrajectoryX(1,j);
+              Q point_y = trimmedTrajectoryY(1,j);
+              Q dist_to_point_sqr = (point_x-currentPositionX)*(point_x-currentPositionX) + (point_y-currentPositionY)*(point_y-currentPositionY);
+              Q dist_to_point = sqrt(dist_to_point_sqr);
+              if (dist_to_point > REACHED_POSITION_THRESHOLD)
+                nextX = point_x;
+                nextY = point_y;
+                is_go_on_1 = 0;
+              end
+            end
+          end
+          if (is_go_on_1)
+            // all points are too close
+            nextX = trimmedTrajectoryX(1,trimmedTrajectoryLength);
+            nextY = trimmedTrajectoryY(1,trimmedTrajectoryLength);
+          end
+        end
+      else
+        // only 2 points left
+        nextX = p2x;
+        nextY = p2y;
+      end
+      desiredDirectionX = nextX - currentPositionX;
+      desiredDirectionY = nextY - currentPositionY;
+      // DISTANCE
+      Q dist = sqrt( (p2x-p1x)*(p2x-p1x) + (p2y-p1y)*(p2y-p1y) );
+      if (trimmedTrajectoryLength >= 3)
+        minVelocity = 3.0;
+        Q is_go_on_2 = 1;
+        Q lastIndex = trimmedTrajectoryLength - 2;
+        for i = 1:lastIndex
+          if (is_go_on_2)
+            Q pt1x = trimmedTrajectoryX(1,i);
+            Q pt1y = trimmedTrajectoryY(1,i);
+            Q pt2x = trimmedTrajectoryX(1,i+1);
+            Q pt2y = trimmedTrajectoryY(1,i+1);
+            Q pt3x = trimmedTrajectoryX(1,i+2);
+            Q pt3y = trimmedTrajectoryY(1,i+2);
+            Q vect1x = pt2x - pt1x;
+            Q vect1y = pt2y - pt1y;
+            Q vect2x = pt3x - pt2x;
+            Q vect2y = pt3y - pt2y;
+            Q alpha = 0.0;
+            Q vect1_norm = sqrt( vect1x*vect1x + vect1y*vect1y );
+            Q vect2_norm = sqrt( vect2x*vect2x + vect2y*vect2y );
+            if ((vect1_norm > EPSILON) && (vect2_norm > EPSILON))
+              Q cos_alpha = (vect1x*vect2x + vect1y*vect2y) / vect1_norm / vect2_norm;
+              alpha = acos(cos_alpha);
+            end
+            if (alpha > TURN_ANGLE_THRESHOLD)
+              is_go_on_2 = 0;
+            else
+              dist += vect2_norm;
+            end
+          end
+        end
+      end
+      distance = dist;
+    end
+  }
+}

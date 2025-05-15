@@ -1,0 +1,16 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/cliTest/flattenDBScan/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp","roscpp"],
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters":[
+      {
+        "name":"DBScan",
+        "min_pts":3,
+        "radius":3
+      }
+    ]
+  }
+}

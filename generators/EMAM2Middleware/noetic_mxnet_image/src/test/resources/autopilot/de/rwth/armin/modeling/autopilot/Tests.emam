@@ -1,0 +1,10 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot;
+
+component Tests {
+  port in B in1, out B out1;
+
+  instance de.rwth.armin.modeling.autopilot.common.Tests t1;
+  instance de.rwth.armin.modeling.autopilot.motion.Tests t2;
+  instance de.rwth.armin.modeling.autopilot.behavior.Tests t3;
+}

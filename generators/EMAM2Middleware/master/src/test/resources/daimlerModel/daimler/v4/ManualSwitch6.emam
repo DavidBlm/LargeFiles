@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component ManualSwitch6 {
+      port
+        in Number distance_Object_Start_m,
+        in Number in2,
+        out Number out1;
+    }
+

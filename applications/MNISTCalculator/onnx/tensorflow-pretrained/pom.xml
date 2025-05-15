@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) https://github.com/MontiCore/monticore -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.monticore.lang.monticar.application</groupId>
+    <artifactId>mnist-calculator</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+
+    <properties>
+ 
+        <!-- .. Misc .......................................................... -->
+        <java.version>1.8</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>de.monticore.lang.monticar.utilities</groupId>
+                <artifactId>emadl-maven-plugin</artifactId>
+                <version>0.0.6-SNAPSHOT</version>
+                <configuration>
+                    <training>
+                        <backend>TENSORFLOW</backend>
+                        <modelToTrain>cNNCalculator.Connector</modelToTrain>
+                        <pathToProject>src/emadl/models</pathToProject>
+                        <pathToTest>src/emadl/models</pathToTest>
+                        <pathToPython>/usr/bin/python3</pathToPython>
+                    </training>
+                    <pretrainedModelToStore>
+                        <path>model/cNNCalculator.Network</path>
+                        <artifactId>mnistcalc-tensorflow</artifactId>
+                        <groupId>de.monticore.lang.monticar.pretrained</groupId>
+                        <version>1</version>
+                    </pretrainedModelToStore>
+                </configuration>
+           </plugin>
+
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://git.rwth-aachen.de/api/v4/projects/55417/packages/maven</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://git.rwth-aachen.de/api/v4/projects/55417/packages/maven</url>
+        </repository>
+        <snapshotRepository>
+            <id>gitlab-maven</id>
+            <url>https://git.rwth-aachen.de/api/v4/projects/55417/packages/maven</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+</project>

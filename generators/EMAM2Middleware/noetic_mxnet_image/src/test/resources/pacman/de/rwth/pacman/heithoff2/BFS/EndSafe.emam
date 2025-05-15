@@ -1,0 +1,48 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS;
+
+// check whether the surrounding tiles are safe
+
+component EndSafe {
+    ports
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in Q(0m: 20m) ghostX[4],
+      in Q(1m: 23m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      in B oldSafe,
+      in B oldSafeFound,
+      in Z oldDirection,
+      
+      out B safe;
+      
+    implementation Math {
+        Z^{1,4} xOffSet = [0,0,-1,1];
+        Z^{1,4} yOffSet = [-1,1,0,0];
+        
+        safe = 1;
+        if oldSafe
+            for i = 1:4
+                if (ghostEatable(i) == 0)
+                    Z xG = round(ghostX(i));
+                    Z yG = round(ghostY(i));
+                    Z xC = currentX;
+                    Z yC = currentY;
+                    if (xG == xC) && (yG == yC)
+                        safe = 0;
+                    end
+                    for j = 0:3
+                        xC = currentX + xOffSet(0,j);
+                        yC = currentY + yOffSet(0,j);
+                        if (xG == xC) && (yG == yC) && (ghostEatable(i) == 0) && (ghostDirection(i) != j)
+                            safe = 0;
+                        end
+                    end
+                end
+            end
+        else
+            safe = 0;
+        end
+    }
+}

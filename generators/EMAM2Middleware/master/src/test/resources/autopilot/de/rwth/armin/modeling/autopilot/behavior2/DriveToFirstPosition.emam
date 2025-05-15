@@ -1,0 +1,39 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior2;
+
+component DriveToFirstPosition {
+  port
+    in  B                                        isDriveToFirstPosition,
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionX,
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionY,
+
+    in  Z (0 : 100)                              trimmedTrajectoryLength,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryX,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryY,
+
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionX,
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionY,
+    out Q (-oo m : 0.01 m : oo m)                signedDistanceToTrajectory,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        minVelocity,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        maxVelocity,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        distance;
+
+  implementation Math {
+    desiredDirectionX = 0.0;
+    desiredDirectionY = 0.0;
+    signedDistanceToTrajectory = 0.0;
+    minVelocity = 0.0;
+    maxVelocity = 0.0;
+    distance = 0.0;
+    if (isDriveToFirstPosition) && (trimmedTrajectoryLength >= 1)
+      maxVelocity = 17.0;
+      desiredDirectionX = trimmedTrajectoryX(1,1) - currentPositionX;
+      desiredDirectionY = trimmedTrajectoryY(1,1) - currentPositionY;
+      Q sqr_dist = desiredDirectionX * desiredDirectionX + desiredDirectionY * desiredDirectionY;
+      distance = sqrt( sqr_dist );
+      if (trimmedTrajectoryLength >= 2)
+        minVelocity = 3.0;
+      end
+    end
+  }
+}

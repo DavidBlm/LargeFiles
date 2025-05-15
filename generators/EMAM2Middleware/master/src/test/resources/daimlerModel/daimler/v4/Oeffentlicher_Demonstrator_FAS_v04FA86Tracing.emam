@@ -1,0 +1,308 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA86.
+  component Oeffentlicher_Demonstrator_FAS_v04FA86Tracing {
+    component DEMO_FAS_1 {
+      port
+        out Double acceleration_pc,
+        in Double v_Vehicle_kmh;
+
+      component DEMO_FAS_2 {
+        port
+          out Double _Acceleration_pc,
+          in Double _V_Vehicle_kmh;
+
+        component Subsystem {
+          port
+            out Double _Acceleration_pc,
+            in Double _V_Vehicle_kmh;
+
+          component DEMO_FAS_3 {
+            port
+              in Double _Distance_Object_m,
+              out Boolean _Opti_warn_b,
+              in Double _V_Vehicle_kmh,
+              out Double _Acceleration_pc,
+              out Boolean _Acusti_warn_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double distance_Object_m2,
+                out Boolean opti_warn_b,
+                in Double v_Vehicle_kmh1,
+                out Boolean acusti_warn_b;
+
+              component Distancewarner {
+                port
+                  in Double distance_Object_m,
+                  out Boolean opti_warn_b,
+                  in Double v_Vehicle_ms,
+                  out Boolean acusti_warn_b;
+
+                component Distancewarner_Function {
+                  port
+                    in Double distance_Object_m,
+                    out Boolean acusti_warn_b,
+                    out Boolean opti_warn_b,
+                    in Double v_Vehicle_ms;
+
+                  component RelOp2_1 {
+                    port
+                      in Double in1,
+                      out Boolean acusti_warn_b,
+                      in Double in2;
+
+                  }
+instance RelOp2_1 relOp2_1;
+                  component RelOp_2 {
+                    port
+                      in Double in1,
+                      out Boolean opti_warn_bOut1,
+                      in Double opti_warn_b;
+
+                  }
+instance RelOp_2 relOp_2;
+                  component Mul1_1 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance Mul1_1 mul1_1;
+                  component Mul_1 {
+                    port
+                      in Double in1,
+                      out Double opti_warn_b;
+
+                  }
+instance Mul_1 mul_1;
+  connect mul_1.opti_warn_b -> relOp_2.opti_warn_b;
+  connect v_Vehicle_ms -> mul_1.in1;
+  connect mul1_1.out1 -> relOp2_1.in2;
+  connect distance_Object_m -> relOp2_1.in1;
+  connect relOp2_1.acusti_warn_b -> acusti_warn_b;
+  connect distance_Object_m -> relOp_2.in1;
+  connect relOp_2.opti_warn_bOut1 -> opti_warn_b;
+  connect v_Vehicle_ms -> mul1_1.in1;
+                }
+instance Distancewarner_Function distancewarner_Function;
+  connect distance_Object_m ->   distancewarner_Function.distance_Object_m;
+  connect distancewarner_Function.acusti_warn_b -> acusti_warn_b;
+  connect distancewarner_Function.opti_warn_b -> opti_warn_b;
+  connect v_Vehicle_ms -> distancewarner_Function.v_Vehicle_ms;
+              }
+instance Distancewarner distancewarner;
+              component FAS_Input {
+                port
+                  in Double distance_Object_m5,
+                  out Double distance_Object_m,
+                  in Double v_Vehicle_kmh1,
+                  out Double v_Vehicle_ms;
+
+                component Div_2 {
+                  port
+                    in Double v_Vehicle_kmh,
+                    out Double v_Vehicle_ms;
+
+                }
+instance Div_2 div_2;
+  connect v_Vehicle_kmh1 -> div_2.v_Vehicle_kmh;
+  connect div_2.v_Vehicle_ms -> v_Vehicle_ms;
+  connect distance_Object_m5 -> distance_Object_m;
+              }
+instance FAS_Input fAS_Input;
+              component LogOp_1 {
+                port
+                  in Boolean acusti_warn_b,
+                  out Boolean acusti_warn_bOut1;
+
+              }
+instance LogOp_1 logOp_1;
+  connect fAS_Input.distance_Object_m -> distancewarner.distance_Object_m;
+  connect fAS_Input.v_Vehicle_ms -> distancewarner.v_Vehicle_ms;
+  connect distance_Object_m2 -> fAS_Input.distance_Object_m5;
+  connect v_Vehicle_kmh1 -> fAS_Input.v_Vehicle_kmh1;
+  connect distancewarner.acusti_warn_b -> logOp_1.acusti_warn_b;
+  connect logOp_1.acusti_warn_bOut1 -> acusti_warn_b;
+  connect distancewarner.opti_warn_b -> opti_warn_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double distance_Object_mIn13,
+                out Double distance_Object_m2,
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh1;
+
+  connect distance_Object_mIn13 ->   distance_Object_m2;
+  connect v_Vehicle_b -> v_Vehicle_kmh1;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean opti_warn_b,
+                out Boolean opti_warn_bOut7,
+                in Boolean acusti_warn_b,
+                out Boolean acusti_warn_bOut8;
+
+  connect opti_warn_b -> opti_warn_bOut7;
+  connect acusti_warn_b -> acusti_warn_bOut8;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.distance_Object_m2 ->   dEMO_FAS_Funktion.distance_Object_m2;
+  connect dEMO_FAS_Input.v_Vehicle_kmh1 -> dEMO_FAS_Funktion.v_Vehicle_kmh1;
+  connect dEMO_FAS_Funktion.opti_warn_b -> dEMO_FAS_Output.opti_warn_b;
+  connect dEMO_FAS_Funktion.acusti_warn_b -> dEMO_FAS_Output.acusti_warn_b;
+  connect _Distance_Object_m -> dEMO_FAS_Input.distance_Object_mIn13;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect dEMO_FAS_Output.opti_warn_bOut7 -> _Opti_warn_b;
+  connect dEMO_FAS_Output.acusti_warn_bOut8 -> _Acusti_warn_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+  connect dEMO_FAS_3._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_3._V_Vehicle_kmh;
+        }
+instance Subsystem subsystem;
+  connect subsystem._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> subsystem._V_Vehicle_kmh;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+  connect dEMO_FAS_2._Acceleration_pc -> acceleration_pc;
+  connect v_Vehicle_kmh -> dEMO_FAS_2._V_Vehicle_kmh;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+    component Memory8 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory8 memory8;
+    component Umgebung {
+      port
+        in Double acceleration_pc,
+        out Double v_Vehicle_kmh;
+
+      component Vehicle {
+        port
+          in Double acceleration_pc,
+          out Double v_Vehicle_kmh;
+
+        component SwitchBlock_36 {
+          port
+            in Double elseIn,
+            out Double out1;
+
+        }
+instance SwitchBlock_36 switchBlock_36;
+        component DiscreteTransferFcnwithinitialstates {
+          port
+            in Double in1,
+            out Double out1;
+
+          component DiscreteStateSpace {
+            port
+              in Double in1,
+              out Double out1;
+
+          }
+instance DiscreteStateSpace discreteStateSpace;
+  connect in1 -> discreteStateSpace.in1;
+  connect discreteStateSpace.out1 -> out1;
+        }
+instance DiscreteTransferFcnwithinitialstates discreteTransferFcnwithinitialstates;
+        component Sum1_4 {
+          port
+            in Double v_Vehicle_kmh,
+            out Double out1;
+
+        }
+instance Sum1_4 sum1_4;
+        component Saturation_2 {
+          port
+            in Double in1,
+            out Double v_Vehicle_kmh;
+
+        }
+instance Saturation_2 saturation_2;
+  connect switchBlock_36.out1 -> discreteTransferFcnwithinitialstates.in1;
+  connect acceleration_pc -> switchBlock_36.elseIn;
+  connect discreteTransferFcnwithinitialstates.out1 -> sum1_4.v_Vehicle_kmh;
+  connect sum1_4.out1 -> saturation_2.in1;
+  connect saturation_2.v_Vehicle_kmh -> v_Vehicle_kmh;
+      }
+instance Vehicle vehicle;
+  connect acceleration_pc -> vehicle.acceleration_pc;
+  connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh;
+    }
+instance Umgebung umgebung;
+  connect dEMO_FAS_1.acceleration_pc -> memory8.in1;
+  connect memory8.out1 -> umgebung.acceleration_pc;
+  connect umgebung.v_Vehicle_kmh -> dEMO_FAS_1.v_Vehicle_kmh;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

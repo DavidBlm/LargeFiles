@@ -1,0 +1,38 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+  component SimToRealTime {
+instance Constant_114_value_0 constant_114;
+instance Constant1_30_value_1 constant1_30;
+instance Terminator_5 terminator_5;
+instance Terminator1_1 terminator1_1;
+instance Terminator2 terminator2;
+instance Terminator3 terminator3;
+instance Terminator4 terminator4;
+instance Terminator5 terminator5;
+instance VAPS_TimeConfiguration vAPS_TimeConfiguration;
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.timeConfig_ProducerOut3 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.terminator2.in1*/
+    connect vAPS_TimeConfiguration.timeConfig_Producer -> terminator2.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.tsSimOut4 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.terminator3.in1*/
+    connect vAPS_TimeConfiguration.tsSim -> terminator3.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.tsRTimeOut5 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.terminator4.in1*/
+    connect vAPS_TimeConfiguration.tsRTime -> terminator4.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.tsRTimeEffOut6 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.terminator5.in1*/
+    connect vAPS_TimeConfiguration.tsRTimeEff -> terminator5.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.timeConfig_ConsumerOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.terminator1.in1*/
+    connect vAPS_TimeConfiguration.timeConfig_Consumer -> terminator1_1.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.factor_SimTimeOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.terminator.in1*/
+    connect vAPS_TimeConfiguration.factor_SimTime -> terminator_5.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.maxSpeedIn2*/
+    connect constant1_30.out1 -> vAPS_TimeConfiguration.maxSpeed;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.timeConfigIn1*/
+    connect constant_114.out1 -> vAPS_TimeConfiguration.timeConfig;
+
+  }
+

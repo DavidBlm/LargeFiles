@@ -1,0 +1,20 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.tools;
+
+
+component GetIndexes {
+    ports   //x,y
+    
+        out Z index[5];
+
+    implementation Math {
+        
+        for i = 1:5
+
+            index(i) = i;
+            
+        end
+        
+    }
+    
+}

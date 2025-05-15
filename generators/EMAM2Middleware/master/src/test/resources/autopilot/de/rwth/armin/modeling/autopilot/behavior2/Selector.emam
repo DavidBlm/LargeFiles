@@ -1,0 +1,34 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior2;
+
+component Selector {
+  port
+    in  B                                        isDriveToFirstPosition,
+    in  Q (-oo m : 0.01 m : oo m)                desiredDirectionX1,
+    in  Q (-oo m : 0.01 m : oo m)                desiredDirectionY1,
+    in  Q (-oo m : 0.01 m : oo m)                signedDistanceToTrajectory1,
+    in  Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        desiredVelocity1,
+    in  Q (-oo m : 0.01 m : oo m)                desiredDirectionX2,
+    in  Q (-oo m : 0.01 m : oo m)                desiredDirectionY2,
+    in  Q (-oo m : 0.01 m : oo m)                signedDistanceToTrajectory2,
+    in  Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        desiredVelocity2,
+
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionX,
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionY,
+    out Q (-oo m : 0.01 m : oo m)                signedDistanceToTrajectory,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        desiredVelocity;
+
+  implementation Math {
+    if (isDriveToFirstPosition)
+      desiredDirectionX = desiredDirectionX1;
+      desiredDirectionY = desiredDirectionY1;
+      signedDistanceToTrajectory = signedDistanceToTrajectory1;
+      desiredVelocity = desiredVelocity1;
+    else
+      desiredDirectionX = desiredDirectionX2;
+      desiredDirectionY = desiredDirectionY2;
+      signedDistanceToTrajectory = signedDistanceToTrajectory2;
+      desiredVelocity = desiredVelocity2;
+    end
+  }
+}

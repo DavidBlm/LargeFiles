@@ -1,0 +1,3 @@
+/home/drakeman/mnistcalculator/gluon-cpp/target/build/CMakeFiles/rebuild_cache.dir
+/home/drakeman/mnistcalculator/gluon-cpp/target/build/CMakeFiles/edit_cache.dir
+/home/drakeman/mnistcalculator/gluon-cpp/target/build/CMakeFiles/cNNCalculator_connector.dir

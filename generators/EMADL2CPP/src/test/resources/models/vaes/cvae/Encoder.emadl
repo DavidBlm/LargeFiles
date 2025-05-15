@@ -1,0 +1,38 @@
+package cvae;
+
+component Encoder{
+    ports in Q(0:1)^{1,28,28} data,
+          in Z(0:9)^{1} label,
+          out Q(-oo:oo)^{2} encoding;
+
+    implementation CNN {
+        (
+            data ->
+            Flatten()
+        |
+            label ->
+            OneHot(size=10) ->
+            Flatten()
+        ) ->
+        Concatenate() ->
+        FullyConnected(units=784) ->
+        Relu() ->
+        Reshape(shape=(1,28,28)) ->
+        Convolution(channels=32,kernel=(3,3),stride=(2,2)) ->
+        Relu() ->
+        Convolution(channels=64,kernel=(3,3),stride=(2,2)) ->
+        Relu() ->
+        Flatten() ->
+        FullyConnected(units=16) ->
+        Relu() ->
+        FullyConnected(units=4) ->
+        Split(n=2) ->
+        (
+            [0] /* mean */
+        |
+            [1] /* log squared std */
+        ) ->
+        Reparameterize() ->
+        encoding;
+    }
+}

@@ -1,0 +1,24 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+component PreprocessingNetwork {
+    ports in Z(0:255)^{3, 32, 32} data,
+         out Q(0:1)^{10} softmax;
+
+    implementation CNN {
+        def conv(channels, kernel=1, stride=1){
+            Convolution(kernel=(kernel,kernel),channels=channels) ->
+            Relu() ->
+            Pooling(pool_type="max", kernel=(2,2), stride=(stride,stride))
+        }
+
+        data ->
+        conv(kernel=5, channels=20, stride=2) ->
+        conv(kernel=5, channels=50, stride=2) ->
+        FullyConnected(units=500) ->
+        Relu() ->
+        Dropout() ->
+        FullyConnected(units=10) ->
+        Softmax() ->
+        softmax;
+    }
+}

@@ -1,0 +1,50 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman;
+import de.rwth.pacman.heithoff2.Controller;
+import de.rwth.pacman.structs.Ghost;
+
+// UP    = 0
+// DOWN  = 1
+// LEFT  = 2
+// RIGHT = 3
+
+// Pacman.WALL    = 0;
+// Pacman.BISCUIT = 1;
+// Pacman.EMPTY   = 2;
+// Pacman.BLOCK   = 3;
+// Pacman.PILL    = 4;
+
+component PacManWrapper {
+    ports 
+        in Q(-1m: 19m) ghostX[4],           // x-position of all ghosts, can be -1 and 19 when exiting and reentering the map
+        in Q(0m: 21m) ghostY[4],            // y-position of all ghosts
+        in Z(0 : 1 : 3) ghostDirection[4],  // the directions of all ghosts encoded in the pattern above
+        in B ghostEatable[4],               // ghosts are eatable when pacman collects a coin
+        in B ghostEaten[4],                 // ghosts enter a non-eatable state after this one
+        in Q(-1m: 19m) pacManX,             // x-position of pacman, can be -1 and 19 when exiting and reenting the map
+        in Q(0m: 21m) pacManY,              // y-position of pacman
+        in B pacManEaten,                   
+        in Z(0:oo) pacManLives,
+        in Z(0:oo) pacManScore,
+        in Z^{22,19} map,                   // the map encoded in the pattern above. x raises to the right, y raises to the bottom
+        
+        out Z(0 : 1 : 3) newPacManDirection;
+        
+    //Replace this with your own custom controller
+    instance Controller controller;
+    
+    connect ghostX[:] -> controller.ghostX[:];
+    connect ghostY[:] -> controller.ghostY[:];
+    connect ghostDirection[:] -> controller.ghostDirection[:];
+    connect ghostEatable[:] -> controller.ghostEatable[:];
+    connect ghostEaten[:] -> controller.ghostEaten[:];
+    connect pacManX -> controller.pacManX;
+    connect pacManY -> controller.pacManY;
+    connect pacManEaten -> controller.pacManEaten;
+    connect pacManLives -> controller.pacManLives;
+    connect pacManScore -> controller.pacManScore;
+    connect map -> controller.map;
+    
+    connect controller.newPacManDirection -> newPacManDirection;
+    
+}

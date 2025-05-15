@@ -1,0 +1,35 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component Brake_Booster {
+                port
+                  in (0:100) brakeForce_pedal_pc,
+                  out (0:100) brakeForceBoosted_pc;
+instance Constant_1_value_100 constant_1;
+instance DEMO_FAS_BrakeBooster_Threshold dEMO_FAS_BrakeBooster_Threshold;
+instance RelOp_1_GreaterEquals relOp_1;
+instance SwitchBlock_1 switchBlock_1;
+instance VERSION_INFO_1 vERSION_INFO_1;
+instance Condition_1 condition_1;
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.switchBlock.brakeForceBoosted_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.brakeForceBoosted_pcOut1*/
+                connect switchBlock_1.brakeForceBoosted_pc -> brakeForceBoosted_pc;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.switchBlock.condition*/
+                connect condition_1.out1 -> switchBlock_1.condition;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.relOp.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.condition.in1*/
+                connect relOp_1.out1 -> condition_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.switchBlock.ifIn*/
+                connect constant_1.out1 -> switchBlock_1.ifIn;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.dEMO_FAS_BrakeBooster_Threshold.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.relOp.in2*/
+                connect dEMO_FAS_BrakeBooster_Threshold.out1 -> relOp_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.brakeForce_pedal_pcIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.relOp.in1*/
+                connect brakeForce_pedal_pc -> relOp_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.brakeForce_pedal_pcIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.brakeAssistant.brake_Booster.switchBlock.elseIn*/
+                connect brakeForce_pedal_pc -> switchBlock_1.elseIn;
+
+              }
+

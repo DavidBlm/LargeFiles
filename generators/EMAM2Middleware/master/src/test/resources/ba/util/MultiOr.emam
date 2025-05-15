@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+
+component MultiOr<N1 x = 2>{
+    ports in B boolIn[x],
+          out B boolOut;
+
+    implementation Math{
+        B flag = false;
+        for i = 1:x
+            flag = flag || boolIn(i);
+        end
+        boolOut = flag;
+    }
+}

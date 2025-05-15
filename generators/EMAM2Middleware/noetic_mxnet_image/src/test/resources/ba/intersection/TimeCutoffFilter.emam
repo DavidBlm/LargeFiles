@@ -1,0 +1,48 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.intersection;
+
+component TimeCutoffFilter<N1 m = 10>(adaptable Q timeCutoff){
+    ports in B collisionIn,
+          in Z indexInA,
+          in Z indexInB,
+          in Q^{2,1} colPosIn,
+          in Q^{3,m} trajectoryInA,
+          in Q^{3,m} trajectoryInB,
+          //in Q timeCutoff,
+          out B collisionOut,
+          out B aIsFasterOut;
+
+    implementation Math{
+        if ((collisionIn) && (indexInA >= 1) && (indexInB >= 1) && (indexInA <= m - 1) && (indexInB <= m - 1))
+            //TODO: with norm()?
+            Q dx1 = trajectoryInA(1,indexInA) - trajectoryInA(1,indexInA + 1);
+            Q dy1 = trajectoryInA(2,indexInA) - trajectoryInA(2,indexInA + 1);
+            Q dist1 = sqrt(dx1*dx1 + dy1*dy1);
+
+            Q dx2 = trajectoryInB(1,indexInB) - trajectoryInB(1,indexInB + 1);
+            Q dy2 = trajectoryInB(2,indexInB) - trajectoryInB(2,indexInB + 1);
+            Q dist2 = sqrt(dx2*dx2 + dy2*dy2);
+
+            Q dxp1 = trajectoryInA(1,indexInA) - colPosIn(1,1);
+            Q dyp1 = trajectoryInA(2,indexInA) - colPosIn(2,1);
+            Q distp1 = sqrt(dxp1*dxp1 + dyp1*dyp1);
+
+            Q dxp2 = trajectoryInB(1,indexInB) - colPosIn(1,1);
+            Q dyp2 = trajectoryInB(2,indexInB) - colPosIn(2,1);
+            Q distp2 = sqrt(dxp2*dxp2 + dyp2*dyp2);
+
+            Q time1 = distp1/dist1 * (trajectoryInA(3,indexInA + 1) - trajectoryInA(3,indexInA));
+            Q time2 = distp2/dist2 * (trajectoryInB(3,indexInB + 1) - trajectoryInB(3,indexInB));
+
+            if time1 <= time2
+                aIsFasterOut = true;
+            else
+                aIsFasterOut = false;
+            end
+
+            collisionOut = abs(time1 - time2) < timeCutoff;
+        else
+            collisionOut = false;
+        end
+    }
+}

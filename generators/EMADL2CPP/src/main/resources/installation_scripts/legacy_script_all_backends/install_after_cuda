@@ -1,0 +1,100 @@
+#!/bin/bash
+############################ Part 2/2 ######################################
+# This script should help you to get ready to do machine learning          #
+# at SE at RWTH, installing all backends (mxnet/gluon, tensorflow, caffe2. #
+#         - Jonas Eckhardt & Julian Steinsberger-Dührßen -                 #
+############################################################################
+# It is based both on instrcutions and docker files from the git
+# repos as well as our own work
+
+############################################################################
+# Requirements:                                                            #
+############################################################################
+# -Git set up to work with RWTH Gitlab
+# -Virgin Ubuntu 16.04.(No touching, no other version) and not isntalling the system updates
+# -Time: Installation may need more than one hour. It may prompt you
+#        for your passowrd multiple times
+# -Disable Screensaver: It just saves you some time
+# - > 10GB RAM or a swapfile so you have ram+swap > 10GB
+# - > 60GB disk space
+
+###########################################################################
+# Usage:                                                                  #
+###########################################################################
+# chmod u+x installer_bomb.sh
+# ./installer_bomb.sh 
+# Dont use twice. It will fill your ~/.bashrc with garbage#!/bin/bash
+
+sudo apt install -y --no-install-recommends cuda-command-line-tools-10-0
+
+#Install MXNet
+pip install mxnet --user
+#for cuda support: use mxnet-cu100 --user instead
+
+git clone https://github.com/apache/incubator-mxnet.git mxnet-source
+cd mxnet-source
+git checkout tags/1.4.0
+cd ..
+sudo cp -r mxnet-source/include/mxnet /usr/include/mxnet
+
+#Test mxnet
+git clone git@git.rwth-aachen.de:monticore/EmbeddedMontiArc/applications/mnistcalculator.git
+cd mnistcalculator
+cd mxnet
+./build.sh
+cd ..
+cd ..
+
+
+#Install OpenCV
+git clone https://github.com/opencv/opencv.git
+cd opencv 
+git checkout 3.3.1 
+cd ..
+git clone https://github.com/opencv/opencv_contrib.git
+cd opencv_contrib
+git checkout 3.3.1
+cd ..
+cd opencv
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
+     		      -D INSTALL_C_EXAMPLES=ON \
+      		      -D INSTALL_PYTHON_EXAMPLES=ON \
+      		      -D WITH_TBB=ON \
+      		      -D WITH_V4L=ON \
+      		      -D WITH_QT=ON \
+      		      -D WITH_OPENGL=ON \
+      		      -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+      		      -D BUILD_EXAMPLES=ON ..
+make -j$(nproc)
+sudo make install
+sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
+sudo ldconfig
+
+
+#Install Tensorflow
+pip install --upgrade tensorflow --user
+#for cuda support: pip install --upgrade tensorflow-gpu --user
+ 
+git clone https://github.com/FloopCZ/tensorflow_cc.git
+
+#Install bazel
+sudo wget -P /tmp https://github.com/bazelbuild/bazel/releases/download/0.21.0/bazel-0.21.0-installer-linux-x86_64.sh
+
+sudo chmod +x /tmp/bazel-0.21.0-installer-linux-x86_64.sh
+sudo /tmp/bazel-0.21.0-installer-linux-x86_64.sh
+sudo rm /tmp/bazel-0.21.0-installer-linux-x86_64.sh
+
+sudo apt-get -y clean
+sudo updatedb
+
+cd tensorflow_cc/tensorflow_cc/
+mkdir build
+cd build
+cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
+make
+sudo rm -rf /home/tensorflow_cc/.cache
+make install
+cd ..
+sudo rm -rf build
