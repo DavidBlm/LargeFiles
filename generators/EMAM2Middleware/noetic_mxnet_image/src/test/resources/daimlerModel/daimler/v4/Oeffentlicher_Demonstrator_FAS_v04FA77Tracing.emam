@@ -1,0 +1,166 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA77.
+  component Oeffentlicher_Demonstrator_FAS_v04FA77Tracing {
+    component Umgebung {
+      port
+        out Double v_Sign_kmh;
+
+    }
+instance Umgebung umgebung;
+    component DEMO_FAS_1 {
+      port
+        in Double v_Sign_kmh;
+
+      component DEMO_FAS_2 {
+        port
+          in Double _V_Sign_kmh;
+
+        component Subsystem {
+          port
+            in Double _V_Sign_kmh;
+
+          component DEMO_FAS_3 {
+            port
+              in Double _V_Sign_kmh,
+              out Boolean _Limiter_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double v_Sign_kmh,
+                out Boolean limiter_active_b;
+
+              component Limiter {
+                port
+                  in Double v_Sign_kmh,
+                  out Double vMax_kmh,
+                  out Boolean limiter_active_b;
+
+                component Limiter_Function {
+                  port
+                    in Double v_Sign_kmh,
+                    out Double vMax_kmh;
+
+                  component MinMax_2 {
+                    port
+                      in Double in1,
+                      out Double out1;
+
+                  }
+instance MinMax_2 minMax_2;
+                  component SwitchBlock_12 {
+                    port
+                      in Double ifIn,
+                      out Double vMax_kmh;
+
+                  }
+instance SwitchBlock_12 switchBlock_12;
+  connect minMax_2.out1 -> switchBlock_12.ifIn;
+  connect v_Sign_kmh -> minMax_2.in1;
+  connect switchBlock_12.vMax_kmh -> vMax_kmh;
+                }
+instance Limiter_Function limiter_Function;
+                component SwitchBlock2_5 {
+                  port
+                    in Double ifIn,
+                    out Double out1,
+                    in Double elseIn;
+
+                }
+instance SwitchBlock2_5 switchBlock2_5;
+                component UnitDelay_5 {
+                  port
+                    in Double valueIn,
+                    out Double valueOut;
+
+                }
+instance UnitDelay_5 unitDelay_5;
+  connect switchBlock2_5.out1 -> unitDelay_5.valueIn;
+  connect unitDelay_5.valueOut -> switchBlock2_5.elseIn;
+  connect limiter_Function.vMax_kmh -> switchBlock2_5.ifIn;
+  connect switchBlock2_5.out1 -> vMax_kmh;
+  connect v_Sign_kmh -> limiter_Function.v_Sign_kmh;
+              }
+instance Limiter limiter;
+              component VelocityControl {
+                port
+                  in Double vMax_kmh;
+
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double v_Sign_kmh,
+                  out Double v_Sign_kmh1;
+
+  connect v_Sign_kmh -> v_Sign_kmh1;
+              }
+instance FAS_Input fAS_Input;
+  connect limiter.vMax_kmh -> velocityControl.vMax_kmh;
+  connect fAS_Input.v_Sign_kmh1 -> limiter.v_Sign_kmh;
+  connect v_Sign_kmh -> fAS_Input.v_Sign_kmh;
+  connect limiter.limiter_active_b -> limiter_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double v_Sign_kmhIn9,
+                out Double v_Sign_kmh;
+
+  connect v_Sign_kmhIn9 -> v_Sign_kmh;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean limiter_active_b,
+                out Boolean limiter_active_bOut6;
+
+  connect limiter_active_b -> limiter_active_bOut6  ;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.v_Sign_kmh -> dEMO_FAS_Funktion.v_Sign_kmh;
+  connect dEMO_FAS_Funktion.limiter_active_b -> dEMO_FAS_Output.limiter_active_b;
+  connect _V_Sign_kmh -> dEMO_FAS_Input.v_Sign_kmhIn9;
+  connect dEMO_FAS_Output.limiter_active_bOut6 -> _Limiter_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+  connect _V_Sign_kmh -> dEMO_FAS_3._V_Sign_kmh;
+        }
+instance Subsystem subsystem;
+  connect _V_Sign_kmh -> subsystem._V_Sign_kmh;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+  connect v_Sign_kmh -> dEMO_FAS_2._V_Sign_kmh;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  connect umgebung.v_Sign_kmh -> dEMO_FAS_1.v_Sign_kmh;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

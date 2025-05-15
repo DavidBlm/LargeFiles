@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component TrueBlock1 {
+      port
+        out Number y;
+instance One_3 one_3;
+      /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.trueBlock1.one.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.trueBlock1.yOut1*/
+      connect one_3.out1 -> y;
+
+    }
+

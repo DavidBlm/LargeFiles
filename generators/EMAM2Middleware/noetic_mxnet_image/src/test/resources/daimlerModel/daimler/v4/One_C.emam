@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                        component One_C {
+                          port
+                            out Number out1;
+                        }
+

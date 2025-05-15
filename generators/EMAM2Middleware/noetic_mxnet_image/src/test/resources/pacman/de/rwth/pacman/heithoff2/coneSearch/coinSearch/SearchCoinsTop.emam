@@ -1,0 +1,38 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch.coinSearch;
+
+component SearchCoinsTop {
+    ports
+      in Z^{22,19} map,
+      in Q(-1m: 19m) currentX,
+      in Q(0m: 22m) currentY,
+      in Z buiscuitWeight,
+      in Z coinWeight,
+      
+      out Z val;
+      
+    implementation Math {
+        val = 0;
+        for i = 1:21
+            Z indexY = currentY - i + 1;
+            if indexY > 0
+                for j = (-i):i
+                    Z indexX = round(currentX) + j + 1;
+                    if (indexX > 0) && (indexX < 19)
+                        Z nextTile = map(indexY, indexX);
+                        if (nextTile == 1) || (nextTile == 4)
+                            Z multBy = 1;
+                            if nextTile == 1
+                                multBy = buiscuitWeight;
+                            elseif nextTile == 4
+                                multBy = coinWeight;
+                            end
+                            Q dist = sqrt(i*i + j*j);
+                            val = val + (multBy/(dist*dist));
+                        end
+                    end
+                end
+            end
+        end
+    }
+}

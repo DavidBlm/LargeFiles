@@ -1,0 +1,131 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA35.
+  component Oeffentlicher_Demonstrator_FAS_v04FA35 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _Acceleration_pedal_pc,
+              out Boolean _Limiter_active_b;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double acceleration_pedal_pc,
+                out Boolean limiter_active_b;
+
+              component Limiter {
+                port
+                  in Double acceleration_pedal_pc,
+                  out Boolean limiter_active_b;
+
+                component Limiter_Function {
+                  port
+                    in Double acceleration_pedal_pc,
+                    out Boolean limiter_active_b;
+
+                  component Limiter_Enabled {
+                    port
+                      in Double acceleration_pedal_pc,
+                      out Boolean limiter_active_b;
+
+                    component Condition2_2 {
+                      port
+                        in Double in1,
+                        out Boolean out1;
+
+                    }
+instance Condition2_2 condition2_2;
+                    component SwitchBlock2_2 {
+                      port
+                        in Boolean condition,
+                        out Boolean out1;
+
+                    }
+instance SwitchBlock2_2 switchBlock2_2;
+  connect condition2_2.out1 -> switchBlock2_2.condition;
+  connect switchBlock2_2.out1 -> limiter_active_b;
+  connect acceleration_pedal_pc -> condition2_2.in1;
+                  }
+instance Limiter_Enabled limiter_Enabled;
+  connect acceleration_pedal_pc ->   limiter_Enabled.acceleration_pedal_pc;
+  connect limiter_Enabled.limiter_active_b -> limiter_active_b;
+                }
+instance Limiter_Function limiter_Function;
+                component SwitchBlock3_5 {
+                  port
+                    in Boolean ifIn,
+                    out Boolean out1;
+
+                }
+instance SwitchBlock3_5 switchBlock3_5;
+  connect limiter_Function.limiter_active_b -> switchBlock3_5.ifIn;
+  connect switchBlock3_5.out1 -> limiter_active_b;
+  connect acceleration_pedal_pc -> limiter_Function.acceleration_pedal_pc;
+              }
+instance Limiter limiter;
+              component FAS_Input {
+                port
+                  in Double acceleration_pedal_pc,
+                  out Double acceleration_pedal_pc2;
+
+  connect acceleration_pedal_pc -> acceleration_pedal_pc2;
+              }
+instance FAS_Input fAS_Input;
+  connect fAS_Input.acceleration_pedal_pc2 -> limiter.acceleration_pedal_pc;
+  connect acceleration_pedal_pc ->   fAS_Input.acceleration_pedal_pc;
+  connect limiter.limiter_active_b -> limiter_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double _Acceleration_pedal_pc,
+                out Double acceleration_pedal_pc;
+
+  connect _Acceleration_pedal_pc ->   acceleration_pedal_pc;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean limiter_active_b,
+                out Boolean limiter_active_bOut6;
+
+  connect limiter_active_b -> limiter_active_bOut6  ;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.acceleration_pedal_pc ->   dEMO_FAS_Funktion.acceleration_pedal_pc;
+  connect dEMO_FAS_Funktion.limiter_active_b -> dEMO_FAS_Output.limiter_active_b;
+  connect _Acceleration_pedal_pc ->   dEMO_FAS_Input._Acceleration_pedal_pc;
+  connect dEMO_FAS_Output.limiter_active_bOut6 -> _Limiter_active_b;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

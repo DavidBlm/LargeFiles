@@ -1,0 +1,43 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS.single;
+
+component ControlFlow {
+    ports
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in B searchFinished,
+      in B safeFromSearchFinished,
+      in B safeFoundFromSearchFinished,
+      in Z oldDirection,
+      in B positionIsSafe,
+      in B safeFoundFromNewPosition,
+      in Q(0m: 20m) newXFromNewPosition,
+      in Q(1m: 23m) newYFromNewPosition,
+      in Z newDirectionFromNewPosition,
+      
+      out Q(0m: 20m) newX,
+      out Q(1m: 23m) newY,
+      out B safeFound,
+      out B safe,
+      out Z newDirection;
+    
+    implementation Math {
+        newDirection = oldDirection;
+        newX = currentX;
+        newY = currentY;
+        
+        if searchFinished == 1
+            safe = safeFromSearchFinished;
+            safeFound = safeFoundFromSearchFinished;
+        elseif positionIsSafe == 0
+            safe = 0;
+            safeFound = 0;
+        else
+            safe = 1;
+            safeFound = safeFoundFromNewPosition;
+            newX = newXFromNewPosition;
+            newY = newYFromNewPosition;
+            newDirection = newDirectionFromNewPosition;
+        end
+    }
+}

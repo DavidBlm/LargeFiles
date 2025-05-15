@@ -1,0 +1,23 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+      component VAPSRealTimeTimer {
+        port
+          in Number timeFactor,
+          out Number tsRTimeEffective,
+          out Number tsRTime,
+          out Number tsSim;
+instance Level2MfileSFunction level2MfileSFunction;
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.level2MfileSFunction.tsSimOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.tsSimOut1*/
+        connect level2MfileSFunction.tsSim -> tsSim;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.level2MfileSFunction.tsRTimeOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.tsRTimeOut2*/
+        connect level2MfileSFunction.tsRTime -> tsRTime;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.level2MfileSFunction.tsRTimeEffectiveOut3 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.tsRTimeEffectiveOut3*/
+        connect level2MfileSFunction.tsRTimeEffective -> tsRTimeEffective;
+
+        /* adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.timeFactorIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.simToRealTime.vAPS_TimeConfiguration.vAPSRealTimeTimer.level2MfileSFunction.in1*/
+        connect timeFactor -> level2MfileSFunction.in1;
+
+      }
+

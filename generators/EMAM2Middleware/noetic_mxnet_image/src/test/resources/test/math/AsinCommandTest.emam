@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component AsinCommandTest{
+    implementation Math{
+        Q a = asin(0.5);
+    }
+}

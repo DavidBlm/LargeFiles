@@ -1,0 +1,83 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                component RisingEdgeDetector_2 {
+                  port
+                    in B in1,
+                    out B out1;
+instance CompareToZero_3 compareToZero_3;
+instance CompareToZero1_3 compareToZero1_3;
+instance CompareToZero2_3 compareToZero2_3;
+instance CompareToZero3_3 compareToZero3_3;
+instance CompareToZero4_3 compareToZero4_3;
+instance Constant_31_value_1 constant_31;
+instance Constant1_10_value_0 constant1_10;
+instance LogicalOperator_6_And logicalOperator_6;
+instance LogicalOperator1_4_And logicalOperator1_4;
+instance LogicalOperator2_4_Or logicalOperator2_4;
+instance Memory_3 memory_3;
+instance Memory1_3 memory1_3;
+instance Memory2_3 memory2_3;
+instance SwitchBlock_13 switchBlock_13;
+instance Condition_14 condition_14;
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.out1Out1*/
+                  connect switchBlock_13.out1 -> out1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero4.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator.in3*/
+                  connect compareToZero4_3.y -> logicalOperator_6.in3;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero4.uIn1*/
+                  connect memory2_3.out1 -> compareToZero4_3.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator2.in1*/
+                  connect logicalOperator_6.out1 -> logicalOperator2_4.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.switchBlock.elseIn*/
+                  connect constant1_10.out1 -> switchBlock_13.elseIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory1.in1*/
+                  connect constant_31.out1 -> memory1_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.switchBlock.condition*/
+                  connect condition_14.out1 -> switchBlock_13.condition;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.switchBlock.ifIn*/
+                  connect logicalOperator2_4.out1 -> switchBlock_13.ifIn;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory2.in1*/
+                  connect logicalOperator2_4.out1 -> memory2_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator2.in2*/
+                  connect logicalOperator1_4.out1 -> logicalOperator2_4.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero3.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator1.in2*/
+                  connect compareToZero3_3.y -> logicalOperator1_4.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero2.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator1.in1*/
+                  connect compareToZero2_3.y -> logicalOperator1_4.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator.in2*/
+                  connect compareToZero1_3.y -> logicalOperator_6.in2;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.logicalOperator.in1*/
+                  connect compareToZero_3.y -> logicalOperator_6.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero.uIn1*/
+                  connect memory_3.out1 -> compareToZero_3.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero2.uIn1*/
+                  connect memory_3.out1 -> compareToZero2_3.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory.in1*/
+                  connect in1 -> memory_3.in1;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero1.uIn1*/
+                  connect in1 -> compareToZero1_3.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.compareToZero3.uIn1*/
+                  connect in1 -> compareToZero3_3.u;
+
+                  /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.memory1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.risingEdgeDetector.condition.in1*/
+                  connect memory1_3.out1 -> condition_14.in1;
+
+                }
+

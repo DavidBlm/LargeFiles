@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component Acusti_warn_b {
+      port
+        in B acusti_warn_b;
+    }
+

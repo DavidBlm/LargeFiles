@@ -1,0 +1,7 @@
+{
+  "modelsDir": "src/test/resources/",
+  "outputDir": "target/cliTest/emadlConfigFile",
+  "rootModel": "tests.emadlTests.resNet34",
+  "generators": ["emadlcpp","roscpp"],
+  "emadlBackend": "MXNET"
+}

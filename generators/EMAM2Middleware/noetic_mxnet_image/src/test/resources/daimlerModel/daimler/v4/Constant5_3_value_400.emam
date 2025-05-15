@@ -1,0 +1,7 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+    component Constant5_3_value_400 {
+      port
+        out Number out1;
+    }
+

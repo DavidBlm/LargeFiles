@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                    component LogicalOperator_1_And {
+                      port
+                        out B limiter_active_b,
+                        in B limiter_enabled_b,
+                        in B limiter_enabled_bIn2;
+                    }
+

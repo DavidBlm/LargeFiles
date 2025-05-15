@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component EnsureBoundsForBrakes {
+  port in Q input, out Q output;
+
+  instance EnsureBounds eb;
+
+  connect 0.0 -> eb.lowerBound;
+  connect 3.0 -> eb.upperBound;
+  connect input -> eb.input;
+  connect eb.output -> output;
+}

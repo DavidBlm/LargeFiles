@@ -1,0 +1,26 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component PID {
+  port
+    in Q paramP,
+    in Q paramI,
+    in Q paramD,
+    in Q paramDecayCoefficient,
+    in Q error,
+    out Q control;
+
+  implementation Math {
+    static B isPrevErrorSpecified = 0;
+    static Q prevError = 0.0;
+    static Q acc = 0.0;
+    acc = paramDecayCoefficient * acc + error;
+    Q drv = 0;
+    if isPrevErrorSpecified
+      drv = error - prevError;
+    end
+    control = paramP * error + paramI * acc + paramD * drv;
+    prevError = error;
+    isPrevErrorSpecified = 1;
+  }
+}

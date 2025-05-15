@@ -1,0 +1,70 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior;
+
+component CalculateMotionCommands {
+  port
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionX,
+    in  Q (-oo m : 0.01 m : oo m)                currentPositionY,
+
+    in  Q (-oo m : 0.01 m : oo m)                currentDirectionX,
+    in  Q (-oo m : 0.01 m : oo m)                currentDirectionY,
+
+    in  Z (0 : 100)                              trimmedTrajectoryLength,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryX,
+    in  Q (-oo m : 0.01 m : oo m) ^ {1,100}      trimmedTrajectoryY,
+
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionX,
+    out Q (-oo m : 0.01 m : oo m)                desiredDirectionY,
+    out Q (-oo m : 0.01 m : oo m)                signedDistanceToTrajectory,
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)        desiredVelocity;
+
+  instance IsDriveToFirstPosition                isDriveToFirstPosition;
+  instance DriveToFirstPosition                  driveToFirstPosition;
+  instance Distance2Velocity                     d2v1;
+  instance FollowTrajectory                      followTrajectory;
+  instance Distance2Velocity                     d2v2;
+  instance Selector                              selector;
+
+  connect currentPositionX                                               ->     isDriveToFirstPosition.currentPositionX;
+  connect currentPositionY                                               ->     isDriveToFirstPosition.currentPositionY;
+  connect trimmedTrajectoryLength                                        ->     isDriveToFirstPosition.trimmedTrajectoryLength;
+  connect trimmedTrajectoryX                                             ->     isDriveToFirstPosition.trimmedTrajectoryX;
+  connect trimmedTrajectoryY                                             ->     isDriveToFirstPosition.trimmedTrajectoryY;
+
+  connect isDriveToFirstPosition.result                                  ->     driveToFirstPosition.isDriveToFirstPosition;
+  connect currentPositionX                                               ->     driveToFirstPosition.currentPositionX;
+  connect currentPositionY                                               ->     driveToFirstPosition.currentPositionY;
+  connect trimmedTrajectoryLength                                        ->     driveToFirstPosition.trimmedTrajectoryLength;
+  connect trimmedTrajectoryX                                             ->     driveToFirstPosition.trimmedTrajectoryX;
+  connect trimmedTrajectoryY                                             ->     driveToFirstPosition.trimmedTrajectoryY;
+                                                                         
+  connect driveToFirstPosition.distance                                  ->     d2v1.distance;
+  connect driveToFirstPosition.minVelocity                               ->     d2v1.minVelocity;
+  connect driveToFirstPosition.maxVelocity                               ->     d2v1.maxVelocity;
+                                                                         
+  connect isDriveToFirstPosition.result                                  ->     followTrajectory.isDriveToFirstPosition;
+  connect currentPositionX                                               ->     followTrajectory.currentPositionX;
+  connect currentPositionY                                               ->     followTrajectory.currentPositionY;
+  connect trimmedTrajectoryLength                                        ->     followTrajectory.trimmedTrajectoryLength;
+  connect trimmedTrajectoryX                                             ->     followTrajectory.trimmedTrajectoryX;
+  connect trimmedTrajectoryY                                             ->     followTrajectory.trimmedTrajectoryY;
+
+  connect followTrajectory.distance                                      ->     d2v2.distance;
+  connect followTrajectory.minVelocity                                   ->     d2v2.minVelocity;
+  connect followTrajectory.maxVelocity                                   ->     d2v2.maxVelocity;
+
+  connect isDriveToFirstPosition.result                                  ->     selector.isDriveToFirstPosition;
+  connect driveToFirstPosition.desiredDirectionX                         ->     selector.desiredDirectionX1;
+  connect driveToFirstPosition.desiredDirectionY                         ->     selector.desiredDirectionY1;
+  connect driveToFirstPosition.signedDistanceToTrajectory                ->     selector.signedDistanceToTrajectory1;
+  connect d2v1.velocity                                                  ->     selector.desiredVelocity1;
+  connect followTrajectory.desiredDirectionX                             ->     selector.desiredDirectionX2;
+  connect followTrajectory.desiredDirectionY                             ->     selector.desiredDirectionY2;
+  connect followTrajectory.signedDistanceToTrajectory                    ->     selector.signedDistanceToTrajectory2;
+  connect d2v2.velocity                                                  ->     selector.desiredVelocity2;
+
+  connect selector.desiredDirectionX                                     ->     desiredDirectionX;
+  connect selector.desiredDirectionY                                     ->     desiredDirectionY;
+  connect selector.signedDistanceToTrajectory                            ->     signedDistanceToTrajectory;
+  connect selector.desiredVelocity                                       ->     desiredVelocity;
+}

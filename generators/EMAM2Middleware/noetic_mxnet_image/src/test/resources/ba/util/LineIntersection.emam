@@ -1,0 +1,37 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.util;
+
+component LineIntersection{
+    ports in Q^{4,1} lineA,
+          in Q^{4,1} lineB,
+          out Q^{2,1} point,
+          out B intersects;
+
+    implementation Math{
+		Q Ax = lineA(3,1) - lineA(1,1);
+		Q Ay = lineA(4,1) - lineA(2,1);
+		Q Bx = lineB(1,1) - lineB(3,1);
+		Q By = lineB(2,1) - lineB(4,1);
+		Q Cx = lineA(1,1) - lineB(1,1);
+		Q Cy = lineA(2,1) - lineB(2,1);
+
+        Q n1 = Ay*Bx - Ax*By;
+        Q cutoff = 0.00000001;
+		B res = false;
+
+		//if lines are not parallel(ish)
+        if (abs(n1) > cutoff)
+			Q alpha = (By * Cx - Bx * Cy) / n1;
+			if (alpha >= cutoff) && (alpha <= 1)
+				Q beta = (Ax * Cy - Ay * Cx) / n1;
+				if (beta >= cutoff) && (beta <= 1)
+					res = true;
+				    point(1,1) = lineA(1,1) + alpha * Ax;
+				    point(2,1) = lineA(2,1) + alpha * Ay;
+				end			
+			end
+        end
+
+		intersects = res;
+    }
+}

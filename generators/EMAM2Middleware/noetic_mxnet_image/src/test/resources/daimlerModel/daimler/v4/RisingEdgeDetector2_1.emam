@@ -1,0 +1,83 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                      component RisingEdgeDetector2_1 {
+                        port
+                          in B in1,
+                          out B out1;
+instance CompareToZero_7 compareToZero_7;
+instance CompareToZero1_7 compareToZero1_7;
+instance CompareToZero2_7 compareToZero2_7;
+instance CompareToZero3_7 compareToZero3_7;
+instance CompareToZero4_7 compareToZero4_7;
+instance Constant_59_value_1 constant_59;
+instance Constant1_17_value_0 constant1_17;
+instance LogicalOperator_12_And logicalOperator_12;
+instance LogicalOperator1_10_And logicalOperator1_10;
+instance LogicalOperator2_10_Or logicalOperator2_10;
+instance Memory_7 memory_7;
+instance Memory1_7 memory1_7;
+instance Memory2_7 memory2_7;
+instance SwitchBlock_20 switchBlock_20;
+instance Condition_26 condition_26;
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.out1Out1*/
+                        connect switchBlock_20.out1 -> out1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero4.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator.in3*/
+                        connect compareToZero4_7.y -> logicalOperator_12.in3;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero4.uIn1*/
+                        connect memory2_7.out1 -> compareToZero4_7.u;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator2.in1*/
+                        connect logicalOperator_12.out1 -> logicalOperator2_10.in1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.switchBlock.elseIn*/
+                        connect constant1_17.out1 -> switchBlock_20.elseIn;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory1.in1*/
+                        connect constant_59.out1 -> memory1_7.in1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.switchBlock.condition*/
+                        connect condition_26.out1 -> switchBlock_20.condition;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.switchBlock.ifIn*/
+                        connect logicalOperator2_10.out1 -> switchBlock_20.ifIn;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory2.in1*/
+                        connect logicalOperator2_10.out1 -> memory2_7.in1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator2.in2*/
+                        connect logicalOperator1_10.out1 -> logicalOperator2_10.in2;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero3.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator1.in2*/
+                        connect compareToZero3_7.y -> logicalOperator1_10.in2;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero2.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator1.in1*/
+                        connect compareToZero2_7.y -> logicalOperator1_10.in1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator.in2*/
+                        connect compareToZero1_7.y -> logicalOperator_12.in2;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.logicalOperator.in1*/
+                        connect compareToZero_7.y -> logicalOperator_12.in1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero.uIn1*/
+                        connect memory_7.out1 -> compareToZero_7.u;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero2.uIn1*/
+                        connect memory_7.out1 -> compareToZero2_7.u;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory.in1*/
+                        connect in1 -> memory_7.in1;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero1.uIn1*/
+                        connect in1 -> compareToZero1_7.u;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.in1In1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.compareToZero3.uIn1*/
+                        connect in1 -> compareToZero3_7.u;
+
+                        /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.memory1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_SetValue.cC_ChangeSetValue.cC_ChangeSetValue_Lvl2_Repeater.risingEdgeDetector2.condition.in1*/
+                        connect memory1_7.out1 -> condition_26.in1;
+
+                      }
+

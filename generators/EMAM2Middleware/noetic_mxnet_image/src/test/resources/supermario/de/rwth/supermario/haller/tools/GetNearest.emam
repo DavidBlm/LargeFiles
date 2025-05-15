@@ -1,0 +1,36 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.tools;
+
+
+component GetNearest {
+    ports   //x,y
+    
+        in Z^{5,2} array,
+        
+        out Z nearestDistX,
+        out Z nearestDistY,
+        out Z index;
+
+    implementation Math {
+        
+        //Implement Bubblesort?
+        
+        for i = 1:5
+            //Z ecDist = sqrt(distX * distX + distY * distY); //Euclidic Distance
+        
+            
+            if(array(i,1) > 0 )
+                nearestDistX = array(i,1);
+                nearestDistY = array(i,2);
+                index = i;
+            else
+                nearestDistX = -1;
+                nearestDistY = -1;
+                index = -1;
+            end
+            
+        end
+        
+    }
+    
+}

@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+
+component Combine{
+    ports in Q in1,
+          in Q in2,
+          in Q in3,
+          in Q in4,
+          out Q out1;
+
+    implementation Math{
+        out1 = cos(in1 + in2 + in3 + in4);
+    }
+
+}

@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component DetCommandTest{
+    implementation Math{
+        Q^{1, 3} vec = [1 0 0];
+        Q a = size(vec);
+    }
+}

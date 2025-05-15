@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component LogOp_1_Or {
+              port
+                in B acusti_warn_b,
+                in B acusti_warn_bIn2,
+                out B acusti_warn_bOut1;
+            }
+

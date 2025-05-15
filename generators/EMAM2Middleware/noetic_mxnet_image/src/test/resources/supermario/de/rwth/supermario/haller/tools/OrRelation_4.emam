@@ -1,0 +1,23 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.tools;
+
+component OrRelation_4 {
+    ports
+        in Z input[4],
+        out Z output;
+
+    implementation Math {
+        Z sum = 0;
+        for i = 1:4
+            sum = sum + input(i);
+        end
+        
+        if(sum > 0)
+            output = 1;
+        else
+            output = 0;
+        end
+        
+    }
+    
+}

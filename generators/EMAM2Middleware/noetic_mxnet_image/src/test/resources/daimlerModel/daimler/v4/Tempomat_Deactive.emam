@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component Tempomat_Deactive {
+                    port
+                      out Number v_CC_delta_kmh;
+instance Constant_39_value_0 constant_39;
+instance VERSION_INFO_26 vERSION_INFO_26;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Deactive.constant.v_CC_delta_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.tempomat.tempomat_Function.cC_Enabled.tempomat_Deactive.v_CC_delta_kmhOut1*/
+                    connect constant_39.v_CC_delta_kmh -> v_CC_delta_kmh;
+
+                  }
+

@@ -1,0 +1,230 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+  component Umgebung {
+    port
+      in (0:100) acceleration_pc,
+      out (0:100) acceleration_pedal_pc,
+      in B acusti_warn_b,
+      in (0:100) brakeForce_pc,
+      out (0:100) brakeForce_pedal_pc,
+      in B cC_active_b,
+      in (0 km/h: 1 km/h: 250 km/h) cCSetValue_kmh,
+      out B cruiseControl_b,
+      out (0:3) distance_stat,
+      out (0:2) leverDown_stat,
+      out (0:2) leverUp_stat,
+      in B limiter_active_b,
+      out B limiter_b,
+      in (0 km/h: 1 km/h: 250 km/h) limiterSetValue_kmh,
+      in B opti_warn_b,
+      out B parkingBrake_b,
+      out B sign_b,
+      out (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+      out (5 km/h: 1 km/h: 130 km/h) v_Sign_kmh,
+      out (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Acusti_warn_b acusti_warn_b;
+instance CC_active_b cC_active_b;
+instance Limiter_active_b limiter_active_b;
+instance Opti_warn_b opti_warn_b;
+instance V_Vehicle_kmh v_Vehicle_kmh;
+instance CCSetValue cCSetValue;
+instance Constant_115_value_1 constant_115;
+instance Constant1_33_value_1 constant1_33;
+instance Constant10_3_value_1 constant10_3;
+instance Constant11_3_value_2 constant11_3;
+instance Constant12_3_value_1 constant12_3;
+instance Constant2_8_value_1 constant2_8;
+instance Constant3_6_value_1 constant3_6;
+instance Constant4_5_value_1 constant4_5;
+instance Constant5_3_value_400 constant5_3;
+instance Constant6_2_value_1 constant6_2;
+instance Constant7_2_value_1 constant7_2;
+instance Constant8_value_0 constant8;
+instance Constant9_value_0 constant9;
+instance DataTypeConversion dataTypeConversion;
+instance Distance_Object_m distance_Object_m;
+instance FalseBlock_4 falseBlock_4;
+instance FalseBlock1_2 falseBlock1_2;
+instance FalseBlock2_2 falseBlock2_2;
+instance FalseBlock5 falseBlock5;
+instance Lever_Level lever_Level;
+instance LimiterSetValue limiterSetValue;
+instance ManualSwitch manualSwitch;
+instance ManualSwitch1 manualSwitch1;
+instance ManualSwitch2 manualSwitch2;
+instance ManualSwitch5 manualSwitch5;
+instance ManualSwitch6 manualSwitch6;
+instance ManualSwitch7 manualSwitch7;
+instance ManualSwitch8 manualSwitch8;
+instance Mul_4 mul_4;
+instance Mul1_4 mul1_4;
+instance Object object;
+instance SliderGain_1 sliderGain_1;
+instance SliderGain1 sliderGain1;
+instance SliderGain2 sliderGain2;
+instance SliderGain3 sliderGain3;
+instance SliderGain4 sliderGain4;
+instance SliderGain5 sliderGain5;
+instance TrueBlock_2 trueBlock_2;
+instance TrueBlock1 trueBlock1;
+instance TrueBlock2 trueBlock2;
+instance TrueBlock5 trueBlock5;
+instance Vehicle vehicle;
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.v_Vehicle_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Vehicle_kmh*/
+    connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch.parkingBrake_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.parkingBrake_b*/
+    connect manualSwitch.parkingBrake_b -> parkingBrake_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.brakeForce_pedal_pc*/
+    connect sliderGain1.y -> brakeForce_pedal_pc;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acceleration_pedal_pc*/
+    connect sliderGain_1.y -> acceleration_pedal_pc;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch2.cruiseControl_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cruiseControl_b*/
+    connect manualSwitch2.cruiseControl_b -> cruiseControl_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch5.limiter_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiter_b*/
+    connect manualSwitch5.limiter_b -> limiter_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.mul.leverUp_statOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.leverUp_stat*/
+    connect mul_4.leverUp_stat -> leverUp_stat;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.mul1.leverDown_statOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.leverDown_stat*/
+    connect mul1_4.leverDown_stat -> leverDown_stat;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain2.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Sign_kmh*/
+    connect sliderGain2.y -> v_Sign_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch1.sign_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sign_b*/
+    connect manualSwitch1.sign_b -> sign_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.dataTypeConversion.distance_statOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.distance_stat*/
+    connect dataTypeConversion.distance_statOut1 -> distance_stat;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.v_Obj_rel_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Obj_rel_kmh*/
+    connect object.v_Obj_rel_kmh -> v_Obj_rel_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acusti_warn_b -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acusti_warn_b.acusti_warn_bIn1*/
+    connect acusti_warn_b -> acusti_warn_b.acusti_warn_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.opti_warn_b -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.opti_warn_b.opti_warn_bIn1*/
+    connect opti_warn_b -> opti_warn_b.opti_warn_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiter_active_b -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiter_active_b.limiter_active_bIn1*/
+    connect limiter_active_b -> limiter_active_b.limiter_active_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiterSetValue_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.limiterSetValue.limiterSetValue_kmhIn1*/
+    connect limiterSetValue_kmh -> limiterSetValue.limiterSetValue_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cCSetValue_kmh -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cCSetValue.cCSetValue_kmhIn1*/
+    connect cCSetValue_kmh -> cCSetValue.cCSetValue_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cC_active_b -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.cC_active_b.cC_active_bIn1*/
+    connect cC_active_b -> cC_active_b.cC_active_b;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.brakeForce_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.brakeForce_pc*/
+    connect brakeForce_pc -> vehicle.brakeForce_pc;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.acceleration_pc -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.acceleration_pc*/
+    connect acceleration_pc -> vehicle.acceleration_pc;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant12.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain5.uIn1*/
+    connect constant12_3.out1 -> sliderGain5.u;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain5.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.dataTypeConversion.distance_statIn1*/
+    connect sliderGain5.y -> dataTypeConversion.distance_stat;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch8.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.mul1.in1*/
+    connect manualSwitch8.out1 -> mul1_4.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.lever_Level.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.mul1.in2*/
+    connect lever_Level.out1 -> mul1_4.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.lever_Level.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.mul.in2*/
+    connect lever_Level.out1 -> mul_4.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant11.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.lever_Level.in2*/
+    connect constant11_3.out1 -> lever_Level.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant10.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.lever_Level.in1*/
+    connect constant10_3.out1 -> lever_Level.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch7.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.mul.in1*/
+    connect manualSwitch7.out1 -> mul_4.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant9.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch8.in2*/
+    connect constant9.out1 -> manualSwitch8.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant8.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch7.in2*/
+    connect constant8.out1 -> manualSwitch7.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant7.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch8.in1*/
+    connect constant7_2.out1 -> manualSwitch8.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch7.in1*/
+    connect constant6_2.out1 -> manualSwitch7.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.distance_Object_mOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.distance_Object_m.distance_Object_mIn1*/
+    connect object.distance_Object_m -> distance_Object_m.distance_Object_m;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch6.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.distance_Object_Start_mIn2*/
+    connect manualSwitch6.out1 -> object.distance_Object_Start_m;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant5.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch6.in2*/
+    connect constant5_3.out1 -> manualSwitch6.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain4.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch6.distance_Object_Start_mIn1*/
+    connect sliderGain4.y -> manualSwitch6.distance_Object_Start_m;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant4.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain4.uIn1*/
+    connect constant4_5.out1 -> sliderGain4.u;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain3.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.v_Object_kmhIn1*/
+    connect sliderGain3.y -> object.v_Object_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant3.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain3.uIn1*/
+    connect constant3_6.out1 -> sliderGain3.u;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant2.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain2.uIn1*/
+    connect constant2_8.out1 -> sliderGain2.u;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.falseBlock1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch1.in2*/
+    connect falseBlock1_2.y -> manualSwitch1.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.trueBlock1.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch1.in1*/
+    connect trueBlock1.y -> manualSwitch1.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain1.uIn1*/
+    connect constant1_33.out1 -> sliderGain1.u;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.sliderGain.uIn1*/
+    connect constant_115.out1 -> sliderGain_1.u;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.v_Vehicle_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.v_Vehicle_kmh.v_Vehicle_kmhIn1*/
+    connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh.v_Vehicle_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.vehicle.v_Vehicle_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.object.v_Vehicle_kmhIn3*/
+    connect vehicle.v_Vehicle_kmh -> object.v_Vehicle_kmh;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.falseBlock5.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch5.in2*/
+    connect falseBlock5.y -> manualSwitch5.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.trueBlock5.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch5.in1*/
+    connect trueBlock5.y -> manualSwitch5.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.falseBlock2.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch2.in2*/
+    connect falseBlock2_2.y -> manualSwitch2.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.trueBlock2.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch2.in1*/
+    connect trueBlock2.y -> manualSwitch2.in1;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.falseBlock.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch.in2*/
+    connect falseBlock_4.y -> manualSwitch.in2;
+
+    /* adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.trueBlock.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.umgebung.manualSwitch.in1*/
+    connect trueBlock_2.y -> manualSwitch.in1;
+
+  }
+

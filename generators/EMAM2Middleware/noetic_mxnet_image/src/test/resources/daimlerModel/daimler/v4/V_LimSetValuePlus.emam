@@ -1,0 +1,24 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component V_LimSetValuePlus {
+                    port
+                      out Number out1,
+                      out Number out2,
+                      in Number v_LimiterSetValue;
+instance Parameter_2 parameter_2;
+instance Sum_5 sum_5;
+instance VERSION_INFO_21 vERSION_INFO_21;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.sum.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.out1*/
+                    connect sum_5.out1 -> out1;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.sum.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.out2*/
+                    connect sum_5.out1 -> out2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.parameter.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.sum.in2*/
+                    connect parameter_2.out1 -> sum_5.in2;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.v_LimiterSetValueIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_SetValue.v_LimSetValuePlus.sum.in1*/
+                    connect v_LimiterSetValue -> sum_5.in1;
+
+                  }
+

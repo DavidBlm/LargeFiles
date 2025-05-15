@@ -1,0 +1,30 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman;
+
+import de.rwth.pacman.basicLibrary.Fallback;
+
+// UP    = 0
+// DOWN  = 1
+// LEFT  = 2
+// RIGHT = 3
+
+component PacManControllerSimple {
+  ports
+      in Q(0m: 18m) ghostX[4],
+      in Q(0m: 21m) ghostY[4],
+      in Z(0 : 1 : 3) ghostDirection[4],
+      in B ghostEatable[4],
+      in B ghostEaten[4],
+      in Q(0m: 18m) pacManX,
+      in Q(0m: 21m) pacManY,
+      in B pacManEaten,
+      in Z(1:oo) pacManLives,
+      in Z(0:oo) pacManScore,
+      in Z^{22,19} map,
+      
+      out Z(0 : 1 : 3) newPacManDirection;
+        
+  instance Fallback fallback;
+      
+  connect fallback.out1 -> newPacManDirection;
+}

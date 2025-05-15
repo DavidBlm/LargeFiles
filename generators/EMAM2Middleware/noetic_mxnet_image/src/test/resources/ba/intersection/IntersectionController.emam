@@ -1,0 +1,26 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.intersection;
+import ba.util.SingleSetCompareMatrix;
+//TODO: x = (n-1)n/2
+//TODO: m1 = m - 1, m2 = m1(m1+1)/2
+component IntersectionController<N1 n = 2,N1 x = 1,N1 m = 10,N1 m1 = 9,N1 m2 = 45>{
+    ports in Q^{3,m} trajectoryIn[n],
+          in Q(0s : 10s) cutoffTime,
+          in B isActive,
+          out B stop[n];
+
+    instance SingleSetCompareMatrix<3,10,2,1> singleSetCompare;
+    instance TrajectoryCollision<10,9,45> trajectoryCollision[x];
+    instance CollisionToStop<2,1> collisionToStop;
+
+    connect trajectoryIn[:] -> singleSetCompare.setIn[:];
+    connect singleSetCompare.outA[:] -> trajectoryCollision[:].trajectoryA;
+    connect singleSetCompare.outB[:] -> trajectoryCollision[:].trajectoryB;
+
+    connect cutoffTime -> trajectoryCollision[:].cutoffTime;
+    connect trajectoryCollision[:].collision -> collisionToStop.collisionIn[:];
+    connect trajectoryCollision[:].aIsFasterOut -> collisionToStop.aIsFasterIn[:];
+
+    connect isActive -> collisionToStop.active;
+    connect collisionToStop.stopOut[:] ->  stop[:];
+}

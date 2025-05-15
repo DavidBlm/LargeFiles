@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+import ba.Delay;
+component DelayInstance{
+    ports in Q(-oo:oo) in1,
+          out Q(-oo:oo) out1;
+
+    instance Delay(5) delay;
+}

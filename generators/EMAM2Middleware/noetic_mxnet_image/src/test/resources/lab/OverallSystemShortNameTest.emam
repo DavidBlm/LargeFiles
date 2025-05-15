@@ -1,0 +1,44 @@
+/* (c) https://github.com/MontiCore/monticore */
+package lab;
+component overallSystemShortNameTest {
+  ports
+    in Q input[4],
+    out Q output[4];
+
+  instance Alex alex;
+  instance DinhAn dinhAn;
+  instance Philipp philipp;
+  instance Michael michael;
+  instance Combine combine;
+
+  instance Alex alex1;
+  instance DinhAn dinhAn1;
+  instance Philipp philipp1;
+  instance Michael michael1;
+  instance Combine combine1;
+
+  connect input[1] -> alex.input;
+  connect input[2] -> dinhAn.input;
+  connect input[3] -> philipp.input;
+  connect input[4] -> michael.input;
+
+  connect alex.out1 -> combine.in1;
+  connect dinhAn.out1 -> combine.in2;
+  connect philipp.out1 -> combine.in3;
+  connect michael.out1 -> combine.in4;
+
+  connect combine.out1 -> alex1.input;
+  connect combine.out1 -> dinhAn1.input;
+  connect combine.out1 -> philipp1.input;
+  connect combine.out1 -> michael1.input;
+
+  connect alex1.out1 -> combine1.in1;
+  connect dinhAn1.out1 -> combine1.in2;
+  connect philipp1.out1 -> combine1.in3;
+  connect michael1.out1 -> combine1.in4;
+
+  connect combine1.out1 -> output[1];
+  connect combine1.out1 -> output[2];
+  connect combine1.out1 -> output[3];
+  connect combine1.out1 -> output[4];
+}

@@ -1,0 +1,128 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA27.
+  component Oeffentlicher_Demonstrator_FAS_v04FA27 {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              in Double _Acceleration_pedal_pc,
+              out Double _Acceleration_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double acceleration_pedal_pc,
+                out Double acceleration_pc;
+
+              component Tempomat {
+                port
+                  out Double v_CC_delta_kmh;
+
+              }
+instance Tempomat tempomat;
+              component VelocityControl {
+                port
+                  in Double v_CC_delta_kmh,
+                  in Double acceleration_pedal_pc,
+                  out Double acceleration_pc;
+
+                component MinMax1 {
+                  port
+                    in Double in1,
+                    out Double out1;
+
+                }
+instance MinMax1 minMax1;
+                component SwitchBlock_35 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock_35 switchBlock_35;
+                component Mul_3 {
+                  port
+                    in Double acceleration_pc,
+                    out Double out1;
+
+                }
+instance Mul_3 mul_3;
+                component SwitchBlock2_12 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect minMax1.out1 -> switchBlock_35.elseIn;
+  connect switchBlock_35.acceleration_pc -> mul_3.acceleration_pc;
+  connect mul_3.out1 -> switchBlock2_12.elseIn;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+  connect acceleration_pedal_pc -> minMax1.in1;
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double acceleration_pedal_pc,
+                  out Double acceleration_pedal_pc1;
+
+  connect acceleration_pedal_pc -> acceleration_pedal_pc1;
+              }
+instance FAS_Input fAS_Input;
+  connect fAS_Input.acceleration_pedal_pc1 ->   velocityControl.acceleration_pedal_pc;
+  connect tempomat.v_CC_delta_kmh -> velocityControl.v_CC_delta_kmh;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect acceleration_pedal_pc ->   fAS_Input.acceleration_pedal_pc;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double _Acceleration_pedal_pc,
+                out Double acceleration_pedal_pc;
+
+  connect _Acceleration_pedal_pc ->   acceleration_pedal_pc;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2;
+
+  connect acceleration_pc -> acceleration_pcOut2;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.acceleration_pedal_pc ->   dEMO_FAS_Funktion.acceleration_pedal_pc;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect _Acceleration_pedal_pc ->   dEMO_FAS_Input._Acceleration_pedal_pc;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

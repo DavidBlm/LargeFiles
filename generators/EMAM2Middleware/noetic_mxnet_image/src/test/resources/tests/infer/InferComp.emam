@@ -1,0 +1,17 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.infer;
+
+component InferComp{
+    ports in Q rosIn,
+          out Q rosOut;
+
+    component Sub1{
+        ports in Q rosIn,
+              out Q rosOut;
+    }
+
+    instance Sub1 sub1;
+
+    connect rosIn -> sub1.rosIn;
+    connect sub1.rosOut -> rosOut;
+}

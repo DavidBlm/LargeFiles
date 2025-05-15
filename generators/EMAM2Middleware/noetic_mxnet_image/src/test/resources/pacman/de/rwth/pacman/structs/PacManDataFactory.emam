@@ -1,0 +1,22 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.structs;
+
+import de.rwth.pacman.structs.PacManData;
+
+component PacManDataFactory {
+    ports
+        in Q(0m: 342cm) X,
+        in Q(0m: 426cm) Y,
+        in B Eaten,
+        in Z(0:oo) Lives,
+        in Z(0:oo) Score,
+        out PacManData pacMan;
+        
+        implementation Math {
+            pacMan.x = X;
+            pacMan.y = Y;
+            pacMan.eaten = Eaten;
+            pacMan.lives = Lives;
+            pacMan.score = Score;
+        }
+}

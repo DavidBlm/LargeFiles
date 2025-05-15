@@ -1,0 +1,33 @@
+{
+  "modelsDir": "src/test/resources/pacman/",
+  "outputDir": "target/cliTest/allAlgos/",
+  "rootModel": "de.rwth.pacman.heithoff2.controller",
+  "generators": ["cpp","roscpp"],
+  "clusteringParameters":{
+    "flatten":true,
+    "algorithmParameters": [
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":{
+          "min":3,
+          "max":10
+        },
+        "l": {
+          "min": 10,
+          "max": 100,
+          "count": 10
+        },
+        "sigma": {
+          "min": 1,
+          "max": 2,
+          "step": 0.1
+        }
+      },{
+        "name":"SpectralClustering",
+        "numberOfClusters": 3,
+        "l": 1,
+        "sigma": 0.1
+      }
+    ]
+  }
+}

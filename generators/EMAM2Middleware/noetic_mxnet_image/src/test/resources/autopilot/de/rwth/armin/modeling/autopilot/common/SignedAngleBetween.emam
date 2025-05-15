@@ -1,0 +1,35 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+component SignedAngleBetween {
+  port
+    in  Q v1x,
+    in  Q v1y,
+    in  Q v2x,
+    in  Q v2y,
+
+    out Q angle;
+
+  implementation Math {
+    static Q EPSILON = 0.001;
+    angle = 0.0;
+    Q norm1 = sqrt( v1x*v1x + v1y*v1y );
+    Q norm2 = sqrt( v2x*v2x + v2y*v2y );
+    if ( (norm1 > EPSILON) && (norm2 > EPSILON) )
+      Q angle1 = -atan2(v1y, v1x);
+      Q c = cos(angle1);
+      Q s = sin(angle1);
+      // v2 rotated
+      Q v2xr = v2x * c - v2y * s;
+      Q v2yr = v2x * s + v2y * c;
+      Q angle2 = -atan2(v2yr, v2xr);
+      Q abs1 = abs(angle2);
+      Q abs2 = abs(abs1 - M_PI);
+      if (abs2 <= EPSILON)
+        angle = -M_PI;
+      else
+        angle = angle2;
+      end
+    end
+  }
+}

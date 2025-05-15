@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.mqtt;
+
+component TestComp{
+    ports in Q in1,
+          in N in2,
+          in Z in3,
+          in B in4,
+          out Q out1,
+          out N out2,
+          out Z out3,
+          out B out4;
+}

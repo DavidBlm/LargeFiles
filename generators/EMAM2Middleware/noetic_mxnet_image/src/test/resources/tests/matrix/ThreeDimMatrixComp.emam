@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.matrix;
+
+component ThreeDimMatrixComp{
+    ports in Q^{3,224,224} in1,
+          in Z^{3,224,224} in2,
+          in B^{3,224,224} in3,
+          out Q^{3,224,224} out1,
+          out Z^{3,224,224} out2,
+          out B^{3,224,224} out3;
+
+}

@@ -1,0 +1,43 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.actuator;
+
+import de.rwth.supermario.haller.tools.OrRelation_2;
+import de.rwth.supermario.haller.tools.OrRelation_5;
+import de.rwth.supermario.haller.environment.Obstacle;
+import de.rwth.supermario.haller.environment.ObstacleWatcher;
+
+import de.rwth.supermario.haller.environment.HoleWatcher;
+
+component ObstacleStrategy {
+    ports
+        in Z obstDistsX[5],
+        in Z obstDistsY[5],
+        in Z holeDistance,
+        
+        out Z jumpAdvice,
+        out Z directionAdvice;
+
+    //Every ObstacleWatcher watches a single Obstacle.
+    //Obstacles are pipes and staircase blocks.
+    instance ObstacleWatcher obstacleWatchers[5];
+    connect obstDistsX[:] ->obstacleWatchers[:].ObstacleDistX;
+    connect obstDistsY[:] ->obstacleWatchers[:].ObstacleDistY;
+    
+    //The output of all Watchers is combined via an or-relation.
+    instance OrRelation_5 orR_5; 
+    connect obstacleWatchers[:].inJumpRange -> orR_5.input[:];
+    
+    //The HoleWatcher watches the distance to the next hole.
+    instance HoleWatcher holeWatch;
+    connect holeDistance -> holeWatch.holeDistance;
+    
+    //Finally, the result from the watchers are combined via or
+    instance OrRelation_2 orR_2;
+    connect holeWatch.inJumpRange -> orR_2.input[1];
+    connect orR_5.output -> orR_2.input[2];
+    
+    //This results in the final advice for obstacle handling
+    connect orR_2.output -> jumpAdvice;
+    
+    
+}

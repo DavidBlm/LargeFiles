@@ -1,0 +1,27 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.collision;
+import ba.struct.Rectangle;
+import ba.struct.RectToPoints;
+
+component RectToLines{
+    ports in Rectangle rect,
+          out Q^{4,1} lines[4];
+
+    instance RectToPoints rectToPoints;
+    instance PointsToLine pointsToLine[4];
+
+    connect rect -> rectToPoints.rect;
+    connect rectToPoints.points[1] -> pointsToLine[1].pointA;
+    connect rectToPoints.points[2] -> pointsToLine[1].pointB;
+
+    connect rectToPoints.points[2] -> pointsToLine[2].pointA;
+    connect rectToPoints.points[3] -> pointsToLine[2].pointB;
+
+    connect rectToPoints.points[3] -> pointsToLine[3].pointA;
+    connect rectToPoints.points[4] -> pointsToLine[3].pointB;
+
+    connect rectToPoints.points[4] -> pointsToLine[4].pointA;
+    connect rectToPoints.points[1] -> pointsToLine[4].pointB;
+
+    connect pointsToLine[:].line -> lines[:];
+}

@@ -1,0 +1,270 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA32.
+  component Oeffentlicher_Demonstrator_FAS_v04FA32 {
+    component DEMO_FAS_1 {
+      port
+        out Double acceleration_pc,
+        in Double v_Vehicle_kmh;
+
+      component DEMO_FAS_2 {
+        port
+          out Double _Acceleration_pc,
+          in Double _V_Vehicle_kmh;
+
+        component Subsystem {
+          port
+            out Double _Acceleration_pc,
+            in Double _V_Vehicle_kmh;
+
+          component DEMO_FAS_3 {
+            port
+              in Double _V_Vehicle_kmh,
+              out Boolean _Limiter_active_b,
+              out Double _Acceleration_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                in Double v_Vehicle_kmh,
+                out Boolean limiter_active_b,
+                out Double acceleration_pc;
+
+              component Limiter {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double vMax_kmh,
+                  out Boolean limiter_active_b;
+
+              }
+instance Limiter limiter;
+              component VelocityControl {
+                port
+                  in Double vMax_kmh,
+                  out Double acceleration_pc;
+
+                component RelOp_9 {
+                  port
+                    in Double in2,
+                    out Boolean out1;
+
+                }
+instance RelOp_9 relOp_9;
+                component LogOp_2 {
+                  port
+                    in Boolean in1,
+                    out Boolean out1;
+
+                }
+instance LogOp_2 logOp_2;
+                component Condition1_22 {
+                  port
+                    in Boolean in1,
+                    out Boolean out1;
+
+                }
+instance Condition1_22 condition1_22;
+                component SwitchBlock_35 {
+                  port
+                    in Boolean condition,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock_35 switchBlock_35;
+                component Mul_3 {
+                  port
+                    in Double acceleration_pc,
+                    out Double out1;
+
+                }
+instance Mul_3 mul_3;
+                component SwitchBlock2_12 {
+                  port
+                    in Double elseIn,
+                    out Double acceleration_pc;
+
+                }
+instance SwitchBlock2_12 switchBlock2_12;
+  connect relOp_9.out1 -> logOp_2.in1;
+  connect vMax_kmh -> relOp_9.in2;
+  connect logOp_2.out1 -> condition1_22.in1;
+  connect switchBlock_35.acceleration_pc -> mul_3.acceleration_pc;
+  connect mul_3.out1 -> switchBlock2_12.elseIn;
+  connect condition1_22.out1 -> switchBlock_35.condition;
+  connect switchBlock2_12.acceleration_pc -> acceleration_pc;
+              }
+instance VelocityControl velocityControl;
+              component FAS_Input {
+                port
+                  in Double v_Vehicle_kmh,
+                  out Double v_Vehicle_kmh4;
+
+  connect v_Vehicle_kmh -> v_Vehicle_kmh4;
+              }
+instance FAS_Input fAS_Input;
+  connect limiter.vMax_kmh -> velocityControl.vMax_kmh;
+  connect velocityControl.acceleration_pc -> acceleration_pc;
+  connect fAS_Input.v_Vehicle_kmh4 -> limiter.v_Vehicle_kmh;
+  connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh;
+  connect limiter.limiter_active_b -> limiter_active_b;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Input {
+              port
+                in Double v_Vehicle_b,
+                out Double v_Vehicle_kmh;
+
+  connect v_Vehicle_b -> v_Vehicle_kmh;
+            }
+instance DEMO_FAS_Input dEMO_FAS_Input;
+            component DEMO_FAS_Output {
+              port
+                in Boolean limiter_active_b,
+                out Boolean limiter_active_bOut6,
+                in Double acceleration_pc,
+                out Double acceleration_pcOut2;
+
+  connect limiter_active_b -> limiter_active_bOut6  ;
+  connect acceleration_pc -> acceleration_pcOut2;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Input.v_Vehicle_kmh -> dEMO_FAS_Funktion.v_Vehicle_kmh;
+  connect dEMO_FAS_Funktion.limiter_active_b -> dEMO_FAS_Output.limiter_active_b;
+  connect dEMO_FAS_Funktion.acceleration_pc -> dEMO_FAS_Output.acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_Input.v_Vehicle_b;
+  connect dEMO_FAS_Output.limiter_active_bOut6 -> _Limiter_active_b;
+  connect dEMO_FAS_Output.acceleration_pcOut2 -> _Acceleration_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+  connect dEMO_FAS_3._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> dEMO_FAS_3._V_Vehicle_kmh;
+        }
+instance Subsystem subsystem;
+  connect subsystem._Acceleration_pc -> _Acceleration_pc;
+  connect _V_Vehicle_kmh -> subsystem._V_Vehicle_kmh;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+  connect dEMO_FAS_2._Acceleration_pc -> acceleration_pc;
+  connect v_Vehicle_kmh -> dEMO_FAS_2._V_Vehicle_kmh;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+    component Memory8 {
+      port
+        in Double in1,
+        out Double out1;
+
+    }
+instance Memory8 memory8;
+    component Umgebung {
+      port
+        in Double acceleration_pc,
+        out Double v_Vehicle_kmh;
+
+      component Vehicle {
+        port
+          in Double acceleration_pc,
+          out Double v_Vehicle_kmh;
+
+        component SwitchBlock_36 {
+          port
+            in Double elseIn,
+            out Double out1;
+
+        }
+instance SwitchBlock_36 switchBlock_36;
+        component DiscreteTransferFcnwithinitialstates {
+          port
+            in Double in1,
+            out Double out1;
+
+          component DiscreteStateSpace {
+            port
+              in Double in1,
+              out Double out1;
+
+          }
+instance DiscreteStateSpace discreteStateSpace;
+  connect in1 -> discreteStateSpace.in1;
+  connect discreteStateSpace.out1 -> out1;
+        }
+instance DiscreteTransferFcnwithinitialstates discreteTransferFcnwithinitialstates;
+        component Sum1_4 {
+          port
+            in Double v_Vehicle_kmh,
+            out Double out1;
+
+        }
+instance Sum1_4 sum1_4;
+        component Saturation_2 {
+          port
+            in Double in1,
+            out Double v_Vehicle_kmh;
+
+        }
+instance Saturation_2 saturation_2;
+  connect switchBlock_36.out1 -> discreteTransferFcnwithinitialstates.in1;
+  connect acceleration_pc -> switchBlock_36.elseIn;
+  connect discreteTransferFcnwithinitialstates.out1 -> sum1_4.v_Vehicle_kmh;
+  connect sum1_4.out1 -> saturation_2.in1;
+  connect saturation_2.v_Vehicle_kmh -> v_Vehicle_kmh;
+      }
+instance Vehicle vehicle;
+  connect acceleration_pc -> vehicle.acceleration_pc;
+  connect vehicle.v_Vehicle_kmh -> v_Vehicle_kmh;
+    }
+instance Umgebung umgebung;
+  connect dEMO_FAS_1.acceleration_pc -> memory8.in1;
+  connect memory8.out1 -> umgebung.acceleration_pc;
+  connect umgebung.v_Vehicle_kmh -> dEMO_FAS_1.v_Vehicle_kmh;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

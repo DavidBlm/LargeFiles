@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component FollowToStop_Function {
+                port
+                  out Number fTS_Abstand_soll_m,
+                  out B fTS_active_b,
+                  in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+                  in (0 km/h: 1 km/h: 250 km/h) v_Vehicle_kmh;
+instance Chart chart;
+instance Sum_3 sum_3;
+instance VERSION_INFO_13 vERSION_INFO_13;
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.fTS_active_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.fTS_active_bOut1*/
+                connect chart.fTS_active_b -> fTS_active_b;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.abstand_soll_mOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.fTS_Abstand_soll_mOut2*/
+                connect chart.abstand_soll_m -> fTS_Abstand_soll_m;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.sum.v_Obj_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.chart.v_Obj_kmhIn1*/
+                connect sum_3.v_Obj_kmh -> chart.v_Obj_kmh;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.v_Vehicle_kmhIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.sum.in1*/
+                connect v_Vehicle_kmh -> sum_3.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.v_Obj_rel_kmhIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.followToStop.followToStop_Function.sum.in2*/
+                connect v_Obj_rel_kmh -> sum_3.in2;
+
+              }
+

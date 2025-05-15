@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                      component LogicalOperator3_2_Or {
+                        port
+                          in B in1,
+                          in B in2,
+                          in B in3,
+                          in B in4,
+                          out B out1;
+                      }
+

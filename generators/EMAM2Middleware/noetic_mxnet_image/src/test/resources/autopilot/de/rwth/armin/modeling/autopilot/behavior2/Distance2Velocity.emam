@@ -1,0 +1,34 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.behavior2;
+
+component Distance2Velocity {
+  port
+    in  Q (0.0 m : 0.01 m : oo m)               distance,
+    in  Q (0.0 m/s : 0.01 m/s : 13.0 m/s)       minVelocity,
+    in  Q (0.0 m/s : 0.01 m/s : 13.0 m/s)       maxVelocity,
+
+    out Q (0.0 m/s : 0.01 m/s : 13.0 m/s)       velocity;
+
+  implementation Math {
+    // exponent
+    static Q D1 = 1.0 m;
+    static Q V1 = 1.0 m/s;
+    static Q D2 = 15.0 m;
+    static Q V2 = 17.0 m/s;
+    static Q COEF_K = log( (V1 / V2) ) / (D2 - D1);
+    Q v = 0.0;
+    if (distance < D1)
+      v = 0.0;
+    elseif (distance >= D2)
+      v = V2;
+    else
+      v = V1 * exp(   -COEF_K * (distance - D1)   );
+    end
+    if (v < minVelocity)
+      v = minVelocity;
+    elseif (v > maxVelocity)
+      v = maxVelocity;
+    end
+    velocity = v;
+  }
+}

@@ -1,0 +1,59 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.BFS.single;
+
+component CalcNewPosition {
+    ports
+      in Q(0m: 20m) currentX,
+      in Q(1m: 23m) currentY,
+      in Q(0m: 20m) oldX,
+      in Q(1m: 23m) oldY,
+      in Z^{22,19} map,
+      in B searchFinished,
+      in B positionIsSafe,
+      
+      out Q(0m: 20m) newX,
+      out Q(1m: 23m) newY,
+      out Z newDirection,
+      out B safeFound;
+    
+    
+    implementation Math {
+        newX = currentX;
+        newY = currentY;
+        newDirection = 0;
+        safeFound = 0;
+        if (searchFinished == 0) && (positionIsSafe == 1)
+            // check for intersection or calculate the next tile
+            Z^{1,4} xOffSet = [0,0,-1,1];
+            Z^{1,4} yOffSet = [-1,1,0,0];
+            safeFound = 0;
+            Z newPathsFound = 0;
+            for i = 0:3
+                Z indexY = 0;
+                Z indexX = i;
+                Z xOff = xOffSet(indexY, indexX);
+                Z yOff = yOffSet(indexY, indexX);
+                Q xT = currentX + xOff;
+                Q yT = currentY + yOff;
+                
+                if (abs(xT - oldX) >= 1) || (abs(yT - oldY) >= 1)
+                    Z nextTile = map(yT, xT);
+                    // if (yT < 23) && (yT > 0) && (xT < 20) && (xT > 0)
+                    //     nextTile = map(yT, xT);
+                    // end
+                    if (nextTile != 0) && (nextTile != 3) // a non-blocking tile was found
+                        newPathsFound = newPathsFound + 1;
+                        newX = xT;
+                        newY = yT;
+                        newDirection = i;
+                        if newPathsFound > 1
+                            safeFound = 1;
+                            newX = currentX;
+                            newY = currentY;
+                        end
+                    end
+                end
+            end
+        end
+    }
+}

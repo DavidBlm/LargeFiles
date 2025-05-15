@@ -1,0 +1,129 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+// The C&C model Oeffentlicher_Demonstrator_FAS_v04 satisfies the view FA75b.
+  component Oeffentlicher_Demonstrator_FAS_v04FA75b {
+    component DEMO_FAS_1 {
+      component DEMO_FAS_2 {
+        component Subsystem {
+          component DEMO_FAS_3 {
+            port
+              out Double _BrakeForce_pc;
+
+            component DEMO_FAS_Funktion {
+              port
+                out Double brakeForce_pc;
+
+              component BrakeAssistant {
+                port
+                  in Double brakeForce_pedal_pc,
+                  out Double brakeForceBoosted_pc;
+
+                component Brake_Booster {
+                  port
+                    in Double brakeForce_pedal_pc,
+                    out Double brakeForceBoosted_pc;
+
+                  component DEMO_FAS_BrakeBooster_Threshold {
+                    port
+                      out Double out1;
+
+                  }
+instance DEMO_FAS_BrakeBooster_Threshold dEMO_FAS_BrakeBooster_Threshold;
+                  component RelOp_1 {
+                    port
+                      in Double in1,
+                      in Double in2,
+                      out Boolean out1;
+
+                  }
+instance RelOp_1 relOp_1;
+                  component Constant_1 {
+                    port
+                      out Double out1;
+
+                  }
+instance Constant_1 constant_1;
+                  component SwitchBlock_1 {
+                    port
+                      in Double ifIn,
+                      in Boolean condition,
+                      out Double brakeForceBoosted_pc;
+
+                  }
+instance SwitchBlock_1 switchBlock_1;
+                  component Condition_1 {
+                    port
+                      in Boolean in1,
+                      out Boolean out1;
+
+                  }
+instance Condition_1 condition_1;
+  connect constant_1.out1 -> switchBlock_1.ifIn;
+  connect condition_1.out1 -> switchBlock_1.condition;
+  connect switchBlock_1.brakeForceBoosted_pc -> brakeForceBoosted_pc  ;
+  connect relOp_1.out1 -> condition_1.in1;
+  connect dEMO_FAS_BrakeBooster_Threshold.out1 -> relOp_1.in2;
+  connect brakeForce_pedal_pc -> relOp_1.in1;
+                }
+instance Brake_Booster brake_Booster;
+  connect brakeForce_pedal_pc -> brake_Booster.brakeForce_pedal_pc;
+  connect brake_Booster.brakeForceBoosted_pc ->   brakeForceBoosted_pc;
+              }
+instance BrakeAssistant brakeAssistant;
+              component VelocityControl {
+                port
+                  in Double brakeForceBoosted_pc,
+                  out Double brakeForce_pc;
+
+                component MinMax2 {
+                  port
+                    in Double in2,
+                    out Double brakeForce_pc;
+
+                }
+instance MinMax2 minMax2;
+  connect brakeForceBoosted_pc -> minMax2.in2;
+  connect minMax2.brakeForce_pc -> brakeForce_pc;
+              }
+instance VelocityControl velocityControl;
+  connect brakeAssistant.brakeForceBoosted_pc ->   velocityControl.brakeForceBoosted_pc;
+  connect velocityControl.brakeForce_pc -> brakeForce_pc;
+            }
+instance DEMO_FAS_Funktion dEMO_FAS_Funktion;
+            component DEMO_FAS_Output {
+              port
+                in Double brakeForce_pc,
+                out Double brakeForce_pcOut3;
+
+  connect brakeForce_pc -> brakeForce_pcOut3;
+            }
+instance DEMO_FAS_Output dEMO_FAS_Output;
+  connect dEMO_FAS_Funktion.brakeForce_pc -> dEMO_FAS_Output.brakeForce_pc;
+  connect dEMO_FAS_Output.brakeForce_pcOut3 -> _BrakeForce_pc;
+          }
+instance DEMO_FAS_3 dEMO_FAS_3;
+        }
+instance Subsystem subsystem;
+      }
+instance DEMO_FAS_2 dEMO_FAS_2;
+    }
+instance DEMO_FAS_1 dEMO_FAS_1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

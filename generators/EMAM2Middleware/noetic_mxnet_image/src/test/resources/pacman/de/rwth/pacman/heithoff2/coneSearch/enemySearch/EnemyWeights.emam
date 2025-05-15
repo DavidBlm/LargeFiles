@@ -1,0 +1,15 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch.enemySearch;
+
+component EnemyWeights {
+    ports
+      out Z normal,
+      out Z towardsPacMan,
+      out Z eatable;
+      
+    implementation Math {
+        normal = -4;
+        towardsPacMan = -10;
+        eatable = 5000;
+    }
+}

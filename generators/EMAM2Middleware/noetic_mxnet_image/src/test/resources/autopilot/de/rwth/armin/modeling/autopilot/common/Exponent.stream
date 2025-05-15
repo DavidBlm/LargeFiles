@@ -1,0 +1,11 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.armin.modeling.autopilot.common;
+
+stream Exponent for Exponent {
+  x1:   1.0            tick 1.0             tick 1.0              tick 1.0               tick 1.0             tick 1.0              ;
+  y1:   1.0            tick 1.0             tick 1.0              tick 1.0               tick 1.0             tick 1.0              ;
+  x2:   5.0            tick 5.0             tick 5.0              tick 5.0               tick 5.0             tick 5.0              ;
+  y2:   50.0           tick 50.0            tick 50.0             tick 50.0              tick 50.0            tick 50.0             ;
+  arg:  0.0            tick 1.0             tick 1.5              tick 3.0               tick 5.0             tick 5.5              ;
+  val:  1.0 +/- 0.01   tick 1.0 +/- 0.01    tick 1.63 +/- 0.01    tick 7.07 +/- 0.01     tick 50.0 +/- 0.1    tick 50.0 +/- 0.1     ;
+}

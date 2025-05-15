@@ -1,0 +1,44 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.decision;
+
+// check whether an intersection (3 or more non-blocked paths) is reached
+
+component NextIntersection {
+    ports
+      in Q(-1m: 19m) pacManX,
+      in Q(0m: 22m) pacManY,
+      in Z^{22,19} map,
+      
+      out B interSectionReached;
+      
+    implementation Math {
+        Z pacX = round(pacManX);
+        Z pacY = round(pacManY);
+        interSectionReached = 0;
+        if (abs(pacManX - pacX) < 0.01) && (abs(pacManY - pacY) < 0.01)
+            pacX = pacX + 1;
+            pacY = pacY + 1;
+            Z^{1,4} xOffSet = [0,0,-1,1];
+            Z^{1,4} yOffSet = [1,-1,0,0];
+            Z newPathsFound = 0;
+            for i = 0:3
+                Z indexY = 0;
+                Z indexX = i;
+                Z xOff = xOffSet(indexY, indexX);
+                Z yOff = yOffSet(indexY, indexX);
+                Q xT = pacX + xOff;
+                Q yT = pacY + yOff;
+                
+                Z nextTile = map(yT, xT);
+                if (nextTile == 0) || (nextTile == 3)
+                    newPathsFound = newPathsFound;
+                else
+                    newPathsFound = newPathsFound + 1;
+                    if newPathsFound > 2
+                        interSectionReached = 1;
+                    end
+                end
+            end
+        end
+    }
+}

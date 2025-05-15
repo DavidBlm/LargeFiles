@@ -1,0 +1,26 @@
+{
+  "modelsDir": "src/test/resources/supermario/",
+  "outputDir": "target/evaluation/supermarioSilhouette/",
+  "rootModel": "de.rwth.supermario.haller.controller",
+  "generators": ["cpp"],
+  "writeTagFile":true,
+  "clusteringParameters":{
+    "flatten":true,
+    "metric": "Silhouette",
+    "algorithmParameters":[
+      {
+        "name":"SpectralClustering",
+        "numberOfClusters":{
+          "min": 3,
+          "max": 39,
+          "step": 1
+        }
+      },{
+        "name":"Markov"
+      },
+      {
+        "name":"AffinityPropagation"
+      }
+    ]
+  }
+}

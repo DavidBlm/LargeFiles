@@ -1,0 +1,14 @@
+/* (c) https://github.com/MontiCore/monticore */
+package ba.struct;
+
+component RectToPoints{
+    ports in Rectangle rect,
+          out Point points[4];
+
+    implementation Math{
+        points(1) = rect.pointA;
+        points(2) = rect.pointB;
+        points(3) = rect.pointC;
+        points(4) = rect.pointD;
+    }
+}

@@ -1,0 +1,65 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+            component EmergencyBrake {
+              port
+                out B acusti_warn_b,
+                out (0:100) brakeForce_Emergency_pc,
+                in (0 m: oo m) distance_Object_m,
+                in Number v_Obj_rel_ms,
+                in Number v_Vehicle_ms;
+instance Constant_7_value_1 constant_7;
+instance EmergencyBrake_Function emergencyBrake_Function;
+instance VERSION_INFO_11 vERSION_INFO_11;
+instance Condition_6 condition_6;
+instance SwitchBlock_6 switchBlock_6;
+instance UnitDelay_2 unitDelay_2;
+instance Condition1_3 condition1_3;
+instance SwitchBlock1_3 switchBlock1_3;
+instance UnitDelay1_2 unitDelay1_2;
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.brakeForce_Emergency_pcOut1*/
+              connect switchBlock_6.out1 -> brakeForce_Emergency_pc;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.acusti_warn_bOut2*/
+              connect switchBlock1_3.out1 -> acusti_warn_b;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.condition.in1*/
+              connect constant_7.out1 -> condition_6.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.condition.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock.condition*/
+              connect condition_6.out1 -> switchBlock_6.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.brakeForce_Emergency_pcOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock.ifIn*/
+              connect emergencyBrake_Function.brakeForce_Emergency_pc -> switchBlock_6.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.unitDelay.valueIn*/
+              connect switchBlock_6.out1 -> unitDelay_2.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.unitDelay.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock.elseIn*/
+              connect unitDelay_2.valueOut -> switchBlock_6.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.constant.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.condition1.in1*/
+              connect constant_7.out1 -> condition1_3.in1;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.condition1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock1.condition*/
+              connect condition1_3.out1 -> switchBlock1_3.condition;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.acusti_warn_bOut2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock1.ifIn*/
+              connect emergencyBrake_Function.acusti_warn_b -> switchBlock1_3.ifIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.unitDelay1.valueIn*/
+              connect switchBlock1_3.out1 -> unitDelay1_2.valueIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.unitDelay1.valueOut -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.switchBlock1.elseIn*/
+              connect unitDelay1_2.valueOut -> switchBlock1_3.elseIn;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.distance_Object_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.distance_Object_mIn2*/
+              connect distance_Object_m -> emergencyBrake_Function.distance_Object_m;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.v_Vehicle_msIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.v_Vehicle_msIn1*/
+              connect v_Vehicle_ms -> emergencyBrake_Function.v_Vehicle_ms;
+
+              /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.v_Obj_rel_msIn3 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.emergencyBrake.emergencyBrake_Function.v_Obj_rel_msIn3*/
+              connect v_Obj_rel_ms -> emergencyBrake_Function.v_Obj_rel_ms;
+
+            }
+

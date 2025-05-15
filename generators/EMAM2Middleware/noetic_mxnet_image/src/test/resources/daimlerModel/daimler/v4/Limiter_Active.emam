@@ -1,0 +1,28 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                  component Limiter_Active {
+                    port
+                      in Number in1,
+                      out B limiter_active_b,
+                      out Number vMax_kmh;
+instance Gain_1_value_1 gain_1;
+instance LogicalOperator_1_And logicalOperator_1;
+instance TrueBlock_1 trueBlock_1;
+instance VERSION_INFO_15 vERSION_INFO_15;
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.gain.vMax_kmhOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.vMax_kmhOut1*/
+                    connect gain_1.vMax_kmhOut1 -> vMax_kmh;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.logicalOperator.limiter_active_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.limiter_active_bOut2*/
+                    connect logicalOperator_1.limiter_active_b -> limiter_active_b;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.in1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.gain.vMax_kmhIn1*/
+                    connect in1 -> gain_1.vMax_kmh;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.trueBlock.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.logicalOperator.limiter_enabled_bIn1*/
+                    connect trueBlock_1.y -> logicalOperator_1.limiter_enabled_b;
+
+                    /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.trueBlock.yOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.limiter.limiter_Function.limiter_Enabled.limiter_Active.logicalOperator.limiter_enabled_bIn2*/
+                    connect trueBlock_1.y -> logicalOperator_1.limiter_enabled_bIn2;
+
+                  }
+

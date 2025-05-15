@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test.math;
+
+component NormCommandTest{
+    implementation Math{
+        Q^{3, 3} mat = [1 0 0;0 1 0; 0 0 1];
+        Q^{3,3} a = norm(mat);
+    }
+}

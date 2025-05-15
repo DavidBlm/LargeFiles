@@ -1,0 +1,9 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component Div1_2 {
+                port
+                  in Number in2,
+                  in (-250 km/h: 1 km/h: 250 km/h) v_Obj_rel_kmh,
+                  out Number v_Obj_rel_ms;
+              }
+

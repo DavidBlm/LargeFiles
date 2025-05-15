@@ -1,0 +1,34 @@
+/* (c) https://github.com/MontiCore/monticore */
+package tests.dist;
+
+component DistComp{
+    port out Q resOut;
+
+    component SubComp1{
+        ports out Q out1,
+              out Q out2;
+
+        implementation Math{
+            out1 = out1 + 1;
+            out2 = out2 + 2;
+        }
+
+    }
+
+    component SubComp2{
+        ports in Q in1,
+              in Q in2,
+              out Q resOut;
+
+        implementation Math{
+            resOut = in1 + in2;
+        }
+    }
+
+    instance SubComp1 sub1;
+    instance SubComp2 sub2;
+
+    connect sub1.out1 -> sub2.in1;
+    connect sub1.out2 -> sub2.in2;
+    connect sub2.resOut -> resOut;
+}

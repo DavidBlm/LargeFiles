@@ -1,0 +1,36 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.supermario.haller.environment;
+
+
+component EnemyWatcher {
+    ports
+    
+        in Z EnemyDistX,
+        in Z EnemyDistY,
+        in Z EnemyVelocityX,
+        in Z EnemyVelocityY,
+        
+        out Z movesTowardsPlayer,
+        out Z inJumpRange;
+
+    implementation Math {
+        //Empirical distance values
+        Z jumpRangeX = 200;
+        
+        //Enemy in Jumprange, and not above, not undefined, stopping to jump while we are over it, so we don't jump much too far. 
+        if((abs(EnemyDistX) < jumpRangeX) && (EnemyDistY > -64) && (EnemyDistX != -1) && (EnemyDistX > 45))
+            inJumpRange = 1;
+        else
+            inJumpRange = 0;
+        end
+        
+        
+        //Enemy moving in the opposite direction of the direction to it from mario
+        if((EnemyVelocityX > 0) != (EnemyDistX > 0))
+            movesTowardsPlayer = 1;
+        else
+            movesTowardsPlayer = 0;
+        end
+        
+    }
+}

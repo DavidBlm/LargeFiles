@@ -1,0 +1,12 @@
+/* (c) https://github.com/MontiCore/monticore */
+package test;
+
+component BasicGenericInstance{
+    ports in Q(-oo:oo)^{3,3} mat1,
+          out Q(-oo:oo)^{3,3} matOut;
+
+    instance BasicGeneric<3> basicGeneric;
+
+    connect mat1 -> basicGeneric.mat1;
+    connect basicGeneric.matOut -> matOut;
+}

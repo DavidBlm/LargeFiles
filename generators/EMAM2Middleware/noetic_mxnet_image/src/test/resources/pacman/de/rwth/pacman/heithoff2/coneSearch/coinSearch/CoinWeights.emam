@@ -1,0 +1,13 @@
+/* (c) https://github.com/MontiCore/monticore */
+package de.rwth.pacman.heithoff2.coneSearch.coinSearch;
+
+component CoinWeights {
+    ports
+      out Z buiscuitWeight,
+      out Z coinWeight;
+      
+    implementation Math {
+        buiscuitWeight = 50;
+        coinWeight = 200;
+    }
+}

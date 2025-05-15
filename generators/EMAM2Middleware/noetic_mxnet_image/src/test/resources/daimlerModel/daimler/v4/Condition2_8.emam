@@ -1,0 +1,8 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+                    component Condition2_8 {
+                      port
+                        in Number in1,
+                        out B out1;
+                    }
+

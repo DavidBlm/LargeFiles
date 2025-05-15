@@ -1,0 +1,47 @@
+/* (c) https://github.com/MontiCore/monticore */
+package daimler.v4;
+              component Distancewarner_Function {
+                port
+                  out B acusti_warn_b,
+                  in (0 m: oo m) distance_Object_m,
+                  out B opti_warn_b,
+                  in Number v_Vehicle_ms;
+instance DEMO_FAS_Accusti_Threshold_Time dEMO_FAS_Accusti_Threshold_Time;
+instance DEMO_FAS_Opti_Threshold_Time dEMO_FAS_Opti_Threshold_Time;
+instance Mul_1 mul_1;
+instance Mul1_1 mul1_1;
+instance RelOp_2_SmallerEquals relOp_2;
+instance RelOp2_1 relOp2_1;
+instance VERSION_INFO_3 vERSION_INFO_3;
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.relOp.opti_warn_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.opti_warn_bOut1*/
+                connect relOp_2.opti_warn_bOut1 -> opti_warn_b;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.relOp2.acusti_warn_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.acusti_warn_bOut2*/
+                connect relOp2_1.acusti_warn_b -> acusti_warn_b;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.mul1.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.relOp2.in2*/
+                connect mul1_1.out1 -> relOp2_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.dEMO_FAS_Accusti_Threshold_Time.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.mul1.in2*/
+                connect dEMO_FAS_Accusti_Threshold_Time.out1 -> mul1_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.distance_Object_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.relOp.in1*/
+                connect distance_Object_m -> relOp_2.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.distance_Object_mIn2 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.relOp2.in1*/
+                connect distance_Object_m -> relOp2_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.mul.opti_warn_bOut1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.relOp.opti_warn_bIn2*/
+                connect mul_1.opti_warn_b -> relOp_2.opti_warn_b;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.dEMO_FAS_Opti_Threshold_Time.out1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.mul.in2*/
+                connect dEMO_FAS_Opti_Threshold_Time.out1 -> mul_1.in2;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.v_Vehicle_msIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.mul1.in1*/
+                connect v_Vehicle_ms -> mul1_1.in1;
+
+                /* adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.v_Vehicle_msIn1 -> adas.oeffentlicher_Demonstrator_FAS_v04.dEMO_FAS.dEMO_FAS.subsystem.dEMO_FAS.dEMO_FAS_Funktion.distancewarner.distancewarner_Function.mul.in1*/
+                connect v_Vehicle_ms -> mul_1.in1;
+
+              }
+
