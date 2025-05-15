@@ -32,7 +32,7 @@
                 <httpHeaders>
                     <property>
                         <name>Private-Token</name>
-                        <value>glpat-Z3puqsBsqP6hGogS1ni1</value>
+                        <value>${env.GITLABTOKEN}</value>
                     </property>
                 </httpHeaders>
             </configuration>

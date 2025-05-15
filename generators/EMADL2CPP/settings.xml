@@ -26,8 +26,8 @@
             <configuration>
                 <httpHeaders>
                     <property>
-                        <name>Job-Token</name>
-                        <value>${env.CI_JOB_TOKEN}</value>
+                        <name>Private-Token</name>
+                        <value>${env.GITLABTOKEN}</value>
                     </property>
                 </httpHeaders>
             </configuration>
@@ -38,8 +38,8 @@
           <configuration>
             <httpHeaders>
                 <property>
-                    <name>Job-Token</name>
-                    <value>${env.CI_JOB_TOKEN}</value>
+                    <name>Private-Token</name>
+                    <value>${env.GITLABTOKEN}</value>
                 </property>
             </httpHeaders>
           </configuration>
