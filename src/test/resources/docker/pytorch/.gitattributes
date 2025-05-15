@@ -1,2 +1,0 @@
-armadillo-9.600.6.zip filter=lfs diff=lfs merge=lfs -text
-libtorch.zip filter=lfs diff=lfs merge=lfs -text
